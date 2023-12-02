@@ -1,7 +1,8 @@
 package cbse.EcoMap.web;
 
 import cbse.EcoMap.model.Team;
-import cbse.EcoMap.model.TeamRepository;
+import cbse.EcoMap.repository.TeamRepository;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

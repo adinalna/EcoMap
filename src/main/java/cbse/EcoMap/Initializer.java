@@ -2,11 +2,10 @@ package cbse.EcoMap;
 
 import cbse.EcoMap.model.User;
 import cbse.EcoMap.model.Team;
-import cbse.EcoMap.model.TeamRepository;
+import cbse.EcoMap.repository.TeamRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.time.Instant;
 import java.util.Collections;
 import java.util.stream.Stream;
 
