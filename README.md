@@ -14,7 +14,7 @@
 3. Under ecomap-react in terminal, run: npm install (only needed once to load dependencies), run: npm run dev to start run project locally at http://localhost:4200/
 4. Create a .env file under ecomap react and add: VITE_API_BASE_URL=http://localhost:8080 (This is to call backend api to the forntend)
    
-#General App Flow
+#Fonted Backend Flow
 1. Both the backend(Ecomap) and frontend(ecomap-react) needs to be running in order to call backend api to the frontend
 2. Axios is a HTTP Client for node.js and browser. I have created axiosClient.js file under ecomap-react
 3. For reference on how it works please do read login.jsx and signup.jsx under src/views
@@ -33,5 +33,14 @@
 5. DefaultLayout.jsx is only rendered when user is logged in (token is not null)
 6. Child Components under DefaultLayout.jsx will inherit its components, this is create sidebars or navs for later, to create common components for only authethicated users
 3. GuestLayout.jsx is only rendered when user is not logged in (token is null), same concept as before
+
+#Backend and Database
+1. Please do reserch on MVC concept for basic understanding, read on JPA and JDBC for futher understanding on how it works for spring boot
+2. src/main/java is where the main files are located
+3. cbse.EcoMap.model are classes which contains logic to connect with database tables, instance variables under these files represent the columns in the database 
+5. cbse.EcoMap.repository is to create functions for for storing/retrieving data from the model/database, example in TeamRepository: Team findByName(String name) to get team by name
+6. cbse.EcoMap.controller is used for mapping and can be used for api retrieval. For example for the TeamController http://localhost:8080/api/teams is used to retrieve all teams in database teams table. Please do test this out by entering in the url of your browser when the backend is running locally
+7. I recommened reading about other features in spring boot such as service and component if u have time
+8. For me info go to https://www.geeksforgeeks.org/spring-mvc/?ref=lbp
 
 The end, goodluck :P
