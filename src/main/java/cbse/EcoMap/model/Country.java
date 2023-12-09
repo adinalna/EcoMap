@@ -20,7 +20,7 @@ public class Country {
     @NonNull
     private Instant date_created = Instant.now();
     private String name;
-    private int XPpoints;
+    private int xp_score;
 
     // Constructor with name parameter
     public Country(String name) {

@@ -6,6 +6,4 @@ import cbse.EcoMap.model.Country;
 
 @Repository
 public interface CountryRepository extends JpaRepository<Country, Long> {
-    
-    // You can add custom query methods here if needed
 }

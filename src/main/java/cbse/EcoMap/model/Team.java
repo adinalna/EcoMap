@@ -1,5 +1,6 @@
 package cbse.EcoMap.model;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -14,7 +15,7 @@ import java.util.Set;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Entity
-@Table(name = "team")
+@Table(name = "teams")
 public class Team {
 
     @Id
@@ -23,14 +24,15 @@ public class Team {
     @NonNull
     private String name;
     private String country;
+    private Instant date_created = Instant.now();
 
-    @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
-    private Set<User> users;
+
+    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
+    private Set<UserTeam> userTeams;
+
     
     public Team(String name, String country) {
         this.name = name;
         this.country = country;
     }
-    
-    
 }
