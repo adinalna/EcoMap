@@ -4,6 +4,7 @@ import GuestLayout from "./components/Layout/GuestLayout.jsx";
 import Login from "../src/views/Login.jsx";
 import Signup from "../src/views/Signup.jsx";
 import NotFound from "../src/views/NotFound.jsx";
+import About from "./views/About.jsx";
 
 const router = createBrowserRouter([
     {
@@ -12,7 +13,7 @@ const router = createBrowserRouter([
         children: [
             {
                 path: '/about',
-                element: <Login />
+                element: <About />
             },
         ]
     },
