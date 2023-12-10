@@ -14,7 +14,7 @@
 3. Under ecomap-react in terminal, run: npm install (only needed once to load dependencies), run: npm run dev to start run project locally at http://localhost:4200/
 4. Create a .env file under ecomap react and add: VITE_API_BASE_URL=http://localhost:8080 (This is to call backend api to the forntend)
    
-#Fonted Backend Flow
+#Fontend Backend Flow
 1. Both the backend(Ecomap) and frontend(ecomap-react) needs to be running in order to call backend api to the frontend
 2. Axios is a HTTP Client for node.js and browser. I have created axiosClient.js file under ecomap-react
 3. For reference on how it works please do read login.jsx and signup.jsx under src/views
@@ -25,7 +25,7 @@
 8. main.jsx is the root react file any imports there will be imported to all view or components files
 9. index.html is the single web page for reactjs
 
-#Frontend Layout and Authenication
+#Frontend Layout and Authenthication
 1. React Context is a way to manage state(variable) globally. I have created UserProvider.jsx to help the authentication process for logged in and out users
 2. UserProvider.jsx will store the authenication token which is initilised at the backend which returned via api if /login api call is successful. Users will be authenticated after this
 3. In login.jsx User Context is initialised if axiosClient.post('/login', payload) is successful, the User state can be accessed globally after this
