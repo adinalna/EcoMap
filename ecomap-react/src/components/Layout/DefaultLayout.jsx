@@ -13,7 +13,7 @@ export default function DefaultLayout() {
     } else {
         content = (
             <div className="defaultLayout">
-               
+               <Outlet />
             </div>
         );
     }

@@ -1,5 +1,8 @@
 import axios from "axios";
 
+// Set the access token for testing
+localStorage.setItem('ACCESS_TOKEN', '429493');
+
 const axiosClient = axios.create({
     baseURL: `${import.meta.env.VITE_API_BASE_URL}/api`
 });
