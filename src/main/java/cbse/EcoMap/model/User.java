@@ -3,14 +3,18 @@ package cbse.EcoMap.model;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import java.time.Instant;
+import java.util.Set;
+import java.util.HashSet;
 
 import jakarta.persistence.*;
 
 @Data
 @Builder  
 @NoArgsConstructor 
+@AllArgsConstructor
 @Entity
 @Table(name = "users")
 public class User {
@@ -36,14 +40,16 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "team_id")
     private Team team;
-
-    // Manually create a constructor with the necessary fields
-    public User(Long id, Instant date_created, String name, String email, Country country, Team team) {
-        this.id = id;
-        this.date_created = date_created;
-        this.name = name;
-        this.email = email;
-        this.country = country;
-        this.team = team;
-    }
+    
+    @ManyToMany
+    @JoinTable(
+        name = "user_cleanups",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "cleanup_id")
+    )
+    private Set<Cleanup> cleanups;
+    
+    @Builder.Default
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<UserTeam> userTeams = new HashSet<>();
 }

@@ -1,8 +1,9 @@
 package cbse.EcoMap.model;
 
-import lombok.Builder;
 import lombok.Data;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
@@ -12,7 +13,9 @@ import java.time.Instant;
 import java.util.Set;
 
 @Data
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @RequiredArgsConstructor
 @Entity
 @Table(name = "teams")
@@ -23,16 +26,15 @@ public class Team {
     private Long id;
     @NonNull
     private String name;
-    private String country;
+    private String logo; 
+    private Boolean isPublic; 
+    @Builder.Default
     private Instant date_created = Instant.now();
-
+    
+    @ManyToOne
+    @JoinColumn(name = "country_id")
+    private Country country;
 
     @OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
     private Set<UserTeam> userTeams;
-
-    
-    public Team(String name, String country) {
-        this.name = name;
-        this.country = country;
-    }
 }
