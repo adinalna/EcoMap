@@ -33,6 +33,8 @@ public class Litter {
 
     private String title;
     private String description;
+    private String media;
+    private String media_type;
 
     @ManyToOne
     @JoinColumn(name = "user_id") // This is the foreign key column
