@@ -10,16 +10,21 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.39.0",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.15.0",
+    "@mui/joy": "^5.0.0-beta.18",
+    "@mui/material": "^5.15.0",
     "@react-google-maps/api": "^2.19.2",
+    "@supabase/supabase-js": "^2.39.0",
     "axios": "^1.6.2",
     "bootstrap": "^5.3.2",
     "react": "^18.2.0",
     "react-bootstrap": "^2.9.1",
     "react-dom": "^18.2.0",
+    "react-modal": "^3.16.1",
     "react-router-dom": "^6.20.1",
-    "uuid": "^9.0.1",
-    "react-modal": "^3.16.1"
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.37",
