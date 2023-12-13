@@ -7,6 +7,7 @@ import Signup from "../src/views/Signup.jsx";
 import NotFound from "../src/views/NotFound.jsx";
 import About from "./views/About.jsx";
 import Upload from "./views/Upload.jsx";
+import Cleanup from "./views/Cleanup.jsx";
 
 const router = createBrowserRouter([
     {
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
                         path: '/upload',
                         element: <Upload />
                     },
+                    {
+                        path: '/cleanup',
+                        element: <Cleanup />
+                    }
                 ]
             },
             {
