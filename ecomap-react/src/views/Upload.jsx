@@ -1,63 +1,102 @@
 import React, { useState } from "react";
-import { Form, Button, Image } from "react-bootstrap";
-import UploadMedia from "../components/Common/uploadMedia";
+import { Form, Button, ListGroup } from "react-bootstrap";
+import MediaUpload from "../components/Common/MediaUpload.jsx"; 
 import axiosClient from "../axios-client.js";
-import LitterList from "../components/Pages/Litter/LitterList.jsx";
 
 export default function Upload() {
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [mediaUrl, setMediaUrl] = useState(`${import.meta.env.VITE_APP_SUPABASE_STORAGE_BUCKET_URL}/litter/411a0083-ad1c-4c5f-acde-a9e2c3c6e453.mp4`);
+  const [selectedFiles, setSelectedFiles] = useState([]);
+  const [uploadedFiles, setUploadedFiles] = useState([]);
+  const [filesToBeUploaded, setFilesToBeUploaded] = useState(true);
+  const [showUploadButton, setShowUploadButton] = useState(true);
 
   const handleFileChange = (e) => {
-    setSelectedFile(e.target.files[0]);
+    const files = Array.from(e.target.files);
+    setSelectedFiles((prevFiles) => [...prevFiles, ...files]);
   };
 
-  const handleUploadComplete = ({ uploadSuccess, fileName }) => {
-    console.log("Upload success:", uploadSuccess);
-    if (uploadSuccess) {
-      console.log("File Name:", fileName);
-      const supabaseStorageMediaUrl = `${import.meta.env.SUPABASE_STORAGE_BUCKET_URL}/${fileName}`;
-      console.log("URL", supabaseStorageMediaUrl);
-      setMediaUrl(supabaseStorageMediaUrl);
+  const removeFile = (file) => {
+    const updatedFiles = selectedFiles.filter((selectedFile) => selectedFile !== file);
+    setSelectedFiles(updatedFiles);
+  };
 
-      // axiosClient.post('/upload', payload)
-      //   .then(({ data }) => {
+  const handleUploadComplete = ({ overallUploadSuccess, fileResults }) => {
+    console.log("Upload success:", overallUploadSuccess);
 
-      //   })
-      //   .catch((err) => {
-      //     const response = err.response;
-      //     if (response && response.status === 422) {
-      //       setErrors(response.data.message)
-      //     }
-      //   })
-    };
-  }
+    if (overallUploadSuccess) {
+      setUploadedFiles((prevFiles) => [...prevFiles, ...fileResults]);
+      setFilesToBeUploaded(false);
+      setShowUploadButton(false);
+    }
+  };
 
+  const openFileDialog = () => {
+    // Trigger the file input dialog
+    document.getElementById("fileInput").click();
+  };
+
+  const uploadMoreFiles = () => {
+    setSelectedFiles([]);
+    setUploadedFiles([])
+    setFilesToBeUploaded(true);
+    setShowUploadButton(true);
+  };
 
   return (
     <div>
       <h1>File Uploader</h1>
       <Form>
-        <Form.Group controlId="formFile" className="mb-3">
-          <Form.Label>Choose a file</Form.Label>
-          <Form.Control type="file" onChange={handleFileChange} />
-        </Form.Group>
+        {filesToBeUploaded && (
+          <Button variant="primary" onClick={openFileDialog}>
+            Choose File
+          </Button>
+        )}
 
-        <UploadMedia
-          selectedFile={selectedFile}
-          pathFolder="litter"
-          onUploadComplete={handleUploadComplete}
-          customButton={({ onUpload }) => (
-            <Button variant="primary" onClick={onUpload}>
-              Upload
-            </Button>
-          )}
+        <input
+          type="file"
+          id="fileInput"
+          style={{ display: "none" }}
+          onChange={handleFileChange}
+          multiple
         />
-        {/* {mediaUrl &&
-          <video height="380px" controls>
-            <source src={mediaUrl} type="video/mp4" />
-          </video>} */}
+
+        {/* Display selected files list */}
+        {filesToBeUploaded && selectedFiles.length > 0 && (
+          <ListGroup>
+            {selectedFiles.map((file, index) => (
+              <ListGroup.Item key={index}>
+                {file.name}
+                <Button variant="danger" size="sm" onClick={() => removeFile(file)}>
+                  Remove
+                </Button>
+              </ListGroup.Item>
+            ))}
+          </ListGroup>
+        )}
+
+        {filesToBeUploaded && showUploadButton && selectedFiles.length > 0 && (
+          <MediaUpload
+            selectedFiles={selectedFiles}
+            pathFolder="litter"
+            onUploadComplete={handleUploadComplete}
+            customButton={({ onUpload, overallUploadSuccess, fileNames }) => (
+              <Button variant="primary" onClick={onUpload}>
+                Upload Selected Files
+              </Button>
+            )}
+          />
+        )}
+
+        {/* Display uploaded files */}
+        {uploadedFiles.map((file, index) => (
+          <p key={index}>{file.fileName}</p>
+        ))}
+
+        {!filesToBeUploaded && (
+          <Button variant="primary" onClick={uploadMoreFiles}>
+            Upload More Files
+          </Button>
+        )}
       </Form>
     </div>
   );
-};
+}

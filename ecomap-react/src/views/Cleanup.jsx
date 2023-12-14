@@ -1,8 +1,6 @@
-// Cleanup.js
-
 import React, { useState } from 'react';
 import Modal from 'react-modal';
-import Maps from './Maps'; // Update the path as needed
+import Maps from '../components/Pages/Cleanup/Maps'; // Update the path as needed
 import '../style.css';
 
 const Cleanup = () => {
