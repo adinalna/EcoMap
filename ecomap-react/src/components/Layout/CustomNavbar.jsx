@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Navbar, Nav, Container, NavDropdown, Row } from 'react-bootstrap';
-import EcoMapLogo from '../../../public/ecomap.svg';
+import EcoMapLogo from '/ecomap.svg';
 
 export default function CustomNavbar({ user, token }) {
 
