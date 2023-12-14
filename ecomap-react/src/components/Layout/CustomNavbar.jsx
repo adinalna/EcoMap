@@ -1,12 +1,22 @@
 import React from 'react';
 import { Button, Navbar, Nav, Container, NavDropdown, Row } from 'react-bootstrap';
+import EcoMapLogo from '../../../public/ecomap.svg';
 
 export default function CustomNavbar({ user, token }) {
 
   return (
     <Navbar expand="lg" className="bg-body-tertiary" data-bs-theme="dark">
       <Container fluid>
-        <Navbar.Brand href="#" className="ms-2">EcoMap</Navbar.Brand>
+        <Navbar.Brand href="#" className="ms-2">
+          <img
+            alt="EcoMap Logo"
+            src={EcoMapLogo}
+            width="30"
+            height="30"
+            className="d-inline-block align-top"
+          />
+          {" EcoMap"}
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav
