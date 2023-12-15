@@ -33,10 +33,14 @@ export default function CustomNavbar({ user, token }) {
             <Nav.Link className="me-2" href="/Login">Login</Nav.Link>
             <Nav.Link className="me-2" href="/signup">Signup</Nav.Link>
             <Nav.Link className="me-2" href="/upload">Upload</Nav.Link>
-            <Nav.Link className="me-2" href="/litter">Litter</Nav.Link>
             <Row className="d-flex flex-row align-items-center">
-              <NavDropdown title="More" className="me-2">
-                <NavDropdown.Item href="/tag">Tag Litter</NavDropdown.Item>
+              <NavDropdown align="end" title="Tag Litter" className="me-2">
+                <NavDropdown.Item href="/litter">Personal</NavDropdown.Item>
+                <NavDropdown.Item href="/litter">All</NavDropdown.Item>
+              </NavDropdown>
+            </Row>
+            <Row className="d-flex flex-row align-items-center">
+              <NavDropdown align="end" title="More" className="me-2">
                 <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
                 <NavDropdown.Item href="/teams">Teams</NavDropdown.Item>
                 <NavDropdown.Item href="/settings">Settings</NavDropdown.Item>

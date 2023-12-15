@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Form, Button, ListGroup, Card, Table, Badge } from "react-bootstrap";
+import { Form, Button, ListGroup, Card, Table, Badge, Nav } from "react-bootstrap";
 import MediaUpload from "../components/Common/MediaUpload.jsx";
 import axiosClient from "../axios-client.js";
+import { Upload as UploadIcon, Images } from 'react-bootstrap-icons'
 
 export default function Upload() {
   const [selectedFiles, setSelectedFiles] = useState([]);
@@ -54,11 +55,11 @@ export default function Upload() {
   };
 
   return (
-    <div className="default-container" style={{ margin: "10px", }}>
+    <div className="default-container" style={{ margin: "15px", }}>
       <h1>Upload Litter</h1>
       <Form>
         <Card className="custom-card"
-          style={{ width: "715px", height: "500px", backgroundColor: "" }}>
+          style={{ width: "715px", height: "450px", backgroundColor: "" }}>
           <input
             type="file"
             id="fileInput"
@@ -68,10 +69,10 @@ export default function Upload() {
           />
           {filesToBeUploaded && (
             <Button variant="dark" onClick={openFileDialog} style={{ width: "400px", height: "50px" }}>
-              Select Media Files
+              Select Media Files <Images className="ml-4" size={18} />
             </Button>
           )}
-          <Card body className="default-card" style={{ width: "600px", height: "400px", overflowY: 'auto', overflowX: 'hidden' }}>
+          <Card body className="default-card" style={{ width: "600px", height: "350px", overflowY: 'auto', overflowX: 'hidden' }}>
             {/* Display selected files list */}
             {filesToBeUploaded && selectedFiles.length > 0 && (
               <Table>
@@ -92,11 +93,11 @@ export default function Upload() {
               <Table>
                 <tbody>
                   {uploadedFiles.map((file, index) => (
-                      <tr key={index} className="border-top">
-                        <td style={{ width: '5%' }}>{`${index + 1}. `}</td>
-                        <td style={{ width: '95%' }}>{file.fileName}</td>
-                        <td style={{ width: '5%' }}><Badge bg={file.uploadSuccess ? "success" : "danger"}>{file.uploadSuccess ? "Success" : "Failed"}</Badge></td>
-                      </tr>
+                    <tr key={index} className="border-top">
+                      <td style={{ width: '5%' }}>{`${index + 1}. `}</td>
+                      <td style={{ width: '95%' }}>{file.fileName}</td>
+                      <td style={{ width: '5%' }}><Badge bg={file.uploadSuccess ? "success" : "danger"}>{file.uploadSuccess ? "Success" : "Failed"}</Badge></td>
+                    </tr>
                   ))}
                 </tbody>
               </Table>
@@ -109,7 +110,7 @@ export default function Upload() {
               onUploadComplete={handleUploadComplete}
               customButton={({ onUpload, overallUploadSuccess, fileNames }) => (
                 <Button variant="success" onClick={onUpload}>
-                  Upload Selected Files
+                  Upload Selected Files <UploadIcon className="ml-4" size={18} />
                 </Button>
               )}
             />
@@ -122,6 +123,11 @@ export default function Upload() {
           )}
         </Card>
       </Form>
+      <Nav.Link className="me-2" href="/litter">
+        <Button variant="dark" style={{ margin: "30px 0px", height: "60px", width: "300px" }}>
+          Tag Your Litters Here !
+        </Button>
+      </Nav.Link>
     </div>
   );
 }
