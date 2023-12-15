@@ -14,13 +14,13 @@ export default function Litter() {
           type: 'video', 
           src: `${import.meta.env.VITE_APP_SUPABASE_STORAGE_BUCKET_URL}/litter/8284c060-33b6-473a-8c05-41568df93763.mp4`
         },
-        { 
-          type: 'video', 
-          src: 'https://assets.codepen.io/6093409/river.mp4'
-        },
         {
           type: 'image',
           src: 'https://images.unsplash.com/photo-1502657877623-f66bf489d236?auto=format&fit=crop&w=800'
+        },
+        { 
+          type: 'video', 
+          src: `${import.meta.env.VITE_APP_SUPABASE_STORAGE_BUCKET_URL}/litter/8284c060-33b6-473a-8c05-41568df93763.mp4`
         },
       ]
     },
