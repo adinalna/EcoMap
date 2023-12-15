@@ -6,13 +6,38 @@ import { Chip, Autocomplete, TextField, ToggleButtonGroup, ToggleButton } from '
 
 export default function Litter() {
   const [mediaListType, setMediaListType] = useState('All');
-  const mediaList = [
-    { type: 'image', src: 'https://images.unsplash.com/photo-1502657877623-f66bf489d236?auto=format&fit=crop&w=800', caption: 'test' },
-    { type: 'video', src: 'https://assets.codepen.io/6093409/river.mp4', caption: 'test' },
-    { type: 'video', src: 'https://assets.codepen.io/6093409/river.mp4', caption: 'test' },
-    { type: 'video', src: 'https://assets.codepen.io/6093409/river.mp4', caption: 'test' },
-    { type: 'video', src: `${import.meta.env.VITE_APP_SUPABASE_STORAGE_BUCKET_URL}/litter/8284c060-33b6-473a-8c05-41568df93763.mp4`, caption: 'test' },
-  ];
+  const litterList = [
+    {
+      title: "Litter 1",
+      medias: [
+        { 
+          type: 'video', 
+          src: `${import.meta.env.VITE_APP_SUPABASE_STORAGE_BUCKET_URL}/litter/8284c060-33b6-473a-8c05-41568df93763.mp4`
+        },
+        {
+          type: 'image',
+          src: 'https://images.unsplash.com/photo-1502657877623-f66bf489d236?auto=format&fit=crop&w=800'
+        },
+        { 
+          type: 'video', 
+          src: `${import.meta.env.VITE_APP_SUPABASE_STORAGE_BUCKET_URL}/litter/8284c060-33b6-473a-8c05-41568df93763.mp4`
+        },
+      ]
+    },
+    {
+      title: "litter 2",
+      medias: [
+        {
+          type: 'image',
+          src: 'https://images.unsplash.com/photo-1502657877623-f66bf489d236?auto=format&fit=crop&w=800'
+        },
+        { 
+          type: 'video', 
+          src: 'https://assets.codepen.io/6093409/river.mp4'
+        },
+      ]
+    }
+  ];  
 
   const tags = [
     { tag: 'paper', },
@@ -70,7 +95,7 @@ export default function Litter() {
         />
         <Button variant="dark">Search</Button>
       </div>
-      <LitterList mediaList={mediaList} />
+      <LitterList litterList={litterList} />
     </div >
   );
 };

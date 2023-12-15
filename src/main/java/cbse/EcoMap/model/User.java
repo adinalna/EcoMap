@@ -37,13 +37,21 @@ public class User {
     @JoinColumn(name = "country_id")
     private Country country;
 
-    @ManyToOne
-    @JoinColumn(name = "team_id")
-    private Team team;
+    @ManyToMany
+    @JoinTable(
+        name = "user_team",
+        joinColumns = @JoinColumn(name = "user_id"), 
+        inverseJoinColumns = @JoinColumn(name = "team_id") 
+    )
+    private Set<Team> teams; 
+    
+    @Builder.Default
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<UserTeam> userTeams = new HashSet<>();
     
     @ManyToMany
     @JoinTable(
-        name = "user_cleanups",
+        name = "user_cleanup",
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "cleanup_id")
     )
@@ -51,5 +59,5 @@ public class User {
     
     @Builder.Default
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private Set<UserTeam> userTeams = new HashSet<>();
+    private Set<UserCleanup> userCleanups = new HashSet<>();
 }

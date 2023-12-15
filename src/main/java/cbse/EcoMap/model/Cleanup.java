@@ -8,7 +8,6 @@ import lombok.AllArgsConstructor;
 import jakarta.persistence.*;
 
 import java.time.Instant;
-import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -30,6 +29,6 @@ public class Cleanup {
     private Boolean isPublic;
     private Instant date_created = Instant.now();
 
-    @ManyToMany(mappedBy = "cleanups")
-    private Set<User> users = new HashSet<>();
+    @OneToMany(mappedBy = "cleanup", cascade = CascadeType.ALL)
+    private Set<UserCleanup> userCleanups;
 }

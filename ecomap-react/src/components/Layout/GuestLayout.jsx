@@ -4,11 +4,13 @@ import { useStateContext } from "../../contexts/UserProvider";
 
 export default function GuestLayout() {
 
-    const {token} = useStateContext();
-    if(token){
+    const { token } = useStateContext();
+    if (token) {
         return <Navigate to="/" />
     }
     return (
-        <Outlet />
+        <div>
+            <Outlet />
+        </div>
     );
 }

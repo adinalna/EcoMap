@@ -12,7 +12,7 @@ export default function DefaultLayout() {
         content = <Navigate to="/login" />;
     } else {
         content = (
-            <div className="defaultLayout">
+            <div>
                <Outlet />
             </div>
         );

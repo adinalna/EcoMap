@@ -12,6 +12,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 import java.time.Instant;
@@ -27,18 +28,18 @@ public class Litter {
     @Id
     @GeneratedValue
     private Long id;
+    
+    private Boolean picked_up;
 
     @Builder.Default
     private Instant date_created = Instant.now();
 
-    private String title;
-    private String description;
-    private String media;
-    private String media_type;
-
     @ManyToOne
-    @JoinColumn(name = "user_id") // This is the foreign key column
+    @JoinColumn(name = "user_id") 
     private User user;
+    
+    @OneToMany(mappedBy = "litter")
+    private Set<Media> media;
 
     @ManyToMany
     @JoinTable(
