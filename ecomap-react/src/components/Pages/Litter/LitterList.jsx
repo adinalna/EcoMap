@@ -114,16 +114,16 @@ export default function LitterList({ litterList }) {
                   right: 0,
                   padding: 2,
                   display: 'flex',
-                  flexDirection: 'column',
+                  flexDirection: 'column-reverse',
                   justifyContent: 'space-between',
                   alignItems: 'right',
                   width: '100%',
                   height: '100%',
                 }}
               >
-                <p
+                {/* <p
                   style={{ color: '#fff' }}
-                >{`1/${litter.medias.length}`}</p>
+                >{`1/${litter.medias.length}`}</p> */}
                 <div
                   style={{
                     width: '100%',

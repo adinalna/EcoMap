@@ -3,6 +3,8 @@ import { Form, Button, ListGroup, Card, Table, Badge, Nav } from "react-bootstra
 import MediaUpload from "../components/Common/MediaUpload.jsx";
 import axiosClient from "../axios-client.js";
 import { Upload as UploadIcon, Images } from 'react-bootstrap-icons'
+import checkGeotag from "../checkGeotag.js";
+import { formatPostcssSourceMap } from "vite";
 
 export default function Upload() {
   const [selectedFiles, setSelectedFiles] = useState([]);
@@ -20,30 +22,49 @@ export default function Upload() {
     setSelectedFiles(updatedFiles);
   };
 
+  const handlePreUpload = async (onUpload) => {
+    try {
+      const geotagChecks = await Promise.all(selectedFiles.map(checkGeotag));
+      const allFilesGeotagged = geotagChecks.every((result) => result);
+
+      if (allFilesGeotagged) {
+        onUpload();
+      } else {
+        alert("Please make sure all selected files are geotagged before uploading.");
+      }
+    } catch (error) {
+      console.error("Error checking geotags:", error.message);
+    }
+  };
+
   const handleUploadComplete = ({ overallUploadSuccess, fileResults }) => {
     console.log("Upload success:", overallUploadSuccess);
-    console.log("Upload success 1:", fileResults[0].uploadSuccess);
 
-    if (overallUploadSuccess) {
-      setUploadedFiles((prevFiles) => [...prevFiles, ...fileResults]);
-      setFilesToBeUploaded(false);
-      setShowUploadButton(false);
+    setFilesToBeUploaded(false);
+    setShowUploadButton(false);
 
-      // axiosClient.post('/upload', payload)
-      // .then(({ data }) => {
+    const successfulUploads = fileResults.filter((fileResult) => fileResult.uploadSuccess);
 
-      // })
-      // .catch((err) => {
-      //   const response = err.response;
-      //   if (response && response.status === 422) {
-      //     setErrors(response.data.message)
-      //   }
-      // })
+    setUploadedFiles(fileResults);
+
+
+    if (successfulUploads.length > 0) {
+      axiosClient.post('/media/batch', successfulUploads)
+        .then(({ data }) => {
+        })
+        .catch((err) => {
+          console.error("Error in batch upload:", err);
+
+          const response = err.response;
+          if (response && response.status === 422) {
+            setErrors(response.data.message);
+          } else {
+          }
+        });
     }
   };
 
   const openFileDialog = () => {
-    // Trigger the file input dialog
     document.getElementById("fileInput").click();
   };
 
@@ -56,7 +77,7 @@ export default function Upload() {
 
   return (
     <div className="default-container" style={{ margin: "15px", }}>
-      <h1>Upload Litter</h1>
+      <h1>Upload Media</h1>
       <Form>
         <Card className="custom-card"
           style={{ width: "715px", height: "450px", backgroundColor: "" }}>
@@ -108,11 +129,15 @@ export default function Upload() {
               selectedFiles={selectedFiles}
               pathFolder="litter"
               onUploadComplete={handleUploadComplete}
-              customButton={({ onUpload, overallUploadSuccess, fileNames }) => (
-                <Button variant="success" onClick={onUpload}>
+              customButton={({ onPreUpload, onUpload }) => (
+                <Button
+                  variant="success"
+                  onClick={() => (onPreUpload ? onPreUpload(onUpload) : onUpload())}
+                >
                   Upload Selected Files <UploadIcon className="ml-4" size={18} />
                 </Button>
               )}
+              onPreUpload={handlePreUpload}
             />
           )}
 

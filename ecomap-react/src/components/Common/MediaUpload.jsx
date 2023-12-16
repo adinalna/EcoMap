@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import supabase from '../../supabase.js';
 import { v4 as uuidv4 } from 'uuid';
 
-const MediaUpload = ({ selectedFiles, pathFolder, onUploadComplete, customButton }) => {
+const MediaUpload = ({ selectedFiles, pathFolder, onUploadComplete, customButton, onPreUpload }) => {
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const [fileResults, setFileResults] = useState([]);
 
@@ -21,6 +21,7 @@ const MediaUpload = ({ selectedFiles, pathFolder, onUploadComplete, customButton
 
           const uploadResult = {
             fileName: selectedFile.name,
+            fileType: getFileType(fileExtension),
             uploadFileName: newFileName,
             uploadSuccess: !error,
           };
@@ -68,12 +69,23 @@ const MediaUpload = ({ selectedFiles, pathFolder, onUploadComplete, customButton
     }
   };
 
+  const getFileType = (fileExtension) => {
+    // Map file extensions to media types
+    const mediaTypeMap = {
+      '.png': 'image',
+      '.jpeg': 'image',
+      '.jpg': 'image',
+      '.mp4': 'video',
+    };
+
+    return mediaTypeMap[fileExtension] || 'unknown';
+  };
+
   return (
     <div>
       {customButton && customButton({
-        onUpload: () => {
-          handleUpload();
-        },
+        onPreUpload: onPreUpload,
+        onUpload: handleUpload,
         uploadSuccess,
         fileResults,
       })}
