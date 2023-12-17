@@ -27,6 +27,12 @@ public class Media {
     
     @Column(name = "media_type") 
     private String mediaType;
+    
+    @Column(name = "location_x") 
+    private double locationX;
+    
+    @Column(name = "location_y") 
+    private double locationY;
 
     @ManyToOne(optional = true) 
     @JoinColumn(name = "litter_id")
