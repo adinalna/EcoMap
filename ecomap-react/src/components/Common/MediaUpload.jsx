@@ -7,6 +7,7 @@ const MediaUpload = ({ selectedFiles, pathFolder, onUploadComplete, customButton
   const [fileResults, setFileResults] = useState([]);
 
   const handleUpload = async () => {
+    console.log(selectedFiles);
     if (selectedFiles && selectedFiles.length > 0 && supabase) {
       try {
         const uploadResults = [];
@@ -24,6 +25,7 @@ const MediaUpload = ({ selectedFiles, pathFolder, onUploadComplete, customButton
             fileType: getFileType(fileExtension),
             uploadFileName: newFileName,
             uploadSuccess: !error,
+            file: selectedFile
           };
 
           if (error) {
@@ -70,7 +72,6 @@ const MediaUpload = ({ selectedFiles, pathFolder, onUploadComplete, customButton
   };
 
   const getFileType = (fileExtension) => {
-    // Map file extensions to media types
     const mediaTypeMap = {
       '.png': 'image',
       '.jpeg': 'image',

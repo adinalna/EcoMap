@@ -4,7 +4,7 @@ import MediaUpload from "../components/Common/MediaUpload.jsx";
 import axiosClient from "../axios-client.js";
 import { Upload as UploadIcon, Images } from 'react-bootstrap-icons'
 import checkGeotag from "../checkGeotag.js";
-import { formatPostcssSourceMap } from "vite";
+import appendGeotag from "../appendGeotag.js";
 
 export default function Upload() {
   const [selectedFiles, setSelectedFiles] = useState([]);
@@ -16,7 +16,7 @@ export default function Upload() {
     const files = Array.from(e.target.files);
     setSelectedFiles((prevFiles) => [...prevFiles, ...files]);
   };
-
+  
   const removeFile = (file) => {
     const updatedFiles = selectedFiles.filter((selectedFile) => selectedFile !== file);
     setSelectedFiles(updatedFiles);
@@ -37,7 +37,7 @@ export default function Upload() {
     }
   };
 
-  const handleUploadComplete = ({ overallUploadSuccess, fileResults }) => {
+  const handleUploadComplete = async ({ overallUploadSuccess, fileResults }) => {
     console.log("Upload success:", overallUploadSuccess);
 
     setFilesToBeUploaded(false);
@@ -45,22 +45,21 @@ export default function Upload() {
 
     const successfulUploads = fileResults.filter((fileResult) => fileResult.uploadSuccess);
 
+    const geotaggedUploads = await appendGeotag(successfulUploads);
+
+    console.log("geotaggedUploads", geotaggedUploads);
+
     setUploadedFiles(fileResults);
 
+    if (geotaggedUploads.length > 0) {
+      const payload = geotaggedUploads.map((upload) => ({
+        path: upload.uploadFileName,
+        mediaType: upload.fileType,
+        locationX: upload.location_x,
+        locationY: upload.location_y,
+      }));      
 
-    if (successfulUploads.length > 0) {
-      axiosClient.post('/media/batch', successfulUploads)
-        .then(({ data }) => {
-        })
-        .catch((err) => {
-          console.error("Error in batch upload:", err);
-
-          const response = err.response;
-          if (response && response.status === 422) {
-            setErrors(response.data.message);
-          } else {
-          }
-        });
+      console.log("payload", payload);
     }
   };
 
