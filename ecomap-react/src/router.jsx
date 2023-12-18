@@ -9,6 +9,8 @@ import About from "./views/About.jsx";
 import Upload from "./views/Upload.jsx";
 import Cleanup from "./views/Cleanup.jsx";
 import Litter from "./views/Litter.jsx";
+import CreateTeam from "./views/CreateTeam.jsx";
+import JoinTeam from "./views/JoinTeam.jsx";
 
 const router = createBrowserRouter([
     {
@@ -30,6 +32,14 @@ const router = createBrowserRouter([
                     {
                         path: '/cleanup',
                         element: <Cleanup />
+                    },
+                    {
+                        path: '/createTeam',
+                        element: <CreateTeam />
+                    },
+                    {
+                        path: '/joinTeam',
+                        element: <JoinTeam />
                     }
                 ]
             },
