@@ -11,9 +11,6 @@ import cbse.EcoMap.model.User;
 
 public class UserDetailsImpl implements UserDetails {
 
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private Long id;
     private String name;
@@ -56,8 +53,29 @@ public class UserDetailsImpl implements UserDetails {
     public String getUsername() {
         return email; 
     }
+    
 
-    public Long getId() {
+    public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Long getId() {
         return id;
     }
 
@@ -81,4 +99,3 @@ public class UserDetailsImpl implements UserDetails {
         return true;
     }
 }
-

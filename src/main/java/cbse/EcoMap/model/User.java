@@ -63,4 +63,7 @@ public class User {
     @Builder.Default
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<UserCleanup> userCleanups = new HashSet<>();
+    
+    @OneToMany(mappedBy = "user")
+    private Set<Litter> litters;
 }

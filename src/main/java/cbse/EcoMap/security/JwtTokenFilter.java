@@ -36,12 +36,10 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     }
 
     private String extractToken(HttpServletRequest request) {
-        // Extract token from the request (e.g., from Authorization header)
-        // Modify this part based on how you send and receive tokens in your application
-        // For example, if you use the "Authorization" header, you can extract it like this:
         String bearerToken = request.getHeader("Authorization");
 
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+        	System.out.print(bearerToken);
             return bearerToken.substring(7);
         }
 

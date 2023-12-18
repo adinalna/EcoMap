@@ -26,7 +26,7 @@ public class MediaService {
         if (isValidMedia(media)) {
             if (media.getLitter() == null) {
                 // If litter is not provided, create a new one
-                Litter newLitter = litterService.createLitter(new Litter()); 
+                Litter newLitter = litterService.createLitter(); 
                 media.setLitter(newLitter);
             }
             return mediaRepository.save(media);
@@ -43,7 +43,7 @@ public class MediaService {
         // If litter is not provided, create a new one for each media
         mediaList.forEach(media -> {
             if (media.getLitter() == null) {
-                Litter newLitter = litterService.createLitter(new Litter()); // Assuming createLitter is implemented in LitterService
+                Litter newLitter = litterService.createLitter(); // Assuming createLitter is implemented in LitterService
                 media.setLitter(newLitter);
             }
         });
@@ -55,4 +55,5 @@ public class MediaService {
         return !ObjectUtils.isEmpty(media.getPath()) &&
                !ObjectUtils.isEmpty(media.getMediaType());
     }
+    
 }

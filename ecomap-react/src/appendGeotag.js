@@ -8,8 +8,8 @@ const appendGeotag = async (uploads) => {
         const exifData = await exifr.parse(file);
         const updatedUpload = {
           ...upload,
-          location_x: exifData?.longitude || 0,
-          location_y: exifData?.latitude || 0,
+          locationX: exifData?.longitude || 0,
+          locationY: exifData?.latitude || 0,
         };
         return updatedUpload;
       })

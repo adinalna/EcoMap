@@ -23,8 +23,8 @@ public class Cleanup {
 
     @NonNull
     private String name;
-    private int location_x;
-    private int location_y;
+    private String location_x;
+    private String location_y;
     private String image;
     private Boolean isPublic;
     private Instant date_created = Instant.now();

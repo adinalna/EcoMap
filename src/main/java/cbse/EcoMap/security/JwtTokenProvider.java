@@ -9,13 +9,10 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.annotation.PostConstruct;
 import java.util.Date;
-
-import cbse.EcoMap.security.UserDetailsServiceImpl;
 
 @PropertySource("classpath:application.properties")
 @Component
@@ -40,6 +37,23 @@ public class JwtTokenProvider {
     }
 
     public String createToken(Long userId, String name, String email) {
+        return Jwts.builder()
+                .setSubject(String.valueOf(userId))
+                .claim("userId", userId)
+                .claim("name", name)
+                .claim("email", email)
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .signWith(Keys.hmacShaKeyFor(encodedSecretKey), SignatureAlgorithm.HS512)
+                .compact();
+    }
+    
+    public String createToken(Authentication authentication) {
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        
+        Long userId = userDetails.getId();
+        String name = userDetails.getName();
+        String email = userDetails.getEmail();
+
         return Jwts.builder()
                 .setSubject(String.valueOf(userId))
                 .claim("userId", userId)

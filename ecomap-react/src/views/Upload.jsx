@@ -55,8 +55,8 @@ export default function Upload() {
       const payload = geotaggedUploads.map((upload) => ({
         path: upload.uploadFileName,
         mediaType: upload.fileType,
-        locationX: upload.location_x,
-        locationY: upload.location_y,
+        locationX: upload.locationX,
+        locationY: upload.locationY,
       }));      
 
       console.log("payload", payload);
