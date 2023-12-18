@@ -68,5 +68,29 @@
     margin-left: 10px; /* Add margin to create space between the label and the select element */
     font-size: 20px; /* Adjust the font size as needed */
   }
+
+  /* Module World Cup */
+.section {
+  margin-top: 3%;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.title {
+  font-size: 75px;
+  font-weight: bolder;
+}
+
+.subtitle {
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.headerBoxes {
+  padding: 15px 20px 10px;
+
+}
+
+
   
   

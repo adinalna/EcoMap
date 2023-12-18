@@ -28,7 +28,7 @@ export default function CustomNavbar({ user, token }) {
             <Nav.Link className="me-2" href="/cleanup">Cleanup</Nav.Link>
             <Nav.Link className="me-2" href="/leaderboard">Leaderboards</Nav.Link>
             <Nav.Link className="me-2" href="/global">Global Map</Nav.Link>
-            <Nav.Link className="me-2" href="/world">World Cup</Nav.Link>
+            <Nav.Link className="me-2" href="/worldcup">World Cup</Nav.Link>
             <Nav.Link className="me-2" href="/community">Community</Nav.Link>
             <Nav.Link className="me-2" href="/Login">Login</Nav.Link>
             <Nav.Link className="me-2" href="/signup">Signup</Nav.Link>

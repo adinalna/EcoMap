@@ -9,6 +9,7 @@ import About from "./views/About.jsx";
 import Upload from "./views/Upload.jsx";
 import Cleanup from "./views/Cleanup.jsx";
 import Litter from "./views/Litter.jsx";
+import WorldCup from "./views/WorldCup.jsx";
 
 const router = createBrowserRouter([
     {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
                     {
                         path: '/cleanup',
                         element: <Cleanup />
+                    },
+                    {
+                        path: '/worldcup',
+                        element: <WorldCup />
                     }
                 ]
             },
