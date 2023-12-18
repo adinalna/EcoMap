@@ -16,7 +16,7 @@ export default function Upload() {
     const files = Array.from(e.target.files);
     setSelectedFiles((prevFiles) => [...prevFiles, ...files]);
   };
-  
+
   const removeFile = (file) => {
     const updatedFiles = selectedFiles.filter((selectedFile) => selectedFile !== file);
     setSelectedFiles(updatedFiles);
@@ -57,9 +57,21 @@ export default function Upload() {
         mediaType: upload.fileType,
         locationX: upload.locationX,
         locationY: upload.locationY,
-      }));      
+      }));
 
       console.log("payload", payload);
+      axiosClient.post('/media/batch', payload)
+        .then(({ data }) => {
+        })
+        .catch((err) => {
+          console.error("Error in batch upload:", err);
+
+          const response = err.response;
+          if (response && response.status === 422) {
+            setErrors(response.data.message);
+          } else {
+          }
+        });
     }
   };
 

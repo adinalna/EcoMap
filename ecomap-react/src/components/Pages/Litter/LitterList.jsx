@@ -155,8 +155,6 @@ export default function LitterList({ litterList }) {
       <LitterModal
         open={openModal}
         handleClose={handleCloseModal}
-        handlePrevImage={handlePrevImage}
-        handleNextImage={handleNextImage}
         currentIndex={currentIndex}
         modalContent={modalContent}
       />

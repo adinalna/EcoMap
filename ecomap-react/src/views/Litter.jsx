@@ -12,8 +12,8 @@ export default function Litter() {
       title: "Litter 1",
       medias: [
         {
-          type: 'video',
-          src: `${import.meta.env.VITE_APP_SUPABASE_STORAGE_BUCKET_URL}/litter/8284c060-33b6-473a-8c05-41568df93763.mp4`
+          type: 'image',
+          src: `${import.meta.env.VITE_APP_SUPABASE_STORAGE_BUCKET_URL}/litter/c27c25f9-d27b-4793-879c-4f20f747d122.jpeg`
         },
       ]
     },
@@ -50,25 +50,7 @@ export default function Litter() {
           gap: "5px",
           border: "1px solid #ebe6e6"
         }}>
-        {/* <ToggleButtonGroup
-          sx={{
-            backgroundColor: "#fff",
-            marginRight: "8px"
-          }}
-          value={litterTagging}
-          exclusive
-          onChange={(e, litterTagging) => setLitterTagging(litterTagging)}
-          aria-label="text alignment"
-          size="small"
-        >
-          <ToggleButton value="All" aria-label="centered">All</ToggleButton>
-          <ToggleButton value="Tagged" aria-label="centered">Tagged</ToggleButton>
-          <ToggleButton value="UnTagged" aria-label="centered">
-            UnTagged
-            <Badge badgeContent={4} color="error" sx={{ position: 'absolute', top: 0, right: 0 }}>
-            </Badge>
-          </ToggleButton>
-        </ToggleButtonGroup> */}
+
 
         <ToggleButtonGroup
           sx={{
