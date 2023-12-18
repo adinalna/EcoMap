@@ -5,6 +5,7 @@ import cbse.EcoMap.model.Litter;
 import cbse.EcoMap.repository.MediaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,7 +44,7 @@ public class MediaService {
         // If litter is not provided, create a new one for each media
         mediaList.forEach(media -> {
             if (media.getLitter() == null) {
-                Litter newLitter = litterService.createLitter(); // Assuming createLitter is implemented in LitterService
+                Litter newLitter = litterService.createLitter(); 
                 media.setLitter(newLitter);
             }
         });
@@ -51,9 +52,38 @@ public class MediaService {
         return mediaRepository.saveAll(mediaList);
     }
 
+    public List<Media> getAllMedia() {
+        return mediaRepository.findAll();
+    }
+
+    public Media getMediaById(Long id) {
+        Optional<Media> optionalMedia = mediaRepository.findById(id);
+        return optionalMedia.orElseThrow(() -> new IllegalArgumentException("Media not found with ID: " + id));
+    }
+    
+    public List<Media> getMediaByUserId(Long userId) {
+        return mediaRepository.findByUserId(userId);
+    }
+
+    public Media editMedia(Long id, Media updatedMedia) {
+        if (!mediaRepository.existsById(id)) {
+            throw new IllegalArgumentException("Media not found with ID: " + id);
+        }
+
+        updatedMedia.setId(id);
+        return mediaRepository.save(updatedMedia);
+    }
+
+    public void deleteMedia(Long id) {
+        if (!mediaRepository.existsById(id)) {
+            throw new IllegalArgumentException("Media not found with ID: " + id);
+        }
+
+        mediaRepository.deleteById(id);
+    }
+
     private boolean isValidMedia(Media media) {
         return !ObjectUtils.isEmpty(media.getPath()) &&
                !ObjectUtils.isEmpty(media.getMediaType());
     }
-    
 }

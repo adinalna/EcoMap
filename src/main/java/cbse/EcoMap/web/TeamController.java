@@ -1,4 +1,4 @@
-package cbse.EcoMap.controller;
+package cbse.EcoMap.web;
 
 import cbse.EcoMap.model.Team;
 import cbse.EcoMap.repository.TeamRepository;

@@ -23,20 +23,22 @@ public class LitterService {
     }
 
     public Litter createLitter() {
-        Long currentUserId = 302L;
+        Long currentUserId = 302L;// for testing
         
         Litter litter = new Litter();
         litter.setUser(userRepository.findById(currentUserId).orElse(null));
         return litterRepository.save(litter);
     }
 
-//    private Long getCurrentUserId() {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        if (authentication != null && authentication.isAuthenticated()) {
-//            UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-//            return userDetails.getId();
-//        } else {
-//            throw new IllegalStateException("User not authenticated");
-//        }
-//    }
 }
+
+
+//private Long getCurrentUserId() {
+//Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//if (authentication != null && authentication.isAuthenticated()) {
+//  UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+//  return userDetails.getId();
+//} else {
+//  throw new IllegalStateException("User not authenticated");
+//}
+//}
