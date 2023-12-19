@@ -4,7 +4,7 @@ import axiosClient from "../axios-client.js";
 import LitterList from "../components/Pages/Litter/LitterList.jsx";
 import { Chip, Autocomplete, TextField, ToggleButtonGroup, ToggleButton, Badge } from '@mui/material';
 
-export default function Litter() {
+export default function LitterTag() {
   // const [litterTagging, setLitterTagging] = useState("All");
   const [litterPickedUp, setLitterPickedUp] = useState(null);
   const litterList = [
@@ -13,7 +13,7 @@ export default function Litter() {
       medias: [
         {
           type: 'image',
-          src: `${import.meta.env.VITE_APP_SUPABASE_STORAGE_BUCKET_URL}/litter/c27c25f9-d27b-4793-879c-4f20f747d122.jpeg`
+          src: `${import.meta.env.VITE_APP_SUPABASE_STORAGE_BUCKET_URL}litter/c27c25f9-d27b-4793-879c-4f20f747d122.jpeg`
         },
       ]
     },

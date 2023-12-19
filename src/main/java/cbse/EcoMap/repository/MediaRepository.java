@@ -8,5 +8,4 @@ import cbse.EcoMap.model.Media;
 
 @Repository
 public interface MediaRepository extends JpaRepository<Media, Long> {
-	List<Media> findByUserId(Long userId);
 }

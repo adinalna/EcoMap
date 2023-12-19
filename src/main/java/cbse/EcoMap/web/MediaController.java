@@ -65,18 +65,6 @@ public class MediaController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorResponse("Internal Server Error"));
         }
     }
-    
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<?> getMediaByUserId(@PathVariable Long userId) {
-        try {
-            List<Media> mediaList = mediaService.getMediaByUserId(userId);
-            return ResponseEntity.ok().body(mediaList);
-
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ErrorResponse("Internal Server Error"));
-        }
-    }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> editMedia(@PathVariable Long id, @RequestBody Media media) {

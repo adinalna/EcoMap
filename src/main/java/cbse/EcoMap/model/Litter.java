@@ -1,22 +1,16 @@
 package cbse.EcoMap.model;
 
+import com.fasterxml.jackson.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
 
 import java.time.Instant;
+import java.util.Objects;
 import java.util.Set;
+
+import jakarta.persistence.*;
 
 @Data
 @NoArgsConstructor
@@ -24,22 +18,24 @@ import java.util.Set;
 @Builder
 @Entity
 @Table(name = "litter")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Litter {
-    @Id
-    @GeneratedValue
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
-    @Column(nullable = false, columnDefinition = "boolean default false")  
-    private Boolean picked_up;
+
+    @Column(name = "picked_up", nullable = false, columnDefinition = "boolean default false")
+    private Boolean pickedUp;
 
     @Builder.Default
-    private Instant date_created = Instant.now();
+    @Column(name = "date_created")
+    private Instant dateCreated = Instant.now();
 
     @ManyToOne
-    @JoinColumn(name = "user_id") 
+    @JoinColumn(name = "user_id")
     private User user;
-    
-    @OneToMany(mappedBy = "litter")
+
+    @OneToMany(mappedBy = "litter", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Media> media;
 
     @ManyToMany
@@ -49,4 +45,17 @@ public class Litter {
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
     private Set<Tag> tags;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Litter litter = (Litter) o;
+        return Objects.equals(id, litter.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

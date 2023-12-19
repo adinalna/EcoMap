@@ -61,10 +61,6 @@ public class MediaService {
         return optionalMedia.orElseThrow(() -> new IllegalArgumentException("Media not found with ID: " + id));
     }
     
-    public List<Media> getMediaByUserId(Long userId) {
-        return mediaRepository.findByUserId(userId);
-    }
-
     public Media editMedia(Long id, Media updatedMedia) {
         if (!mediaRepository.existsById(id)) {
             throw new IllegalArgumentException("Media not found with ID: " + id);

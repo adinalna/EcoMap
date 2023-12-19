@@ -9,6 +9,8 @@ export default function LitterList({ litterList }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
 
+  const BUCKET_URL= import.meta.env.VITE_APP_SUPABASE_STORAGE_BUCKET_URL;
+
   const handleCardClick = (litter, index) => {
     setModalContent({ ...litter, index });
     setOpenModal(true);
@@ -66,7 +68,7 @@ export default function LitterList({ litterList }) {
                   >
                     {media.type === 'image' && (
                       <img
-                        src={media.src}
+                        src={`${BUCKET_URL}/${media.src}`}
                         loading="lazy"
                         alt=""
                         style={{
@@ -100,7 +102,7 @@ export default function LitterList({ litterList }) {
                           borderRadius: '5px',
                         }}
                       >
-                        <source src={media.src} type="video/mp4" />
+                        <source src={`${BUCKET_URL}/${media.src}`} type="video/mp4" />
                       </video>
                     )}
                   </div>
