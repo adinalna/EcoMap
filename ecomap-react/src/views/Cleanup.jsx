@@ -138,14 +138,42 @@ const Cleanup = () => {
         </Modal>
 
         <Modal
-          isOpen={joinModalIsOpen}
-          onRequestClose={closeModals}
-          contentLabel="Join Cleanup Modal"
-          className="cleanup-modal"
-        >
-          <h2>Join a Cleanup</h2>
-          {/* Add content for the Join Cleanup modal */}
-        </Modal>
+        isOpen={joinModalIsOpen}
+        onRequestClose={closeModals}
+        contentLabel="Join Cleanup Modal"
+        className="cleanup-modal"
+      >
+        <h2>Join a Cleanup</h2>
+        {/* Add content for the Join Cleanup modal */}
+        
+        {/* Example listing with dummy data */}
+        <table className="cleanup-listing">
+          <thead>
+            <tr>
+              <th>Event Name</th>
+              <th>Date</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Cleanup Event 1</td>
+              <td>2023-01-01</td>
+              <td>
+                <button onClick={() => handleJoinEvent(1)}>Join</button>
+              </td>
+            </tr>
+            <tr>
+              <td>Cleanup Event 2</td>
+              <td>2023-02-15</td>
+              <td>
+                <button onClick={() => handleJoinEvent(2)}>Join</button>
+              </td>
+            </tr>
+            {/* Add more rows with dummy data as needed */}
+          </tbody>
+        </table>
+      </Modal>
 
         
       </div>
