@@ -5,10 +5,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
 @Data
@@ -17,9 +22,11 @@ import jakarta.persistence.Table;
 @Builder
 @Entity
 @Table(name = "tag")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@SequenceGenerator(name = "tag_seq", sequenceName = "tag_id_seq", allocationSize = 1)
 public class Tag {
     @Id
-    @GeneratedValue
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tag_seq")
     private Long id;
 
     private String title;

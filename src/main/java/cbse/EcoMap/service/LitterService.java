@@ -29,7 +29,7 @@ public class LitterService {
     }
 
     public Litter createLitter() {
-        Long currentUserId = 302L; // for testing
+        Long currentUserId = 1L; // for testing
         
         Litter litter = new Litter();
         litter.setUser(userRepository.findById(currentUserId).orElse(null));

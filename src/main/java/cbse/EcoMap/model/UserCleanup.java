@@ -8,6 +8,9 @@ import lombok.NonNull;
 
 import java.time.Instant;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import jakarta.persistence.*;
 
 @Builder
@@ -16,10 +19,12 @@ import jakarta.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "user_cleanup")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@SequenceGenerator(name = "user_cleanup_seq", sequenceName = "user_cleanup_id_seq", allocationSize = 1)
 public class UserCleanup {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_cleanup_seq")
     private Long id;
 
     @NonNull

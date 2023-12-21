@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 import java.time.Instant;
 import java.util.Objects;
@@ -19,13 +20,28 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "litter")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@SequenceGenerator(name = "litter_seq", sequenceName = "litter_id_seq", allocationSize = 1)
 public class Litter {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "litter_seq")
     private Long id;
 
     @Column(name = "picked_up", nullable = false, columnDefinition = "boolean default false")
     private Boolean pickedUp;
+    
+    @ManyToOne
+    @JoinColumn(name = "country_id", nullable = true)
+    private Country country;
+
+    @Column(name = "state", nullable = true)
+    private String state;
+
+    @Column(name = "city", nullable = true)
+    private String city;
+
+    @Column(name = "postcode", nullable = true)
+    private String postcode;
+
 
     @Builder.Default
     @Column(name = "date_created")
