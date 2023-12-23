@@ -41,7 +41,12 @@ public class Litter {
 
     @Column(name = "postcode", nullable = true)
     private String postcode;
+    
+    @Column(name = "address", nullable = true, columnDefinition = "TEXT")
+    private String address;
 
+    @Column(name = "request_response", nullable = true, columnDefinition = "TEXT")
+    private String requestResponse;
 
     @Builder.Default
     @Column(name = "date_created")

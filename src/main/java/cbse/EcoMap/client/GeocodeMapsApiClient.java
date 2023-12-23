@@ -1,24 +1,22 @@
 package cbse.EcoMap.client;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-@PropertySource("classpath:application.properties")
 @Component
 public class GeocodeMapsApiClient {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GeocodeMapsApiClient.class);
 
-    @Value("${geocode.api.url}")
-    private String baseUrl;
+    private String baseUrl = "https://geocode.maps.co";
 
-    public void Reverse(double latitude, double longitude) {
+    public JsonNode Reverse(double latitude, double longitude) throws Exception {
         try {
             // Build the URL with endpoint and query parameters
             String apiUrl = UriComponentsBuilder.fromHttpUrl(baseUrl)
@@ -33,11 +31,19 @@ public class GeocodeMapsApiClient {
             if (response.getStatusCode().is2xxSuccessful()) {
                 String data = response.getBody();
                 LOGGER.info("Received data: {}", data);
+                ObjectMapper objectMapper = new ObjectMapper();
+                return objectMapper.readTree(data);
             } else {
                 LOGGER.error("Failed to fetch data. Status code: {}", response.getStatusCode());
+                throw new RuntimeException("Failed to fetch data. Status code: " + response.getStatusCode());
             }
         } catch (Exception e) {
             LOGGER.error("An error occurred during the API request", e);
+            throw e; // Rethrow the exception for higher-level error handling
         }
+    }
+
+    public String getBaseUrl() {
+        return baseUrl;
     }
 }
