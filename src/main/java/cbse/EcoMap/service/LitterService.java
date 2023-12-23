@@ -30,7 +30,6 @@ public class LitterService {
     private final UserRepository userRepository;
     private final CountryRepository countryRepository;
 
-
     @Autowired
     public LitterService(LitterRepository litterRepository, UserRepository userRepository, CountryRepository countryRepository) {
         this.litterRepository = litterRepository;
@@ -69,6 +68,7 @@ public class LitterService {
                 .postcode(getTextOrNull(jsonData.path("address"), "postcode"))
                 .country(getCountry(jsonData.path("address")))
                 .user(getUser(currentUserId))
+                .pickedUp(false)
                 .build();
 
         return litterRepository.save(litter);

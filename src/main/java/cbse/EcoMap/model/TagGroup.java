@@ -30,6 +30,7 @@ public class TagGroup {
     @Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tag_group_seq")
     private Long id;
+    
     private String title;
 
     @OneToMany(mappedBy = "tagGroup")

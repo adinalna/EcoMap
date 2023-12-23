@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -29,7 +30,11 @@ public class Tag {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tag_seq")
     private Long id;
 
-    private String title;
+    @Column(name = "title_key")
+    private String titleKey;
+    
+    @Column(name = "title_value")
+    private String titleValue;
 
     @ManyToOne
     private TagGroup tagGroup;

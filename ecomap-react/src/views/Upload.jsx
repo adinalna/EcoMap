@@ -15,14 +15,14 @@ export default function Upload() {
   const handleFileChange = (e) => {
     const files = Array.from(e.target.files);
   
-    if (selectedFiles.length === 2) {
+    if (selectedFiles.length >= 10) {
       alert('You can only upload up to 10 files.');
       e.target.value = null;
     } else {
       // Process the selected files
       setSelectedFiles((prevFiles) => [...prevFiles, ...files]);
     }
-  };
+  };  
   
   const removeFile = (file) => {
     const updatedFiles = selectedFiles.filter((selectedFile) => selectedFile !== file);
