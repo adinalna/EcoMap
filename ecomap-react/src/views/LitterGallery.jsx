@@ -69,7 +69,7 @@ export default function LitterGallery() {
       <h1>Litter Gallery</h1>
 
       <LitterFilter tags={tagData} onFilterChange={handleFilterChange} />
-      <LitterList litterList={filteredData} />
+      <LitterList litterList={filteredData} type={"gallery"} />
     </div>
   );
 }

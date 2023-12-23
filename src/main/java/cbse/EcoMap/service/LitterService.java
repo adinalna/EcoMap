@@ -102,8 +102,12 @@ public class LitterService {
         return litterRepository.findById(litterId);
     }
     
-    public List<Litter> getAllLittersByUserId(Long userId) {
-        return litterRepository.findAllByUserId(userId);
+    public List<LitterDto> getAllLittersByUserId(Long userId) {
+    	Sort sort = Sort.by(Sort.Direction.ASC, "dateCreated");
+    	List<Litter> litters = litterRepository.findAllByUserId(userId, sort);
+    	return litters.stream()
+                .map(LitterDto::new)
+                .collect(Collectors.toList());
     }
 
     public Litter updateLitter(Long litterId, Litter updatedLitter) {

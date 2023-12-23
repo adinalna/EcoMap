@@ -4,6 +4,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { Hidden } from '@mui/material';
+import { format } from 'date-fns';
 
 export default function LitterModal({
   open,
@@ -50,7 +51,7 @@ export default function LitterModal({
                     alt=""
                     style={{
                       maxWidth: '100%',
-                      maxHeight: '415px',
+                      maxHeight: '380px',
                     }}
                   />
                 )}
@@ -59,7 +60,7 @@ export default function LitterModal({
                     controls
                     style={{
                       maxWidth: '100%',
-                      maxHeight: '550px',
+                      maxHeight: '380px',
                     }}
                   >
                     <source
@@ -102,7 +103,7 @@ export default function LitterModal({
                     <td>{litter.country}</td>
                   </tr>
                   <tr>
-                    <th style={{ width: "15%" }}>Address:</th>
+                    <th style={{ width: "15%"}}>Address:</th>
                     <td style={{ width: "15%", maxheight: "65px", overflowX: "hidden", overflowY: "auto" }}>{litter.address}</td>
                   </tr>
                   <tr>
@@ -110,12 +111,16 @@ export default function LitterModal({
                     <td>{litter.pickedUp ? "Yes" : "No"}</td>
                   </tr>
                   <tr>
+                    <th style={{ width: "15%" }}>Date Created</th>
+                    <td style={{ width: "15%" }}>{format(new Date(litter.dateCreated), 'MMMM d, yyyy h:mm a')}</td>
+                  </tr>
+                  <tr>
                     <th style={{ width: "15%" }}>{"Tag(s):"}</th>
-                   <td style={{ width: "15%", maxheight: "65px", overflowX: "hidden", overflowY: "auto" }}>
-        {litter.tags.map((tag, index) => (
-          <span key={index}>{tag.titleValue}{index < litter.tags.length - 1 ? ', ' : ''}</span>
-        ))}
-      </td>
+                    <td style={{ width: "15%", height: "65px", overflowX: "hidden", overflowY: "auto" }}>
+                      {litter.tags.map((tag, index) => (
+                        <span key={index}>{tag.titleValue}{index < litter.tags.length - 1 ? ', ' : ''}</span>
+                      ))}
+                    </td>
                   </tr>
                 </tbody>
               </Table>

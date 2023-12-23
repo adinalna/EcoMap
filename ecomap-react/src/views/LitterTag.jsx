@@ -1,97 +1,75 @@
-import React, { useState } from "react";
-import { Form, Button, Image } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
 import axiosClient from "../axios-client.js";
+import LitterFilter from "../components/Pages/Litter/LitterFilter.jsx";
 import LitterList from "../components/Pages/Litter/LitterList.jsx";
-import { Chip, Autocomplete, TextField, ToggleButtonGroup, ToggleButton, Badge } from '@mui/material';
 
 export default function LitterTag() {
-  // const [litterTagging, setLitterTagging] = useState("All");
-  const [litterPickedUp, setLitterPickedUp] = useState(null);
-  const litterList = [
-    {
-      title: "Litter 1",
-      medias: [
-        {
-          type: 'image',
-          src: `${import.meta.env.VITE_APP_SUPABASE_STORAGE_BUCKET_URL}litter/c27c25f9-d27b-4793-879c-4f20f747d122.jpeg`
-        },
-      ]
-    },
-    {
-      title: "litter 2",
-      medias: [
-        {
-          type: 'image',
-          src: 'https://images.unsplash.com/photo-1502657877623-f66bf489d236?auto=format&fit=crop&w=800'
-        },
-      ]
-    }
-  ];
+  const [litterData, setLitterData] = useState([]);
+  const [tagData, setTagData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+  const [initialLoad, setInitialLoad] = useState(true);
 
-  const tags = [
-    { tag: 'paper', },
-    { tag: 'metal', },
-    { tag: 'plastic', },
-    { tag: 'food', },
-    { tag: 'clothes' },
-  ];
+  useEffect(() => {
+    fetchLitterList();
+    fetchTagList();
+  }, []);
+
+  useEffect(() => {
+    // This useEffect runs whenever litterData changes
+    if (!initialLoad) {
+      handleFilterChange({ litterPickedUp: null, selectedTags: [] });
+    } else {
+      setInitialLoad(false);
+    }
+  }, [litterData, initialLoad]);
+
+  const fetchLitterList = async () => {
+    try {
+      const response = await axiosClient.get("litter/user/1", { timeout: 5000 });
+      const list = response.data;
+      // console.log(list);
+      setLitterData(list);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const fetchTagList = async () => {
+    try {
+      const response = await axiosClient.get("/tag/all", { timeout: 5000 });
+      const list = response.data;
+      // console.log(list);
+      setTagData(list);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleFilterChange = (filters) => {
+    const { litterPickedUp, selectedTags } = filters;
+
+    let updatedData = litterData;
+
+    if (litterPickedUp !== "All") {
+      const pickedUpValue = litterPickedUp === "pickedUp";
+      updatedData = updatedData.filter((litter) => litter.pickedUp === pickedUpValue);
+    }
+
+    if (selectedTags.length > 0) {
+      updatedData = updatedData.filter((litter) =>
+        selectedTags.some((tag) => litter.tags.some((litterTag) => litterTag.id === tag.id))
+      );
+    }
+
+    setFilteredData(updatedData);
+  };
 
   return (
     <div style={{ margin: "10px 200px" }}>
       <h1>Your Litter</h1>
-      <div
-        style={{
-          margin: "15px 0px",
-          padding: "15px",
-          borderRadius: "5px",
-          backgroundColor: "#f0faf0",
-          display: "flex",
-          justifyContent: "center",
-          gap: "5px",
-          border: "1px solid #ebe6e6"
-        }}>
 
-
-        <ToggleButtonGroup
-          sx={{
-            backgroundColor: "#fff",
-            marginRight: "8px"
-          }}
-          value={litterPickedUp}
-          exclusive
-          onChange={(e, litterPickedUp) => setLitterPickedUp(litterPickedUp)}
-          aria-label="text alignment"
-          size="small"
-        >
-          <ToggleButton value={null} aria-label="centered">All</ToggleButton>
-          <ToggleButton value={true} aria-label="centered">Picked Up</ToggleButton>
-          <ToggleButton value={false} aria-label="centered">Not Picked Up</ToggleButton>
-        </ToggleButtonGroup>
-
-        <Autocomplete
-          sx={{
-            width: "770px",
-            backgroundColor: "#fff"
-          }}
-          // disabled={litterTagging === "UnTagged"}
-          multiple
-          limitTags={10}
-          id="multiple-limit-tags"
-          size="small"
-          options={tags}
-          getOptionLabel={(option) => option.tag}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="Search Litter Tag"
-              placeholder="Litter Tag"
-            />
-          )}
-        />
-        {/* <Button disabled={litterTagging === "UnTagged"} variant="dark">Search</Button> */}
-        <Button variant="dark">Search</Button>
-      </div>
-      <LitterList litterList={litterList} />
-    </div >
+      <LitterFilter tags={tagData} onFilterChange={handleFilterChange} />
+      <LitterList litterList={filteredData} type={"tag"} />
+    </div>
   );
-};
+}

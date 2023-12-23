@@ -59,14 +59,18 @@ public class Litter {
     @OneToMany(mappedBy = "litter", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Media> media;
 
+    @OneToMany(mappedBy = "litter", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<LitterTag> litterTags;
+
     @ManyToMany
     @JoinTable(
-            name = "litter_tag",
-            joinColumns = @JoinColumn(name = "litter_id"),
-            inverseJoinColumns = @JoinColumn(name = "tag_id")
+        name = "litter_tag",
+        joinColumns = @JoinColumn(name = "litter_id"),
+        inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
+    
     private Set<Tag> tags;
-
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

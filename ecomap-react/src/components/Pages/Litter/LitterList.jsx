@@ -3,8 +3,9 @@ import { Grid, Card, CardCover, CardContent, Typography, IconButton, Chip } from
 import Pagination from '@mui/material/Pagination';
 import { Button } from 'react-bootstrap';
 import LitterModal from './LitterModal.jsx';
+import LitterTagModal from './LitterTagModal.jsx';
 
-export default function LitterList({ litterList }) {
+export default function LitterList({ litterList, type }) {
   const [openModal, setOpenModal] = useState(false);
   const [modalContent, setModalContent] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -39,6 +40,9 @@ export default function LitterList({ litterList }) {
     setCurrentIndex(0);
     setOpenModal(false);
   };
+
+  const isGalleryType = type === 'gallery';
+  const ModalComponent = isGalleryType ? LitterModal : LitterTagModal;
 
   const handlePageChange = (event, value) => {
     setPage(value);
@@ -159,7 +163,7 @@ export default function LitterList({ litterList }) {
                     variant="dark"
                     onClick={() => handleCardClick(litter, index)}
                   >
-                    View
+                    {type === "gallery" ? "View" : "Tag Litter"}
                   </Button>
                 </div>
               </CardContent>
@@ -169,15 +173,15 @@ export default function LitterList({ litterList }) {
       </Grid>
 
       <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-      <Pagination
-        color="success"
-        count={Math.ceil(litterList.length / (rowsPerPage * cardsPerRow))}
-        page={page}
-        onChange={handlePageChange}
-      />
-    </div>
+        <Pagination
+          color="success"
+          count={Math.ceil(litterList.length / (rowsPerPage * cardsPerRow))}
+          page={page}
+          onChange={handlePageChange}
+        />
+      </div>
 
-      <LitterModal
+      <ModalComponent
         open={openModal}
         handleClose={handleCloseModal}
         currentIndex={currentIndex}

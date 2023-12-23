@@ -167,7 +167,7 @@ export default function Upload() {
           )}
         </Card>
       </Form>
-      <Nav.Link className="me-2" href="/litter">
+      <Nav.Link className="me-2" href="/tag">
         <Button variant="dark" style={{ margin: "15px 0px", height: "60px", width: "300px" }}>
           Tag Your Litters Here !
         </Button>

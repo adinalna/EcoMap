@@ -62,8 +62,8 @@ public class LitterController {
     }
     
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Litter>> getAllLittersByUserId(@PathVariable Long userId) {
-        List<Litter> litters = litterService.getAllLittersByUserId(userId);
+    public ResponseEntity<List<LitterDto>> getAllLittersByUserId(@PathVariable Long userId) {
+    	List<LitterDto> litters = litterService.getAllLittersByUserId(userId);
         return ResponseEntity.ok().body(litters);
     }
 
