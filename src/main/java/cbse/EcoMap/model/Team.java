@@ -12,6 +12,9 @@ import jakarta.persistence.*;
 import java.time.Instant;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -19,10 +22,12 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Entity
 @Table(name = "teams")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@SequenceGenerator(name = "teams_seq", sequenceName = "teams_id_seq", allocationSize = 1)
 public class Team {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "teams_seq")
     private Long id;
     @NonNull
     private String name;
