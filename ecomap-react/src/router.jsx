@@ -8,7 +8,6 @@ import NotFound from "../src/views/NotFound.jsx";
 import About from "./views/About.jsx";
 import Upload from "./views/Upload.jsx";
 import Cleanup from "./views/Cleanup.jsx";
-import Litter from "./views/Litter.jsx";
 import CreateTeam from "./views/CreateTeam.jsx";
 import JoinTeam from "./views/JoinTeam.jsx";
 import LitterGallery from "./views/LitterGallery.jsx";
