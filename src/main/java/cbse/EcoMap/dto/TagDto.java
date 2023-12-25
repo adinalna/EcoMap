@@ -8,6 +8,7 @@ public class TagDto {
     private Long id;
     private String titleKey;
     private String titleValue;
+    private int count;
     private String group;
 
     public TagDto(Tag tag) {

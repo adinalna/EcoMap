@@ -25,7 +25,7 @@ export default function LitterTag() {
 
   const fetchLitterList = async () => {
     try {
-      const response = await axiosClient.get("litter/user/1", { timeout: 5000 });
+      const response = await axiosClient.get("/litter/user/1", { timeout: 5000 });
       const list = response.data;
       // console.log(list);
       setLitterData(list);
@@ -36,9 +36,9 @@ export default function LitterTag() {
 
   const fetchTagList = async () => {
     try {
-      const response = await axiosClient.get("/tag/all", { timeout: 5000 });
+      const response = await axiosClient.get("/tag/user/1", { timeout: 5000 });
       const list = response.data;
-      // console.log(list);
+      console.log(list);
       setTagData(list);
     } catch (error) {
       console.error(error);

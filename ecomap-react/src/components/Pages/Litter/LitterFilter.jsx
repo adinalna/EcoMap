@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { FormControl,InputLabel , MenuItem, Autocomplete, TextField, Select } from '@mui/material';
+import { FormControl, InputLabel, MenuItem, Autocomplete, TextField, Select, Stack } from '@mui/material';
 import { Button } from 'react-bootstrap';
 
 export default function LitterFilter({ tags, onFilterChange }) {
-    const [litterPickedUp, setLitterPickedUp] = useState(null);
+    const [litterPickedUp, setLitterPickedUp] = useState("All");
+    const [sortLitter, setSortLitter] = useState("Latest");
     const [selectedTags, setSelectedTags] = useState([]);
 
     const handleFilterChange = () => {
@@ -23,32 +24,51 @@ export default function LitterFilter({ tags, onFilterChange }) {
                 backgroundColor: '#f0faf0',
                 display: 'flex',
                 justifyContent: 'center',
-                gap: '5px',
+                gap: '7px',
                 border: '1px solid #ebe6e6',
             }}
         >
-            <FormControl size="small">
-                <InputLabel>Litter Pickup</InputLabel>
-                <Select
-                    sx={{
-                        backgroundColor: '#fff',
-                        marginRight: '8px',
-                        minWidth: '150px',
-                    }}
-                    label="Litter Pickup"
-                    size="small"
-                    value={litterPickedUp}
-                    onChange={(e) => setLitterPickedUp(e.target.value)}
-                >
-                    <MenuItem value={"All"}>All</MenuItem>
-                    <MenuItem value={"pickedUp"}>Picked Up</MenuItem>
-                    <MenuItem value={"notPickedUp"}>Not Picked Up</MenuItem>
-                </Select>
-            </FormControl>
+            <Stack direction="row" spacing={1}>
+                <FormControl size="small">
+                    <InputLabel>Sort By</InputLabel>
+                    <Select
+                        sx={{
+                            backgroundColor: '#fff',
+                            marginRight: '8px',
+                            minWidth: '150px',
+                        }}
+                        label="Sort Litter"
+                        size="small"
+                        value={sortLitter}
+                        onChange={(e) => setSortLitter(e.target.value)}
+                    >
+                        <MenuItem value={"Latest"}>Latest</MenuItem>
+                        <MenuItem value={"Oldest"}>Oldest</MenuItem>
+                    </Select>
+                </FormControl>
 
+                <FormControl size="small">
+                    <InputLabel>Litter Pickup</InputLabel>
+                    <Select
+                        sx={{
+                            backgroundColor: '#fff',
+                            marginRight: '8px',
+                            minWidth: '150px',
+                        }}
+                        label="Litter Pickup"
+                        size="small"
+                        value={litterPickedUp}
+                        onChange={(e) => setLitterPickedUp(e.target.value)}
+                    >
+                        <MenuItem value={"All"}>All</MenuItem>
+                        <MenuItem value={"pickedUp"}>Picked Up</MenuItem>
+                        <MenuItem value={"notPickedUp"}>Not Picked Up</MenuItem>
+                    </Select>
+                </FormControl>
+            </Stack>
             <Autocomplete
                 sx={{
-                    width: '670px',
+                    width: '500px',
                     backgroundColor: '#fff',
                 }}
                 multiple
@@ -66,8 +86,7 @@ export default function LitterFilter({ tags, onFilterChange }) {
                     />
                 )}
             />
-
-            <Button variant="dark" onClick={handleFilterChange}>
+            <Button variant="dark" onClick={handleFilterChange} style={{marginLeft: "10px"}}>
                 Search
             </Button>
         </div>

@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+
 import java.time.Instant;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -31,6 +33,10 @@ public class LitterTag {
     @ManyToOne
     @JoinColumn(name = "tag_id")
     private Tag tag;
+    
+    @Column(name = "count")
+    @Min(0)
+    private int count;
 
     @Builder.Default
     @Column(name = "date_created")

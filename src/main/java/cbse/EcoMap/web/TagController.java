@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,8 +27,20 @@ public class TagController {
 
     @GetMapping("/all")
     public ResponseEntity<List<TagDto>> getAllTags() {
-        List<TagDto> allTags = tagService.getAllTags();
+        List<TagDto> allTags = tagService.findtAllTags();
         return ResponseEntity.ok().body(allTags);
+    }
+    
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<TagDto>> getTagsByUserId(@PathVariable Long userId) {
+        List<TagDto> allTags = tagService.findTagsByUserId(userId);
+        return ResponseEntity.ok().body(allTags);
+    }
+    
+    @GetMapping("/unused/{litterId}")
+    public ResponseEntity<List<TagDto>> getUnusedTagsByLitterId(@PathVariable Long litterId) {
+        List<TagDto> unusedTags = tagService.findUnusedTagsByLitterId(litterId);
+        return ResponseEntity.ok(unusedTags);
     }
     
     @GetMapping("/mostUsed")
