@@ -10,8 +10,9 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cbse.EcoMap.dto.LitterTagDto;
 import cbse.EcoMap.dto.TagDto;
-
+import cbse.EcoMap.model.LitterTag;
 import cbse.EcoMap.model.Tag;
 import cbse.EcoMap.repository.TagRepository;
 import cbse.EcoMap.repository.LitterTagRepository;
@@ -27,9 +28,23 @@ public class TagService {
         this.litterTagRepository = litterTagRepository;
     }
 	
-    public List<TagDto> getAllTags() {
+    public List<TagDto> findtAllTags() {
     	List<Tag>tags = tagRepository.findAll();
         return tags.stream()
+                .map(TagDto::new)
+                .collect(Collectors.toList());
+    }
+    
+    public List<TagDto> findTagsByUserId(Long userId) {
+    	List<Tag> litterTags = litterTagRepository.findDistinctTagsByUserId(userId);
+        return litterTags.stream()
+                .map(TagDto::new)
+                .collect(Collectors.toList());
+    }
+    
+    public List<TagDto> findUnusedTagsByLitterId(Long litterId) {
+    	List<Tag> litterTags = litterTagRepository.findUnusedTagsByLitterId(litterId);
+        return litterTags.stream()
                 .map(TagDto::new)
                 .collect(Collectors.toList());
     }

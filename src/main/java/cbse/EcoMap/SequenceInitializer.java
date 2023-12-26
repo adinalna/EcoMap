@@ -22,7 +22,7 @@
 //    }
 //
 //    private void initializeSequences() {
-//        String[] tableNames = {"cleanups", "country", "litter", "media", "tag", "tag_group", "teams", "user_cleanup", "user_team", "users"};
+//        String[] tableNames = {"cleanups", "country", "litter", "litter_tag", "media", "tag", "tag_group", "teams", "user_cleanup", "user_team", "users"};
 //
 //        for (String tableName : tableNames) {
 //            String sequenceName = tableName + "_id_seq";
