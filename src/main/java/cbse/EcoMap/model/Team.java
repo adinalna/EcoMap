@@ -31,8 +31,8 @@ public class Team {
     private Long id;
     @NonNull
     private String name;
-    private String logo; 
-    private Boolean isPublic; 
+    private Boolean isPublic;
+    private String uniqueIdentifier;
     @Builder.Default
     private Instant date_created = Instant.now();
     

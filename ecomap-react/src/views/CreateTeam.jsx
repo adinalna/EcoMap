@@ -4,7 +4,6 @@ const CreateTeam = () => {
   const [teamType, setTeamType] = useState('public'); // 'public' or 'private'
   const [name, setName] = useState('');
   const [identifier, setIdentifier] = useState('');
-  const [logo, setLogo] = useState(null); // For the logo/avatar file
   const [processing, setProcessing] = useState(false);
   const [errors, setErrors] = useState({}); // Error handling
 
@@ -12,7 +11,6 @@ const CreateTeam = () => {
   const handleTeamTypeChange = (e) => setTeamType(e.target.value);
   const handleNameChange = (e) => setName(e.target.value);
   const handleIdentifierChange = (e) => setIdentifier(e.target.value);
-  const handleLogoChange = (e) => setLogo(e.target.files[0]);
 
   const clearErrors = () => setErrors({});
 
@@ -69,18 +67,6 @@ const CreateTeam = () => {
             />
           </div>
         )}
-        <div className='form-group mb-4'>
-            <label htmlFor='teamLogo' className='form-label'>Team Logo/Avatar</label>
-            <div className="mt-2">
-                <input
-                id='teamLogo'
-                className='form-control-file'
-                type='file'
-                onChange={handleLogoChange}
-                required
-                />
-            </div>
-        </div>
         <button 
           className={`btn ${processing ? 'btn-secondary' : 'btn-dark'} `} 
           type='submit' 
