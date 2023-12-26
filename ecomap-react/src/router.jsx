@@ -10,6 +10,7 @@ import Upload from "./views/Upload.jsx";
 import Cleanup from "./views/Cleanup.jsx";
 import LitterGallery from "./views/LitterGallery.jsx";
 import LitterTag from "./views/LitterTag.jsx";
+import Community from "./views/Community.jsx";
 
 const router = createBrowserRouter([
     {
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
                         element: <Signup />
                     }
                 ]
+            },
+            {
+                path: '/community',
+                element: <Community />
             },
         ]
     },

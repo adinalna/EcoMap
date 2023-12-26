@@ -1,0 +1,32 @@
+.community-container {
+  text-align: left;
+  padding: 100px;
+  /* padding-top: 30px; */
+  background-color: black;
+  color: white;
+
+  &.blue {
+    background-color: #000435;
+  }
+}
+
+.community-div {
+  display: flex;
+  justify-content: space-around;
+}
+
+.community-child-div {
+  text-align: center;
+
+  & h2 {
+    font-weight: 600;
+  }
+
+  & span {
+    display: block;
+  }
+}
+
+.community-graph {
+  height: 600px;
+}

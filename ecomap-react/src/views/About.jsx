@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from 'react-i18next';
 import { Typography, Card, CardContent, CardHeader, CardMedia } from "@mui/material";
-import "../About.css"; // Import the CSS file for styling
+import "../About.css"; 
 import NicotineIcon from '/nicotine.png';
 import BioIcon from '/plant.svg';
 import EarthIcon from '/earth.svg';
