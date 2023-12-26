@@ -21,14 +21,14 @@ public class LitterDto {
 	private String postcode;
 	private String address;
     private Set<MediaDto> media;
-    private Set<TagDto> tags; 
+    private Set<LitterTagDto> litterTags; 
 
     public LitterDto(Litter litter) {
     	this.id = litter.getId();
         this.pickedUp = litter.getPickedUp();
         this.user = litter.getUser().getName();  
         this.media = litter.getMedia().stream().map(MediaDto::new).collect(Collectors.toSet());
-        this.tags = litter.getTags().stream().map(TagDto::new).collect(Collectors.toSet());
+        this.litterTags = litter.getLitterTags().stream().map(LitterTagDto::new).collect(Collectors.toSet());
         this.country = litter.getCountry().getName();
         this.state = litter.getState();
         this.city = litter.getCity();

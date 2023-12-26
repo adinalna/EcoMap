@@ -117,8 +117,8 @@ export default function LitterModal({
                   <tr>
                     <th style={{ width: "15%" }}>{"Tag(s):"}</th>
                     <td style={{ width: "15%", height: "65px", overflowX: "hidden", overflowY: "auto" }}>
-                      {litter.tags.map((tag, index) => (
-                        <span key={index}>{tag.titleValue}{index < litter.tags.length - 1 ? ', ' : ''}</span>
+                      {litter.litterTags.map((tag, index) => (
+                        <span key={index}>{tag.titleValue}{index < litter.litterTags.length - 1 ? ', ' : ''}</span>
                       ))}
                     </td>
                   </tr>
