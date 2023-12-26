@@ -29,11 +29,19 @@ public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "teams_seq")
     private Long id;
+    
     @NonNull
+    @Column(name = "name", nullable = false, unique = true)
     private String name;
+
+    @Column(name = "is_public")
     private Boolean isPublic;
+
+    @Column(name = "unique_identifier", unique = true)
     private String uniqueIdentifier;
+
     @Builder.Default
+    @Column(name = "date_created")
     private Instant date_created = Instant.now();
     
     @ManyToOne

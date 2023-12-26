@@ -1,8 +1,10 @@
 package cbse.EcoMap.web;
 
+import cbse.EcoMap.dto.TeamDto;
 import cbse.EcoMap.model.Team;
-import cbse.EcoMap.repository.TeamRepository;
+import cbse.EcoMap.service.TeamService;
 
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -14,6 +16,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -21,44 +25,31 @@ import java.util.Optional;
 public class TeamController {
 
 
-	    private final Logger log = LoggerFactory.getLogger(TeamController.class);
-	    private TeamRepository teamRepository;
+	private final Logger log = LoggerFactory.getLogger(TeamController.class);
+    private final TeamService teamService;
+    private final ModelMapper modelMapper;
 
-	    public TeamController(TeamRepository teamRepository) {
-	        this.teamRepository = teamRepository;
-	    }
+    public TeamController(TeamService teamService, ModelMapper modelMapper) {
+        this.teamService = teamService;
+        this.modelMapper = modelMapper;
+    }
 
-	    @GetMapping("/teams")
-	    Collection<Team> teams() {
-	        return teamRepository.findAll();
-	    }
+    @PostMapping("/teams")
+    public ResponseEntity<TeamDto> createTeam(@Valid @RequestBody TeamDto teamDto) {
+        log.info("Request to create team: {}", teamDto);
+        Team team = modelMapper.map(teamDto, Team.class);
+        Team result = teamService.createOrUpdateTeam(team);
+        TeamDto responseBody = modelMapper.map(result, TeamDto.class);
+        return ResponseEntity.created(URI.create("/api/teams/" + result.getId())).body(responseBody);
+    }
 
-	    @GetMapping("/team/{id}")
-	    ResponseEntity<?> getTeam(@PathVariable Long id) {
-	        Optional<Team> team = teamRepository.findById(id);
-	        return team.map(response -> ResponseEntity.ok().body(response))
-	                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-	    }
-
-	    @PostMapping("/team")
-	    ResponseEntity<Team> createTeam(@Valid @RequestBody Team team) throws URISyntaxException {
-	        log.info("Request to create team: {}", team);
-	        Team result = teamRepository.save(team);
-	        return ResponseEntity.created(new URI("/api/team/" + result.getId()))
-	                .body(result);
-	    }
-
-	    @PutMapping("/team/{id}")
-	    ResponseEntity<Team> updateTeam(@Valid @RequestBody Team team) {
-	        log.info("Request to update team: {}", team);
-	        Team result = teamRepository.save(team);
-	        return ResponseEntity.ok().body(result);
-	    }
-	    
-	    @DeleteMapping("/team/{id}")
-	    public ResponseEntity<?> deleteTeam(@PathVariable Long id) {
-	        log.info("Request to delete team: {}", id);
-	        teamRepository.deleteById(id);
-	        return ResponseEntity.ok().build();
-	    }
+    // Additional endpoints can go here
+    @GetMapping("/teams/public")
+    public ResponseEntity<List<TeamDto>> getPublicTeams() {
+        List<Team> publicTeams = teamService.findAllPublicTeams();
+        List<TeamDto> publicTeamDtos = publicTeams.stream()
+                .map(team -> modelMapper.map(team, TeamDto.class))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(publicTeamDtos);
+    }
 }

@@ -10,6 +10,10 @@ const axiosClient = axios.create({
 axiosClient.interceptors.request.use((config) => {
     const token = localStorage.getItem('ACCESS_TOKEN');
     config.headers.Authorization = `Bearer ${token}`
+
+    // Log the request method and URL
+    console.log(`Request ${config.method.toUpperCase()} ${config.url}`);
+    
     return config;
 });
 

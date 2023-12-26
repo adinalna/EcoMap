@@ -1,16 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axiosClient from "../axios-client.js";
 
 const JoinTeam = () => {
+  const [teams, setTeams] = useState([]);
   const [identifier, setIdentifier] = useState('');
   const [processing, setProcessing] = useState(false);
   const [errors, setErrors] = useState({});
 
-  // Dummy data for public teams
-  const publicTeams = [
-    { id: 1, name: 'Team Alpha' },
-    { id: 2, name: 'Team Beta' },
-    // Add more teams here
-  ];
+  // Fetch public teams from the backend
+  useEffect(() => {
+    const fetchPublicTeams = async () => {
+      try {
+        const response = await axiosClient.get('/teams/public'); // Adjust the URL as per your backend API
+        setTeams(response.data);
+      } catch (error) {
+        console.error('Error fetching public teams:', error);
+        // Handle error
+      }
+    };
+
+    fetchPublicTeams();
+  }, []); // Empty dependency array to run only once on mount
 
   const handleIdentifierChange = (e) => {
     setIdentifier(e.target.value);
@@ -75,7 +85,7 @@ const JoinTeam = () => {
             </tr>
           </thead>
           <tbody>
-            {publicTeams.map((team, index) => (
+            {teams.map((team, index) => (
               <tr key={team.id}>
                 <th scope='row'>{index + 1}</th>
                 <td>{team.name}</td>

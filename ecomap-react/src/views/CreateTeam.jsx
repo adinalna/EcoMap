@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axiosClient from "../axios-client.js";
 
 const CreateTeam = () => {
   const [teamType, setTeamType] = useState('public'); // 'public' or 'private'
@@ -17,11 +18,27 @@ const CreateTeam = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setProcessing(true);
+    clearErrors();
 
-    // TODO: Implement the logic for creating a team
+    const payload = {
+        name,
+        isPublic: teamType === 'public',
+        uniqueIdentifier: teamType === 'private' ? identifier : '',
+    };
 
-    setProcessing(false);
-  };
+    console.log('Sending POST request to:', `${import.meta.env.VITE_API_BASE_URL}/api/teams`, payload);
+
+    try {
+        const response = await axiosClient.post('/teams', payload);
+        console.log('Response:', response.data);
+        // Handle the successful response here
+    } catch (error) {
+        console.error('Error:', error);
+        setErrors(error.response?.data?.errors || { generic: 'An error occurred.' });
+    } finally {
+        setProcessing(false);
+    }
+};
 
   return (
     <div style={{ margin: "10px 200px" }}>
