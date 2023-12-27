@@ -10,59 +10,63 @@ import Upload from "./views/Upload.jsx";
 import Cleanup from "./views/Cleanup.jsx";
 import LitterGallery from "./views/LitterGallery.jsx";
 import LitterTag from "./views/LitterTag.jsx";
+import GlobalMap from "./views/GlobalMap.jsx";
 
 const router = createBrowserRouter([
     {
-        path: '/',
+        path: "/",
         element: <AppLayout />,
         children: [
             {
-                path: '/',
+                path: "/",
                 element: <DefaultLayout />,
                 children: [
                     {
-                        path: '/upload',
-                        element: <Upload />
+                        path: "/upload",
+                        element: <Upload />,
                     },
                     {
-                        path: '/gallery',
-                        element: <LitterGallery />
+                        path: "/gallery",
+                        element: <LitterGallery />,
                     },
                     {
-                        path: '/tag',
-                        element: <LitterTag />
+                        path: "/tag",
+                        element: <LitterTag />,
                     },
                     {
-                        path: '/cleanup',
-                        element: <Cleanup />
-                    }
-                ]
+                        path: "/cleanup",
+                        element: <Cleanup />,
+                    },
+                ],
             },
             {
-                path: '/about',
-                element: <About />
+                path: "/about",
+                element: <About />,
             },
             {
-                path: '/',
+                path: "/global",
+                element: <GlobalMap />,
+            },
+            {
+                path: "/",
                 element: <GuestLayout />,
                 children: [
                     {
-                        path: '/login',
-                        element: <Login />
+                        path: "/login",
+                        element: <Login />,
                     },
                     {
-                        path: '/signup',
-                        element: <Signup />
-                    }
-                ]
+                        path: "/signup",
+                        element: <Signup />,
+                    },
+                ],
             },
-        ]
+        ],
     },
     {
-        path: '*',
-        element: <NotFound />
-    }
-])
-
+        path: "*",
+        element: <NotFound />,
+    },
+]);
 
 export default router;
