@@ -35,6 +35,10 @@ const router = createBrowserRouter([
                     {
                         path: '/worldcup',
                         element: <WorldCup />
+                    },
+                    {
+                        path: '/worldCupLeaderboards',
+                        element: <WorldCup />
                     }
                 ]
             },

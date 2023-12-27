@@ -1,88 +1,82 @@
-import React, { useEffect, useRef, useState } from 'react';
-import Box from '@mui/material/Box';
-import LinearProgress from '@mui/material/LinearProgress';
-import Typography from '@mui/material/Typography';
+import React, { useEffect, useState } from 'react';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
+import {TypeAnimation} from "react-type-animation";
+import {LinearProgress, Stack} from "@mui/material";
 
 export default function WorldCup() {
-    const [progress, setProgress] = useState(0);
-    const [buffer, setBuffer] = useState(10);
 
-    const progressRef = useRef(() => {});
-    useEffect(() => {
-        progressRef.current = () => {
-            if (progress > 100) {
-                setProgress(0);
-                setBuffer(10);
-            } else {
-                const diff = Math.random() * 10;
-                const diff2 = Math.random() * 10;
-                setProgress(progress + diff);
-                setBuffer(progress + diff + diff2);
-            }
-        };
-    });
+    //Litter Overall Totals Logic
+    const totals = [
+        { title: 'Total Litter', number: '752456' },
+        { title: 'Total Photos', number: '478456' },
+        { title: 'Total LitterCoin', number: '5456' }
+    ];
 
-    useEffect(() => {
-        const timer = setInterval(() => {
-            progressRef.current();
-        }, 500);
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
 
-        return () => {
-            clearInterval(timer);
-        };
-    }, []);
+    // Litter Target Logic
+    const targetValue = 1000000; // Example target
+    const currentData = 752456;  // Example current data
+
+    // Calculate the percentage of current data towards the target
+    const progressPercentage = parseFloat((currentData / targetValue * 100).toFixed(2));
+
 
     return (
         <div>
             <div className='section'>
-                <h1 className='title'>Litter World Cup</h1>
-                <p className='subtitle'>Our Global Community</p>
-
-                <Grid container spacing={1}>
-                    <Grid item xs={4}>
-                        <Paper elevation={1} className='headerBoxes'>
-                            <h5>Total Litter</h5>
-                            {/* Add the logic or data for the total litter here */}
+                <Grid container spacing={3}>
+                    <Grid item xs={12}>
+                        <Paper elevation={1} className='headerBoxes' variant="outlined">
+                            <Stack spacing={2}>
+                                <h1 className='title'>Litter World Cup</h1>
+                                <TypeAnimation
+                                    sequence={[
+                                        'Our Global Community',
+                                        3500,
+                                        'Our Global Impact',
+                                        3500,
+                                        'Our Global Progress',
+                                        3500,
+                                    ]}
+                                    wrapper="span"
+                                    speed={25}
+                                    className='subtitle'
+                                    repeat={Infinity}
+                                />
+                                <Grid container >
+                                    {totals.map((item) => (
+                                        <Grid item xs={4} key={item.title}>
+                                            <Paper variant="outlined" className="totalOverall">
+                                                <h4>{item.title}</h4>
+                                                <p>{numberWithCommas(item.number)}</p>
+                                            </Paper>
+                                        </Grid>
+                                    ))}
+                                </Grid>
+                            </Stack>
                         </Paper>
                     </Grid>
-                    <Grid item xs={4}>
-                        <Paper elevation={1} className='headerBoxes'>
-                            <h5>Total Photos</h5>
+                    <Grid item xs={6}>
+                        <Paper elevation={1} className='headerBoxes' variant="outlined">
+                            <h5>Litter Target</h5>
+                            <p>1,000,000</p>
+                            <p>Previous Target</p>
+                            <p>500,000</p>
+                            <LinearProgress variant="determinate" value={progressPercentage} />
+                            <p>{progressPercentage}%</p>
+                        </Paper>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Paper elevation={1} className='headerBoxes' variant="outlined">
+                            <h5>Leaderboards</h5>
                             {/* Add the logic or data for the total photos here */}
                         </Paper>
                     </Grid>
-                    <Grid item xs={4}>
-                        <Paper elevation={1} className='headerBoxes'>
-                            <h5>Total Littercoin</h5>
-                            {/* Add the logic or data for the total littercoin here */}
-                        </Paper>
-                    </Grid>
                 </Grid>
-
-                <div>
-                    <h4>Litter Goal</h4>
-                    <Paper elevation={3} sx={{width: '100%'}}>
-                        <LinearProgress variant="buffer" value={progress} valueBuffer={buffer} sx={{height: 25}}>
-                            <Box sx={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'space-between',
-                                width: '100%'
-                            }}>
-                                <Typography variant="body2" color="textSecondary">{`${Math.round(progress)}%`}</Typography>
-                            </Box>
-                        </LinearProgress>
-                    </Paper>
-                </div>
-                <p>Global Leaderboard</p>
-            </div>
-            <div className='section'>
-                <p>#LitterWorldCup</p>
-                <div>
-                    <p>Rank - Country Name</p>
-                </div>
             </div>
         </div>
     );

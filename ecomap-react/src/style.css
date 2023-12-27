@@ -69,7 +69,8 @@
     font-size: 20px; /* Adjust the font size as needed */
   }
 
-  /* Module World Cup */
+/* Module World Cup */
+
 .section {
   margin-top: 3%;
   margin-left: 5%;
@@ -88,8 +89,13 @@
 
 .headerBoxes {
   padding: 15px 20px 10px;
-
 }
+
+.totalOverall {
+  padding: 20px;
+  text-align: center;
+}
+
 
 
   
