@@ -43,28 +43,28 @@ public class TagController {
         return ResponseEntity.ok(unusedTags);
     }
     
-    @GetMapping("/mostUsed")
-    public Tag getMostUsedTag() {
+    @GetMapping("/trending/ever")
+    public List<TagDto> getMostUsedTag() {
         return tagService.findMostUsedTag();
     }
 
-    @GetMapping("/mostUsedLastWeek")
-    public Tag getMostUsedTagLastWeek() {
+    @GetMapping("/trending/week")
+    public List<TagDto> getMostUsedTagLastWeek() {
         return tagService.findMostUsedTagLastWeek();
     }
 
-    @GetMapping("/mostUsedLastMonth")
-    public Tag getMostUsedTagLastMonth() {
+    @GetMapping("/trending/month")
+    public List<TagDto> getMostUsedTagLastMonth() {
         return tagService.findMostUsedTagLastMonth();
     }
 
-    @GetMapping("/mostUsedLastYear")
-    public Tag getMostUsedTagLastYear() {
+    @GetMapping("/trending/year")
+    public List<TagDto> getMostUsedTagLastYear() {
         return tagService.findMostUsedTagLastYear();
     }
 
-    @GetMapping("/mostUsedAll")
-    public Map<String, Tag> getMostUsedTagsAll() {
+    @GetMapping("/trending/all")
+    public Map<String, List<TagDto>> getMostUsedTagsAll() {
         return tagService.findMostUsedTagsAll();
     }
 }

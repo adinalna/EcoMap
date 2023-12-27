@@ -86,7 +86,6 @@ export default function LitterTagForm({ litter }) {
         // Reset the count to its original value
         setCount(1);
 
-        // Reset the editing state
         setIsEditingCount(false);
     };
 

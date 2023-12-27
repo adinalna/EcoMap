@@ -67,18 +67,6 @@ public class LitterController {
         return ResponseEntity.ok().body(litters);
     }
 
-    @PutMapping("/{litterId}")
-    public ResponseEntity<?> updateLitter(@PathVariable Long litterId, @RequestBody Litter litter) {
-        try {
-            Litter updatedLitter = litterService.updateLitter(litterId, litter);
-            return ResponseEntity.ok().body(updatedLitter);
-
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ErrorResponse("Internal Server Error"));
-        }
-    }
-
     @DeleteMapping("/{litterId}")
     public ResponseEntity<?> deleteLitter(@PathVariable Long litterId) {
         try {

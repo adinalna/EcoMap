@@ -110,15 +110,6 @@ public class LitterService {
                 .collect(Collectors.toList());
     }
 
-    public Litter updateLitter(Long litterId, Litter updatedLitter) {
-        if (litterRepository.existsById(litterId)) {
-            updatedLitter.setId(litterId);
-            return litterRepository.save(updatedLitter);
-        } else {
-            throw new IllegalArgumentException("Litter not found with ID: " + litterId);
-        }
-    }
-
     public void deleteLitter(Long litterId) {
         litterRepository.deleteById(litterId);
     }

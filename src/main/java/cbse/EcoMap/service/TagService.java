@@ -1,6 +1,8 @@
 package cbse.EcoMap.service;
 
 import java.time.Instant;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
@@ -10,10 +12,8 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cbse.EcoMap.dto.LitterTagDto;
-import cbse.EcoMap.dto.TagDto;
-import cbse.EcoMap.model.LitterTag;
 import cbse.EcoMap.model.Tag;
+import cbse.EcoMap.dto.TagDto;
 import cbse.EcoMap.repository.TagRepository;
 import cbse.EcoMap.repository.LitterTagRepository;
 
@@ -49,31 +49,48 @@ public class TagService {
                 .collect(Collectors.toList());
     }
     
-    public Tag findMostUsedTag() {
-       return litterTagRepository.findMostUsedTag();
+    public List<TagDto> findMostUsedTag() {
+    	List<Tag> litterTags = litterTagRepository.findMostUsedTag();
+    	return litterTags.stream()
+                .map(TagDto::new)
+                .collect(Collectors.toList());
     }
 
-    public Tag findMostUsedTagLastWeek() {
+    public List<TagDto> findMostUsedTagLastWeek() {
         Instant oneWeekAgo = Instant.now().minus(7, ChronoUnit.DAYS);
-        return litterTagRepository.findMostUsedTagLastWeek(oneWeekAgo);
+        List<Tag> litterTags = litterTagRepository.findMostUsedTagLastWeek(oneWeekAgo);
+        return litterTags.stream()
+                .map(TagDto::new)
+                .collect(Collectors.toList());
     }
 
-    public Tag findMostUsedTagLastMonth() {
-        Instant oneMonthAgo = Instant.now().minus(1, ChronoUnit.MONTHS);
-        return litterTagRepository.findMostUsedTagLastMonth(oneMonthAgo);
+    public List<TagDto> findMostUsedTagLastMonth() {
+    	ZonedDateTime oneMonthAgo = ZonedDateTime.now(ZoneOffset.UTC).minusMonths(1);
+        Instant oneMonthAgoInstant = oneMonthAgo.toInstant();
+        List<Tag> litterTags = litterTagRepository.findMostUsedTagLastMonth(oneMonthAgoInstant);
+        return litterTags.stream()
+                .map(TagDto::new)
+                .collect(Collectors.toList());
     }
 
-    public Tag findMostUsedTagLastYear() {
-        Instant oneYearAgo = Instant.now().minus(1, ChronoUnit.YEARS);
-        return litterTagRepository.findMostUsedTagLastYear(oneYearAgo);
-    }
+    public List<TagDto> findMostUsedTagLastYear() {
+        ZonedDateTime oneYearAgo = ZonedDateTime.now(ZoneOffset.UTC).minusYears(1);
+        Instant oneYearAgoInstant = oneYearAgo.toInstant();
+        List<Tag> litterTags = litterTagRepository.findMostUsedTagLastYear(oneYearAgoInstant);
+		return litterTags.stream()
+                .map(TagDto::new)
+                .collect(Collectors.toList());
+}
     
-    public Map<String, Tag> findMostUsedTagsAll() {
-        Map<String, Tag> mostUsedTagsAll = new HashMap<>();
-        mostUsedTagsAll.put("mostUsed", findMostUsedTag());
-        mostUsedTagsAll.put("mostUsedLastWeek", findMostUsedTagLastWeek());
-        mostUsedTagsAll.put("mostUsedLastMonth", findMostUsedTagLastMonth());
-        mostUsedTagsAll.put("mostUsedLastYear", findMostUsedTagLastYear());
+    public Map<String, List<TagDto>> findMostUsedTagsAll() {
+        Map<String, List<TagDto>> mostUsedTagsAll = new HashMap<>();
+        
+        mostUsedTagsAll.put("week", findMostUsedTagLastWeek());
+        mostUsedTagsAll.put("month", findMostUsedTagLastMonth());
+        mostUsedTagsAll.put("year", findMostUsedTagLastYear());
+        mostUsedTagsAll.put("ever", findMostUsedTag()); 
+        
         return mostUsedTagsAll;
     }
+
 }

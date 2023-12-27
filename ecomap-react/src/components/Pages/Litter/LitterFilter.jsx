@@ -37,7 +37,7 @@ export default function LitterFilter({ tags, onFilterChange }) {
                             marginRight: '8px',
                             minWidth: '150px',
                         }}
-                        label="Sort Litter"
+                        label="Sort By"
                         size="small"
                         value={sortLitter}
                         onChange={(e) => setSortLitter(e.target.value)}
