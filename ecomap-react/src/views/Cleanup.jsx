@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import Maps from "../components/Pages/Cleanup/Maps";
 import axiosClient from "../axios-client.js";
+import axios from "axios";
 import "../style.css";
 
 // Set the app element for react-modal
@@ -9,8 +10,25 @@ Modal.setAppElement("#root");
 
 const Cleanup = () => {
   const [createModalIsOpen, setCreateModalIsOpen] = useState(false);
-  const [joinModalIsOpen, setJoinModalIsOpen] = useState(false);
   const [additionalModalIsOpen, setAdditionalModalIsOpen] = useState(false);
+  const [cleanupEvents, setCleanupEvents] = useState([]);
+  const [joinModalIsOpen, setJoinModalIsOpen] = useState(false);
+
+  const openJoinModal = () => {
+    setJoinModalIsOpen(true);
+    setCreateModalIsOpen(false);
+    setAdditionalModalIsOpen(false);
+    // Fetch cleanup events when the modal is opened
+    axios
+      .get("http://localhost:8080/api/cleanup/list")
+      .then((response) => {
+        setCleanupEvents(response.data);
+        setJoinModalIsOpen(true);
+      })
+      .catch((error) => {
+        console.error("Error fetching cleanup events:", error);
+      });
+  };
 
   const [eventName, setEventName] = useState("");
   const [date, setDate] = useState("");
@@ -24,38 +42,57 @@ const Cleanup = () => {
 
     const cleanupData = {
       name: eventName,
-      locationX: xCoordinate,
-      locationY: yCoordinate,
+      location_x: xCoordinate,
+      location_y: yCoordinate,
+      description: description,
+      date: date,
       image: null,
       isPublic: privacyType,
     };
 
-    axiosClient
-      .post("/cleanup/create", cleanupData)
-      .then(({ data }) => {
-        // Handle successful response if needed
-        console.log("Cleanup created successfully:", data);
-      })
-      .catch((err) => {
-        console.error("Error in create cleanup:", err);
-
-        if (err && err.response && err.response.status === 422) {
-          setErrors(err.response.data.message);
-        } else {
-          // Handle other error cases if needed
-        }
-      });
+    try {
+      // Make a POST request using Axios
+      const response = await axios.post(
+        "http://localhost:8080/api/cleanup/create",
+        cleanupData
+      );
+      alert("Cleanup event created successfully", response.data);
+      // Handle the response as needed
+      console.log("Cleanup event created successfully:", response.data);
+    } catch (error) {
+      // Handle errors
+      console.error(
+        "Error creating cleanup event:",
+        error.response ? error.response.data : error.message
+      );
+    }
   };
+
+  const handleJoinEvent = async (cleanupId) => {
+    const userId = 1;
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/api/usercleanup/find?userId=${userId}&cleanupId=${cleanupId}`,
+        {
+          headers: {
+            Origin: 'http://localhost:4200',
+          },
+        }
+      );
+      alert("User has successfully joined the Cleanup", response.data);
+      console.log("User has successfully joined the Cleanup:", response.data);
+    } catch (error) {
+      console.error(
+        "Error joining cleanup event:",
+        error.response ? error.response.data : error.message
+      );
+    }
+  };
+  
 
   const openCreateModal = () => {
     setCreateModalIsOpen(true);
     setJoinModalIsOpen(false);
-    setAdditionalModalIsOpen(false);
-  };
-
-  const openJoinModal = () => {
-    setJoinModalIsOpen(true);
-    setCreateModalIsOpen(false);
     setAdditionalModalIsOpen(false);
   };
 
@@ -203,38 +240,33 @@ const Cleanup = () => {
 
         <Modal
           isOpen={joinModalIsOpen}
-          onRequestClose={closeModals}
+          onRequestClose={() => setJoinModalIsOpen(false)}
           contentLabel="Join Cleanup Modal"
           className="cleanup-modal"
         >
           <h2>Join a Cleanup</h2>
-          {/* Add content for the Join Cleanup modal */}
-
-          {/* Example listing with dummy data */}
           <table className="cleanup-listing">
             <thead>
               <tr>
+                <th className="centered">Cleanup ID</th>
                 <th>Event Name</th>
-                <th>Date</th>
-                <th>Action</th>
+                <th className="centered">Date</th>
+                <th className="centered">Action</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Cleanup Event 1</td>
-                <td>2023-01-01</td>
-                <td>
-                  <button onClick={() => handleJoinEvent(1)}>Join</button>
-                </td>
-              </tr>
-              <tr>
-                <td>Cleanup Event 2</td>
-                <td>2023-02-15</td>
-                <td>
-                  <button onClick={() => handleJoinEvent(2)}>Join</button>
-                </td>
-              </tr>
-              {/* Add more rows with dummy data as needed */}
+              {cleanupEvents.map((cleanup) => (
+                <tr key={cleanup.id}>
+                  <td className="centered">{cleanup.id}</td>
+                  <td>{cleanup.name}</td>
+                  <td>{cleanup.date}</td>
+                  <td>
+                    <button onClick={() => handleJoinEvent(cleanup.id)}>
+                      Join
+                    </button>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </Modal>

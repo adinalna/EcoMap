@@ -1,4 +1,7 @@
 /* Cleanup.css */
+.centered {
+  text-align: center;
+}
 
 .cleanup-container {
   text-align: center;
