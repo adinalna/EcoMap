@@ -8,6 +8,8 @@ import lombok.NonNull;
 
 import java.time.Instant;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 @Builder
@@ -25,6 +27,7 @@ public class UserCleanup {
     @NonNull
     @ManyToOne
     @JoinColumn(name = "cleanup_id")
+    @JsonIgnore 
     private Cleanup cleanup;
 
     @NonNull
