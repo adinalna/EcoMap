@@ -6,6 +6,11 @@ import cbse.EcoMap.repository.LitterRepository;
 import cbse.EcoMap.repository.UserRepository;
 //import cbse.EcoMap.security.UserDetailsImpl;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -63,6 +68,16 @@ public class LitterService {
 
     public void deleteLitter(Long litterId) {
         litterRepository.deleteById(litterId);
+    }
+    
+    public List<Litter> getAllLittersInMonth(int year, Month month) {
+        LocalDate startOfMonth = LocalDate.of(year, month, 1);
+        System.out.println(startOfMonth + "this is startOfMonth");
+        LocalDate endOfMonth = startOfMonth.plusMonths(1).minusDays(1);
+        
+        Instant startDate = startOfMonth.atStartOfDay().toInstant(ZoneOffset.UTC);
+        Instant endDate = endOfMonth.atTime(23, 59, 59).toInstant(ZoneOffset.UTC);
+        return litterRepository.findByDateCreatedBetween(startDate, endDate);
     }
 }
 

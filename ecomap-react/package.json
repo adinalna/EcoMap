@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "procy": "http://localhost:8080",
   "scripts": {
     "dev": "vite --port=4200",
     "build": "vite build",
@@ -29,6 +30,7 @@
     "react-i18next": "^14.0.0",
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.21.0",
+    "recharts": "^2.10.3",
     "uuid": "^9.0.1"
   },
   "devDependencies": {

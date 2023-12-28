@@ -13,6 +13,7 @@
 .community-div {
   display: flex;
   justify-content: space-around;
+  margin-bottom: 40px;
 }
 
 .community-child-div {
@@ -29,4 +30,6 @@
 
 .community-graph {
   height: 600px;
+  display: flex;
+  justify-content: center;
 }

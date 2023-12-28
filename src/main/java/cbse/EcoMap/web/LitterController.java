@@ -1,11 +1,13 @@
 package cbse.EcoMap.web;
 
+import java.time.Month;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +22,7 @@ import cbse.EcoMap.exception.ErrorResponse;
 import cbse.EcoMap.model.Litter;
 import cbse.EcoMap.service.LitterService;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/litter")
 public class LitterController {
@@ -90,4 +93,11 @@ public class LitterController {
                     .body(new ErrorResponse("Internal Server Error"));
         }
     }
+    
+    @GetMapping("/{year}/{month}")
+    public ResponseEntity<?> getAllLitterInAMonth(@PathVariable int year, @PathVariable Month month){
+    	List<Litter> allLitters = litterService.getAllLittersInMonth(year, month);
+        return ResponseEntity.ok().body(allLitters);
+    }
+     
 }
