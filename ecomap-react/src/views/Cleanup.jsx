@@ -71,23 +71,20 @@ const Cleanup = () => {
   const handleJoinEvent = async (cleanupId) => {
     const userId = 1;
     try {
-      const response = await axios.get(
-        `http://localhost:8080/api/usercleanup/find?userId=${userId}&cleanupId=${cleanupId}`,
-        {
-          headers: {
-            Origin: 'http://localhost:4200',
-          },
-        }
-      );
-      alert("User has successfully joined the Cleanup", response.data);
-      console.log("User has successfully joined the Cleanup:", response.data);
+        const response = await axios.get(
+          `http://localhost:8080/api/usercleanup/find?userId=${userId}&cleanupId=${cleanupId}`
+        );
+        // Access cleanup and user from the response data
+        const { cleanup, user } = response.data;
+        alert("User has successfully joined the Cleanup", cleanup, user);
+        console.log(cleanup, user);
     } catch (error) {
-      console.error(
-        "Error joining cleanup event:",
-        error.response ? error.response.data : error.message
-      );
+        console.error(
+            "Error joining cleanup event:",
+            error.response ? error.response.data : error.message
+        );
     }
-  };
+};
   
 
   const openCreateModal = () => {
