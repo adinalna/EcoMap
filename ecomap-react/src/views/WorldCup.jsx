@@ -15,9 +15,9 @@ export default function WorldCup() {
     ];
 
     const topCountries = [
-        { number: 1, country: 'Netherlands' },
-        { number: 2, country: 'UK' },
-        { number: 3, country: 'USA' }
+        { number: 1, country: 'Netherlands', totalLitter: 216115 },
+        { number: 2, country: 'UK', totalLitter: 145348 },
+        { number: 3, country: 'USA', totalLitter: 141217 }
     ];
 
     function numberWithCommas(x) {
@@ -118,11 +118,15 @@ export default function WorldCup() {
                                         <Col>
                                             <h3 style={{fontWeight: 'bold'}}>Leaderboards</h3>
                                             <hr/>
-                                            <Stack gap={3}>
+                                            <Stack gap={2}>
                                                 {topCountries.map((item) => (
                                                     <div key={item.number}>
                                                         <Card>
-                                                            <p>{item.country}</p>
+                                                            <Stack direction='horizontal' gap={3}>
+                                                                <p>{item.number}</p>
+                                                                <p>{item.country}</p>
+                                                                <p>{item.totalLitter}</p>
+                                                            </Stack>
                                                         </Card>
                                                     </div>
                                                 ))}
