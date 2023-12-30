@@ -72,29 +72,45 @@
 /* Module World Cup */
 
 .section {
-  margin-top: 3%;
-  margin-left: 5%;
-  margin-right: 5%;
+  margin: 3% 5%;
+  padding-bottom: 25px;
 }
 
 .title {
   font-size: 75px;
   font-weight: bolder;
+  color: #f0faf0;
 }
 
 .subtitle {
   font-size: 40px;
   font-weight: bold;
-}
+  color: #f0faf0;
 
-.headerBoxes {
-  padding: 15px 20px 10px;
 }
 
 .totalOverall {
-  padding: 20px;
+  padding: 10px;
   text-align: center;
+  background-color: #f0faf0;
+  outline: #163020 solid 3px;
+  border-radius: 5px;
 }
+
+.otherCards {
+  height: auto;
+  text-align: center;
+  background-color: #f0faf0;
+  outline: #163020 solid 5px;
+  border-radius: 5px;
+}
+
+.parentContainer {
+  display: flex;
+  flex-wrap: wrap; /* Allows multiple lines */
+  align-items: stretch; /* Stretches the children to fill the container */
+}
+
 
 
 
