@@ -1,33 +1,59 @@
 import React, { useEffect, useState } from "react";
 import "../community.css";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts'; // npm install recharts
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts'; // npm install rechartsss
 
 export default function Community() {
 
     const [chartData, setChartData] = useState([]);
-
-    const data = [
-        { name: 'Day 1', value: 2 },
-        { name: 'Day 2', value: 5.5 },
-        { name: 'Day 3', value: 2 },
-        { name: 'Day 4', value: 8.5 },
-        { name: 'Day 5', value: 1.5 },
-        { name: 'Day 6', value: 5 },
-    ];
+    const [filteredData, setFilteredData] = useState([]);
+    const [selectedRange, setSelectedRange] = useState("last3Years");
+    var dateCreatedArray = [];
+    var formattedDates = [];
+    let newObj = [];
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch("http://localhost:8080/api/litter/all");
-                const data = await response.json();
-                setChartData(data);
-                console.log(chartData);
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            }
-        };
-        fetchData();
-    }, []);
+        fetch('http://localhost:8080/api/litter/all')
+           .then((response) => response.json())
+           .then((data) => {
+
+            console.log(data);
+            setChartData(data);
+            dateCreatedArray = data.map(item => item.dateCreated);
+            console.log(dateCreatedArray);
+           formattedDates = dateCreatedArray.map(date => formatDateToMonthYear(date));
+           
+           // Count occurrences of each month-year
+            const monthYearCount = {};
+            formattedDates.forEach(monthYear => {
+                monthYearCount[monthYear] = (monthYearCount[monthYear] || 0) + 1;
+            });
+
+            // Create a new object with the desired format
+            newObj = Object.keys(monthYearCount).map(monthYear => ({
+                name: monthYear,
+                value: monthYearCount[monthYear].toString()
+            }));
+
+           console.log('formatDate',formattedDates);
+           console.log('newObj', newObj);
+
+           setChartData(newObj);
+           console.log(chartData);
+           })
+           .catch((err) => {
+              console.log(err.message);
+           });
+           
+        
+     }, []);
+
+     function formatDateToMonthYear(dateString) {
+        const options = { month: 'long', year: 'numeric' };
+        const formattedDate = new Date(dateString).toLocaleDateString(undefined, options);
+        console.log(formattedDate,'fDTMY function')
+        return formattedDate;
+    }
+
 
     return (
         <div>
@@ -54,8 +80,18 @@ export default function Community() {
                     </div>
                 </div>
                 <div class="community-graph">
+                    <div>
+                    <select>
+                        <option value="last3Years">Last 3 Years</option>
+                        <option value="lastYear">Last Year</option>
+                        <option value="last6Months">Last 6 Months</option>
+                        <option value="last3Months">Last 3 Months</option>
+                    </select>
+                    </div>
+                     {/* Dropdown for selecting time range */}
+
                     <LineChart
-                        width={500}
+                        width={1500}
                         height={300}
                         data = {chartData}
                     >
@@ -66,6 +102,7 @@ export default function Community() {
                         <Legend />
                         <Line type="monotone" dataKey="value" stroke="#8884d8" />
                     </LineChart>
+                    
                 </div>
             </div>
         </div>

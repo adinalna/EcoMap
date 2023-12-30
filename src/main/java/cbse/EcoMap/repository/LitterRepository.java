@@ -26,6 +26,8 @@ public interface LitterRepository extends JpaRepository<Litter, Long> {
 	
 	@Query("SELECT l FROM Litter l WHERE l.dateCreated BETWEEN :startDate AND :endDate")
 	List<Litter> findByDateCreatedBetween(Instant startDate, Instant endDate);
+	
+	
 
 
 }

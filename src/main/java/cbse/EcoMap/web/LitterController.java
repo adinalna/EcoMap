@@ -22,7 +22,7 @@ import cbse.EcoMap.exception.ErrorResponse;
 import cbse.EcoMap.model.Litter;
 import cbse.EcoMap.service.LitterService;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:3000") 
 @RestController
 @RequestMapping("/api/litter")
 public class LitterController {
@@ -97,6 +97,33 @@ public class LitterController {
     @GetMapping("/{year}/{month}")
     public ResponseEntity<?> getAllLitterInAMonth(@PathVariable int year, @PathVariable Month month){
     	List<Litter> allLitters = litterService.getAllLittersInMonth(year, month);
+        return ResponseEntity.ok().body(allLitters);
+    }
+    
+ // Endpoint to get litter data for the last year
+    @GetMapping("/last_year")
+    public ResponseEntity<List<Litter>> getLitterLastYear() {
+        List<Litter> allLitters = litterService.getAllLittersPastNDays(365);
+        return ResponseEntity.ok().body(allLitters); 
+    }
+    
+    @GetMapping("/last_three_years")
+    public ResponseEntity<List<Litter>> getLitterLastThreeYears() {
+        List<Litter> allLitters = litterService.getAllLittersPastNDays(365*3);
+        return ResponseEntity.ok().body(allLitters); 
+    }
+
+    // Endpoint to get litter data for the last 6 months
+    @GetMapping("/last_six_months")
+    public ResponseEntity<List<Litter>> getLitterLastSixMonths() {
+    	List<Litter> allLitters = litterService.getAllLittersPastNDays(180);
+        return ResponseEntity.ok().body(allLitters);
+    }
+
+    // Endpoint to get litter data for the last 3 months
+    @GetMapping("/last_three_months")
+    public ResponseEntity<List<Litter>> getLitterLastThreeMonths() {
+    	List<Litter> allLitters = litterService.getAllLittersPastNDays(90);
         return ResponseEntity.ok().body(allLitters);
     }
      

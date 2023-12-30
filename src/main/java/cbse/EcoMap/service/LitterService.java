@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.ZoneOffset;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -77,6 +78,20 @@ public class LitterService {
         
         Instant startDate = startOfMonth.atStartOfDay().toInstant(ZoneOffset.UTC);
         Instant endDate = endOfMonth.atTime(23, 59, 59).toInstant(ZoneOffset.UTC);
+        return litterRepository.findByDateCreatedBetween(startDate, endDate);
+    }
+    
+    public List<Litter> getAllLittersInDateRange(Instant startDate, Instant endDate) {
+        // Assuming you have a method in your repository to fetch data in a date range
+        return litterRepository.findByDateCreatedBetween(startDate, endDate);
+    }
+    
+    public List<Litter> getAllLittersPastNDays(int days) {
+        // Calculate start and end dates based on the number of days
+        Instant endDate = Instant.now();
+        Instant startDate = endDate.minus(days, ChronoUnit.DAYS);
+        
+        // Assuming you have a method in your repository to fetch data in a date range
         return litterRepository.findByDateCreatedBetween(startDate, endDate);
     }
 }
