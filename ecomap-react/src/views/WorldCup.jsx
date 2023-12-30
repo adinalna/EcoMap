@@ -131,6 +131,7 @@ export default function WorldCup() {
                                                     </div>
                                                 ))}
                                             </Stack>
+                                            <hr/>
                                         </Col>
                                     </Row>
                                     <Row>
