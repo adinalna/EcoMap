@@ -29,7 +29,7 @@
   border-radius: 8px;
   outline: none;
   width: 80%; /* Adjusted width */
-  max-width: 500px; /* Set max-width for larger screens */
+  max-width: 1000px; /* Set max-width for larger screens */
 }
 
 .cleanup-modal h2 {
@@ -99,4 +99,9 @@ button {
   display: inline-block;
   font-size: 14px;
   cursor: pointer;
+}
+
+.search-container {
+  display: flex;
+  align-items: center; /* Vertically align items in the center */
 }

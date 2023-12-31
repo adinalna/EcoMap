@@ -18,9 +18,10 @@ const Cleanup = () => {
     setJoinModalIsOpen(true);
     setCreateModalIsOpen(false);
     setAdditionalModalIsOpen(false);
+    const userId = 1;
     // Fetch cleanup events when the modal is opened
     axios
-      .get("http://localhost:8080/api/cleanup/list")
+      .get(`http://localhost:8080/api/cleanup/filteredList?userID=${userId}`)
       .then((response) => {
         setCleanupEvents(response.data);
         setJoinModalIsOpen(true);
@@ -36,7 +37,12 @@ const Cleanup = () => {
   const [xCoordinate, setXCoordinate] = useState("");
   const [yCoordinate, setYCoordinate] = useState("");
   const [privacyType, setType] = useState(true);
-
+  const handleSearch = (eventName) => {
+    // Now you can use the eventName parameter in your logic
+    console.log("Searching for:", eventName);
+  
+    // Add the rest of your search logic here
+  };
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -71,21 +77,21 @@ const Cleanup = () => {
   const handleJoinEvent = async (cleanupId) => {
     const userId = 1;
     try {
-        const response = await axios.get(
-          `http://localhost:8080/api/usercleanup/find?userId=${userId}&cleanupId=${cleanupId}`
-        );
-        // Access cleanup and user from the response data
-        const { cleanup, user } = response.data;
-        alert("User has successfully joined the Cleanup", cleanup, user);
-        console.log(cleanup, user);
+      const response = await axios.get(
+        `http://localhost:8080/api/usercleanup/find?userId=${userId}&cleanupId=${cleanupId}`
+      );
+      alert("User has successfully joined the Cleanup", response.data);
+      // Update the frontend by removing the joined event
+      setCleanupEvents((prevCleanupEvents) =>
+        prevCleanupEvents.filter((cleanup) => cleanup.id !== cleanupId)
+      );
     } catch (error) {
-        console.error(
-            "Error joining cleanup event:",
-            error.response ? error.response.data : error.message
-        );
+      console.error(
+        "Error joining cleanup event:",
+        error.response ? error.response.data : error.message
+      );
     }
-};
-  
+  };
 
   const openCreateModal = () => {
     setCreateModalIsOpen(true);
@@ -242,28 +248,48 @@ const Cleanup = () => {
           className="cleanup-modal"
         >
           <h2>Join a Cleanup</h2>
+          <label>
+            Search Cleanup by Code:
+            <input
+              type="text"
+              name="eventName"
+              value={eventName}
+              onChange={(e) => setEventName(e.target.value)}
+            />
+            <button onClick={() => handleSearch(eventName)}>
+              Search
+            </button>
+          </label>
           <table className="cleanup-listing">
             <thead>
               <tr>
-                <th className="centered">Cleanup ID</th>
-                <th>Event Name</th>
+                <th className="centered">Event Name</th>
                 <th className="centered">Date</th>
+                <th className="centered">Description</th>
                 <th className="centered">Action</th>
               </tr>
             </thead>
             <tbody>
-              {cleanupEvents.map((cleanup) => (
-                <tr key={cleanup.id}>
-                  <td className="centered">{cleanup.id}</td>
-                  <td>{cleanup.name}</td>
-                  <td>{cleanup.date}</td>
-                  <td>
-                    <button onClick={() => handleJoinEvent(cleanup.id)}>
-                      Join
-                    </button>
+              {cleanupEvents.length > 0 ? (
+                cleanupEvents.map((cleanup) => (
+                  <tr key={cleanup.id}>
+                    <td className="centered">{cleanup.name}</td>
+                    <td className="centered">{cleanup.date}</td>
+                    <td className="centered">{cleanup.description}</td>
+                    <td className="centered">
+                      <button onClick={() => handleJoinEvent(cleanup.id)}>
+                        Join
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="4" className="centered">
+                    There is no available Cleanup at the moment.
                   </td>
                 </tr>
-              ))}
+              )}
             </tbody>
           </table>
         </Modal>
