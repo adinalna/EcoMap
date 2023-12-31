@@ -1,9 +1,18 @@
 package cbse.EcoMap.web;
 
+import cbse.EcoMap.repository.CleanupRepository;
+import cbse.EcoMap.repository.UserRepository;
+
+import java.time.Instant;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -28,42 +37,80 @@ public class UserCleanupController {
 	private final CleanupService cleanupService;
 	private final UserService userService;
 	private final UserCleanupService userCleanupService;
+    private UserRepository userRepository; // Add this field
 
 	@Autowired
 	public UserCleanupController(CleanupService cleanupService, UserService userService,
-			UserCleanupService userCleanupService) {
+			UserCleanupService userCleanupService, UserRepository userRepository) {
 		this.cleanupService = cleanupService;
 		this.userService = userService;
 		this.userCleanupService = userCleanupService;
+		this.userRepository = userRepository;
 	}
 
 	@GetMapping("/find")
 	@CrossOrigin(origins = "http://localhost:4200")
 	public ResponseEntity<?> findUserAndCleanup(@RequestParam Long userId, @RequestParam Long cleanupId) {
 		try {
-			//System.out.println("Searching for User with ID: " + userId);
-			//User user = userService.createDummyUser();
-//			
-			System.out.println("Searching for Cleanup with ID: " + cleanupId);
+			List<User> userList = userService.getAllUsers();
+
+	        // Find the user with the specified ID
+	        User foundUser = null;
+	        for (User user : userList) {
+	            if (user.getId().equals(userId)) {
+	                foundUser = user;
+	                break;
+	            }
+	        }
+	        
 			Cleanup cleanup = cleanupService.findCleanupById(cleanupId);
-			
-			//System.out.println("Searching for User with ID: " + userId);
-			//User user = userService.findCleanupById(userId);
-			
-			// Optionally, you can return the user and cleanup objects as a response
 			Map<String, Object> result = new HashMap<>();
 			result.put("cleanup", cleanup);
-			//result.put("user", user);
-
-			System.out.println("Search successful. Result: " + result);
+			result.put("user", foundUser);
 			
-			UserCleanup UC = new UserCleanup();
-			UC.setCleanup(cleanup);
-			//UC.setUser(userId);
-			UserCleanup createdUserCleanup = userCleanupService.createUserCleanup(UC);
+	
+			UserCleanup userCleanup = UserCleanup.builder()
+	                .cleanup(cleanup)
+	                .user(foundUser)
+	                .role("Member") // Set the role accordingly
+	                .date_created(Instant.now())
+	                .build();
+//				
+			 
+			 UserCleanup createdUserCleanup = userCleanupService.createUserCleanup(userCleanup);
+//			 
+			 
+//			 User user = userRepository.findById(userId).orElseThrow();
+//			 
+//			 Set<UserCleanup> userCleanups = new HashSet<>();
+//			 userCleanups.add(createdUserCleanup);
+//			 user.setUserCleanups(userCleanups);
 			
+//			User user = userRepository.findById(userId).orElseThrow();
+//			UserCleanup createdUserCleanup = userCleanupService.createUserCleanup(userCleanup);
+//			user.getUserCleanups().add(createdUserCleanup); // Add the new UserCleanup to the set
+//			User u1 = userRepository.save(user);
+//			 
+//			 User u1 = userRepository.save(user);
+//			 Set<Cleanup> list = foundUser.getCleanups();
+//			 list.add(cleanup);
+//			 foundUser.setCleanups(list);
+			 
+//			 userRepository.save(foundUser);
+			 //			 User updated = userService.saveUpdatedUser(foundUser); 
+			 
+//			 Set<UserCleanup> UClist = foundUser.getUserCleanups();
+//			 UClist.add(createdUserCleanup);
+//			 foundUser.setUserCleanups(UClist);
+////			 Set<Cleanup> list = foundUser.getCleanups();
+//			 list.add(cleanup);
+//			
+////			 
+//			 User newSaved = userService.updateUser((long) 1,foundUser);
+////			 
+//	         System.out.println("UserCleanup created: " + createdUserCleanup);
 
-			return ResponseEntity.ok().body(result);
+			 return ResponseEntity.ok().body(createdUserCleanup);
 		} catch (Exception e) {
 			// Handle errors and return an appropriate response
 			System.err.println("Error during search: " + e.getMessage());
@@ -72,20 +119,12 @@ public class UserCleanupController {
 					.body(new ErrorResponse("Internal Server Error"));
 		}
 	}
-//    @PostMapping("/create")
+	
+//	@GetMapping("/list")
 //    @CrossOrigin(origins = "http://localhost:4200")
-//    public ResponseEntity<?> createUserCleanup(@RequestBody UserCleanup userCleanup) {
-//        try {
-//            System.out.println("Received UserCleanup data: " + userCleanup.toString());
-//            UserCleanup createdUserCleanup = userCleanupService.createUserCleanup(userCleanup);
-//            return ResponseEntity.ok().body(createdUserCleanup);
-//        } catch (IllegalArgumentException e) {
-//            System.err.println("IllegalArgumentException: " + e.getMessage());
-//            return ResponseEntity.badRequest().body(new ErrorResponse("Invalid data: " + e.getMessage()));
-//        } catch (Exception e) {
-//            e.printStackTrace(); // Print the full exception stack trace
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorResponse("Internal Server Error"));
-//        }
+//    public ResponseEntity<List<UserCleanup>> list() {
+//        List<User> userList = userService.getAllUsers();
+//        return ResponseEntity.ok().body(userList);
 //    }
 
 }

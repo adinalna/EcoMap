@@ -55,7 +55,20 @@ public class CleanupController {
         return ResponseEntity.ok().body(cleanupList);
     }
     
+    @GetMapping("/filteredList")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ResponseEntity<List<Cleanup>> filteredList(Long userID) {
+        List<Cleanup> cleanupList = cleanupService.filteredCleanups(userID);
+        return ResponseEntity.ok().body(cleanupList);
+    }
     
-
+    @GetMapping("/findSpecific")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ResponseEntity<Cleanup> findSpecific(Long cleanupID) {
+        Cleanup foundCleanup = cleanupService.findCleanupById(cleanupID);
+        return ResponseEntity.ok().body(foundCleanup);
+    }
+    
+    
 }
 

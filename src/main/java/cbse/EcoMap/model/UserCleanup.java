@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 import java.time.Instant;
+import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -46,8 +47,21 @@ public class UserCleanup {
         cleanup.getUserCleanups().add(this);
     }
 
-    public void setUser(User user) {
-        this.user = user;
-        user.getUserCleanups().add(this);
+//    public void setUser(User user) {
+//        this.user = user;
+//        user.getUserCleanups().add(this);
+//    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserCleanup userCleanup = (UserCleanup) o;
+        return Objects.equals(id, userCleanup.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
