@@ -24,8 +24,10 @@ public interface LitterRepository extends JpaRepository<Litter, Long> {
 //	@Query("SELECT l FROM Litter l WHERE l.dateCreated BETWEEN :startDate AND :endDate")
 //	List<Litter> findByDateCreatedBetween(LocalDateTime startDate, LocalDateTime endDate);
 	
-	@Query("SELECT l FROM Litter l WHERE l.dateCreated BETWEEN :startDate AND :endDate")
-	List<Litter> findByDateCreatedBetween(Instant startDate, Instant endDate);
+	@Query("SELECT DISTINCT l FROM Litter l LEFT JOIN FETCH l.media m WHERE l.dateCreated BETWEEN :startDate AND :endDate")
+	List<Litter> findByDateCreatedBetween(@Param("startDate") Instant startDate, @Param("endDate") Instant endDate, Sort sort);
+
+
 	
 	
 

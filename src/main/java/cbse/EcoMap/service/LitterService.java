@@ -78,12 +78,15 @@ public class LitterService {
         
         Instant startDate = startOfMonth.atStartOfDay().toInstant(ZoneOffset.UTC);
         Instant endDate = endOfMonth.atTime(23, 59, 59).toInstant(ZoneOffset.UTC);
-        return litterRepository.findByDateCreatedBetween(startDate, endDate);
+        
+        Sort sort = Sort.by(Sort.Direction.ASC, "dateCreated");
+        return litterRepository.findByDateCreatedBetween(startDate, endDate, sort);
     }
     
     public List<Litter> getAllLittersInDateRange(Instant startDate, Instant endDate) {
         // Assuming you have a method in your repository to fetch data in a date range
-        return litterRepository.findByDateCreatedBetween(startDate, endDate);
+    	Sort sort = Sort.by(Sort.Direction.ASC, "dateCreated");
+        return litterRepository.findByDateCreatedBetween(startDate, endDate, sort);
     }
     
     public List<Litter> getAllLittersPastNDays(int days) {
@@ -91,8 +94,12 @@ public class LitterService {
         Instant endDate = Instant.now();
         Instant startDate = endDate.minus(days, ChronoUnit.DAYS);
         
+    	System.out.println("This is endDate" + endDate);
+    	System.out.println("This is endDate" + startDate);
+
+    	Sort sort = Sort.by(Sort.Direction.ASC, "dateCreated");
         // Assuming you have a method in your repository to fetch data in a date range
-        return litterRepository.findByDateCreatedBetween(startDate, endDate);
+        return litterRepository.findByDateCreatedBetween(startDate, endDate, sort);
     }
 }
 

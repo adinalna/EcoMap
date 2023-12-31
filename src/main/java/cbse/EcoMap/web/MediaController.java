@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = "http://localhost:3000") // Change to Port 4200
 @RestController
 @RequestMapping("/api/media")
 public class MediaController {
@@ -48,7 +49,7 @@ public class MediaController {
         }
     }
     
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<Media>> getAllMedia() {
         List<Media> mediaList = mediaService.getAllMedia();
         return ResponseEntity.ok().body(mediaList);
