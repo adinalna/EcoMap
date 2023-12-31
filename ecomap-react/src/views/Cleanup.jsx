@@ -37,12 +37,40 @@ const Cleanup = () => {
   const [xCoordinate, setXCoordinate] = useState("");
   const [yCoordinate, setYCoordinate] = useState("");
   const [privacyType, setType] = useState(true);
-  const handleSearch = (eventName) => {
-    // Now you can use the eventName parameter in your logic
-    console.log("Searching for:", eventName);
+  const [specificCleanup, setSpecificCleanup] = useState([]);
+ 
+  const handleSearch = async (eventName) => {
+    try {
+      // Check if the event name is empty
+      if (!eventName) {
+        alert("Please enter an event code");
+        return;
+      }
+      // Make a GET request using Axios
+      const response = await axios.get(
+        `http://localhost:8080/api/cleanup/findSpecific?cleanupID=${eventName}`
+      );
   
+      // Check if the response contains cleanup data
+      if (response.data) {
+        console.log("Cleanup data:", response.data);
+        setSpecificCleanup([response.data]);
+      } else {
+        // If no cleanup data is found, show an alert
+        alert("No cleanup data found for the given ID");
+      }
+    } catch (error) {
+      // Handle errors
+      console.error(
+        "Error searching cleanup event:",
+        error.response ? error.response.data : error.message
+      );
+    }
+  
+    console.log("Searching for:", eventName);
     // Add the rest of your search logic here
   };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -138,12 +166,9 @@ const Cleanup = () => {
           style={{
             overlay: {
               display: "flex",
-              alignItems: "center", // Center content vertically
-              justifyContent: "center", // Center content horizontally
+            
             },
             content: {
-              display: "flex",
-              flexDirection: "row",
               width: "80%",
               maxWidth: "800px",
             },
@@ -228,7 +253,7 @@ const Cleanup = () => {
               isOpen={additionalModalIsOpen}
               onRequestClose={smallCloseModal}
               contentLabel="Additional Modal"
-              className="cleanup-modal"
+              className="cleanup-modalMap"
             >
               {/* Additional Modal Content */}
               {additionalModalIsOpen && (
@@ -248,50 +273,71 @@ const Cleanup = () => {
           className="cleanup-modal"
         >
           <h2>Join a Cleanup</h2>
-          <label>
-            Search Cleanup by Code:
-            <input
-              type="text"
-              name="eventName"
-              value={eventName}
-              onChange={(e) => setEventName(e.target.value)}
-            />
+          <label className="search-container">
+            <span style={{ display: 'flex', alignItems: 'center' }}>
+              Search Code:
+              <input
+                type="text"
+                name="eventName"
+                value={eventName}
+                onChange={(e) => setEventName(e.target.value)}
+                style={{ marginRight: '10px', marginBottom: '0' }}
+              />
+            </span>
             <button onClick={() => handleSearch(eventName)}>
               Search
             </button>
           </label>
+
+
+           
+          
           <table className="cleanup-listing">
-            <thead>
-              <tr>
-                <th className="centered">Event Name</th>
-                <th className="centered">Date</th>
-                <th className="centered">Description</th>
-                <th className="centered">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {cleanupEvents.length > 0 ? (
-                cleanupEvents.map((cleanup) => (
-                  <tr key={cleanup.id}>
-                    <td className="centered">{cleanup.name}</td>
-                    <td className="centered">{cleanup.date}</td>
-                    <td className="centered">{cleanup.description}</td>
-                    <td className="centered">
-                      <button onClick={() => handleJoinEvent(cleanup.id)}>
-                        Join
-                      </button>
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="4" className="centered">
-                    There is no available Cleanup at the moment.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+  <thead>
+    <tr>
+      <th className="centered">Event Name</th>
+      <th className="centered">Date</th>
+      <th className="centered">Description</th>
+      <th className="centered">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {specificCleanup.length > 0 ? (
+      specificCleanup.map((cleanup) => (
+        <tr key={cleanup.id}>
+          <td className="centered">{cleanup.name}</td>
+          <td className="centered">{cleanup.date}</td>
+          <td className="centered">{cleanup.description}</td>
+          <td className="centered">
+            <button onClick={() => handleJoinEvent(cleanup.id)}>
+              Join
+            </button>
+          </td>
+        </tr>
+      ))
+    ) : cleanupEvents.length > 0 ? (
+      cleanupEvents.map((cleanup) => (
+        <tr key={cleanup.id}>
+          <td className="centered">{cleanup.name}</td>
+          <td className="centered">{cleanup.date}</td>
+          <td className="centered">{cleanup.description}</td>
+          <td className="centered">
+            <button onClick={() => handleJoinEvent(cleanup.id)}>
+              Join
+            </button>
+          </td>
+        </tr>
+      ))
+    ) : (
+      <tr>
+        <td colSpan="4" className="centered">
+          There is no available Cleanup at the moment.
+        </td>
+      </tr>
+    )}
+  </tbody>
+</table>
+
         </Modal>
       </div>
     </div>

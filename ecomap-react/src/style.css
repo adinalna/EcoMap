@@ -17,7 +17,19 @@
   padding: 10px;
   font-size: 16px;
 }
-
+.cleanup-modalMap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border: 2px solid black; /* Add border property */
+  padding: 20px;
+  border-radius: 8px;
+  outline: none;
+  width: 80%; /* Adjusted width */
+  max-width: 500px; /* Set max-width for larger screens */
+}
 .cleanup-modal {
   position: absolute;
   top: 50%;
@@ -104,4 +116,5 @@ button {
 .search-container {
   display: flex;
   align-items: center; /* Vertically align items in the center */
+  max-width: 500px;
 }
