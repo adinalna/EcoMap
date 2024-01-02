@@ -142,7 +142,9 @@ export default function WorldCup() {
                                                 justifyContent: 'center',
                                                 backgroundColor:'#163020',
                                                 borderColor:'#163020'
-                                            }}>
+                                            }}
+                                            href='/worldCupLeaderboards'
+                                            >
                                                 <p style={{ margin: '0', paddingRight: '10px' }}>Leaderboards</p>
                                                 <ArrowForwardOutline
                                                     color={'#00000'}

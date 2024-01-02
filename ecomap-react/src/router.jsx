@@ -10,6 +10,7 @@ import Upload from "./views/Upload.jsx";
 import Cleanup from "./views/Cleanup.jsx";
 import Litter from "./views/Litter.jsx";
 import WorldCup from "./views/WorldCup.jsx";
+import WorldCupLeaderboards from "./components/Pages/WorldCup/WorldCupLeaderboards.jsx";
 
 const router = createBrowserRouter([
     {
@@ -38,7 +39,7 @@ const router = createBrowserRouter([
                     },
                     {
                         path: '/worldCupLeaderboards',
-                        element: <WorldCup />
+                        element: <WorldCupLeaderboards />
                     }
                 ]
             },

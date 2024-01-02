@@ -86,7 +86,12 @@
   font-size: 40px;
   font-weight: bold;
   color: #f0faf0;
+}
 
+.cardText {
+  font-size: 20px;
+  font-weight: normal;
+  color: #f0faf0;
 }
 
 .totalOverall {
@@ -105,12 +110,35 @@
   border-radius: 5px;
 }
 
+.cardOutline {
+  outline: #163020 solid 3px;
+  border-radius: 5px;
+}
+
 .parentContainer {
   display: flex;
   flex-wrap: wrap; /* Allows multiple lines */
   align-items: stretch; /* Stretches the children to fill the container */
 }
 
+.leaderBoardTable tbody {
+  text-align: center;
+  font-size: 18px;
+}
+
+.leaderBoardTable thead {
+  font-weight: bold;
+  text-align: center;
+
+}
+
+.leaderBoardTable thead th {
+  font-weight: bold;
+  text-align: center;
+  border: 2px solid #163020;
+  background-color: #355c44;
+  color: #f0faf0;
+}
 
 
 
