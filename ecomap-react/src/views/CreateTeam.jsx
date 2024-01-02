@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axiosClient from "../axios-client.js";
 
 const CreateTeam = () => {
@@ -7,6 +7,17 @@ const CreateTeam = () => {
   const [identifier, setIdentifier] = useState('');
   const [processing, setProcessing] = useState(false);
   const [errors, setErrors] = useState({}); // Error handling
+  const [successMessage, setSuccessMessage] = useState('');
+  const [timeoutId, setTimeoutId] = useState(null);
+
+  // Clear the timeout when the component unmounts to prevent memory leaks
+  useEffect(() => {
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [timeoutId]);
 
   // Handlers for input changes
   const handleTeamTypeChange = (e) => setTeamType(e.target.value);
@@ -19,6 +30,7 @@ const CreateTeam = () => {
     e.preventDefault();
     setProcessing(true);
     clearErrors();
+    setSuccessMessage('');
 
     const payload = {
         name,
@@ -29,9 +41,19 @@ const CreateTeam = () => {
     console.log('Sending POST request to:', `${import.meta.env.VITE_API_BASE_URL}/api/teams`, payload);
 
     try {
-        const response = await axiosClient.post('/teams', payload);
-        console.log('Response:', response.data);
-        // Handle the successful response here
+      const response = await axiosClient.post('/teams', payload);
+      console.log('Response:', response.data);
+      // Display success message and reset form fields
+      setSuccessMessage(`Team "${response.data.name}" created successfully!`);
+      setName('');
+      setIdentifier('');
+      setTeamType('public');
+
+      // Clear the success message after 5 seconds
+      const newTimeoutId = setTimeout(() => {
+        setSuccessMessage('');
+      }, 5000);
+      setTimeoutId(newTimeoutId); // Save the timeout id
     } catch (error) {
         console.error('Error:', error);
         setErrors(error.response?.data?.errors || { generic: 'An error occurred.' });
@@ -44,6 +66,11 @@ const CreateTeam = () => {
     <div style={{ margin: "10px 200px" }}>
       <h1 className='mb-4'>Create a Team</h1>
       <p className='mb-3'>You are allowed to create 9 teams.</p>
+      {successMessage && (
+        <div className="alert alert-success" role="alert">
+          {successMessage}
+        </div>
+      )}
       <div className='card p-3 mb-4' style={{ backgroundColor: '#f0faf0' }}>
       <form onSubmit={handleSubmit}>
         <div className='form-group mb-3'>
