@@ -40,3 +40,12 @@ body {
     display: flex;
     align-items: center;
 }
+
+.countryLitterData .modal-dialog {
+    max-width: 90%;
+    height: 90%;
+}
+
+.countryLitterData .modal-content {
+    height: 100%;
+}

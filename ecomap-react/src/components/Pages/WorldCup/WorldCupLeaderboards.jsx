@@ -3,6 +3,7 @@ import React, {useEffect, useState} from "react";
 import Stack from 'react-bootstrap/Stack';
 import {SearchOutline} from "react-ionicons";
 import getCountryFlag from "./getCountryFlag.jsx";
+import CountryGraphOverlay from "./CountryGraphOverlay.jsx";
 
 function WorldCupLeaderboards() {
     const [selectedTime, setSelectedTime] = useState('All Time');
@@ -300,7 +301,6 @@ function WorldCupLeaderboards() {
                             </Card.Body>
                         </Card>
                     </Col>
-
                 </Row>
                 <Row style={{paddingBottom: 20}}>
                     <Col>
@@ -337,7 +337,7 @@ function WorldCupLeaderboards() {
                                         <td>{data.totalContributors}</td>
                                         <td>{data.lastUpdated}</td>
                                         <td>
-                                            <Button>Details</Button>
+                                            <CountryGraphOverlay />
                                         </td>
                                     </tr>
                                     ))}
