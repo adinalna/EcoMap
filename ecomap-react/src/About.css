@@ -3,15 +3,27 @@
   justify-content: space-around;
   padding: 20px;
   text-align: center;
+  background-color: black;
+  color: white;
+  min-width: 1000px;
 }
 
 .about-content {
+  color: white;
+  min-width: 1000px;
+}
+
+.about-p1 {
   max-width: 700px;
+  color: white;
+  text-align: center;
+  margin: 0 auto;
 }
 
 .about-heading {
   color: #2C3E50;
   padding-bottom: 25px;
+  color: white;
 }
 
 .about-card {
@@ -25,12 +37,12 @@
 
 .card-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   margin-top: 20px;
 }
 
 .about-paragraph {
-  color: #555;
+  color: white;
   margin-bottom: 10px;
 }
 
