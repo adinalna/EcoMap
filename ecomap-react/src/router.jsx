@@ -11,6 +11,8 @@ import Cleanup from "./views/Cleanup.jsx";
 import Litter from "./views/Litter.jsx";
 import WorldCup from "./views/WorldCup.jsx";
 import WorldCupLeaderboards from "./components/Pages/WorldCup/WorldCupLeaderboards.jsx";
+import LitterGallery from "./views/LitterGallery.jsx";
+import LitterTag from "./views/LitterTag.jsx";
 
 const router = createBrowserRouter([
     {
@@ -26,8 +28,12 @@ const router = createBrowserRouter([
                         element: <Upload />
                     },
                     {
-                        path: '/litter',
-                        element: <Litter />
+                        path: '/gallery',
+                        element: <LitterGallery />
+                    },
+                    {
+                        path: '/tag',
+                        element: <LitterTag />
                     },
                     {
                         path: '/cleanup',

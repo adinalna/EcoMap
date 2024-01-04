@@ -9,6 +9,8 @@ export default function LitterList({ litterList }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
 
+  const BUCKET_URL= import.meta.env.VITE_APP_SUPABASE_STORAGE_BUCKET_URL;
+
   const handleCardClick = (litter, index) => {
     setModalContent({ ...litter, index });
     setOpenModal(true);
@@ -66,7 +68,7 @@ export default function LitterList({ litterList }) {
                   >
                     {media.type === 'image' && (
                       <img
-                        src={media.src}
+                        src={`${BUCKET_URL}/${media.src}`}
                         loading="lazy"
                         alt=""
                         style={{
@@ -100,7 +102,7 @@ export default function LitterList({ litterList }) {
                           borderRadius: '5px',
                         }}
                       >
-                        <source src={media.src} type="video/mp4" />
+                        <source src={`${BUCKET_URL}/${media.src}`} type="video/mp4" />
                       </video>
                     )}
                   </div>
@@ -114,16 +116,16 @@ export default function LitterList({ litterList }) {
                   right: 0,
                   padding: 2,
                   display: 'flex',
-                  flexDirection: 'column',
+                  flexDirection: 'column-reverse',
                   justifyContent: 'space-between',
                   alignItems: 'right',
                   width: '100%',
                   height: '100%',
                 }}
               >
-                <p
+                {/* <p
                   style={{ color: '#fff' }}
-                >{`1/${litter.medias.length}`}</p>
+                >{`1/${litter.medias.length}`}</p> */}
                 <div
                   style={{
                     width: '100%',
@@ -155,8 +157,6 @@ export default function LitterList({ litterList }) {
       <LitterModal
         open={openModal}
         handleClose={handleCloseModal}
-        handlePrevImage={handlePrevImage}
-        handleNextImage={handleNextImage}
         currentIndex={currentIndex}
         modalContent={modalContent}
       />

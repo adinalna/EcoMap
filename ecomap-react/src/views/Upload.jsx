@@ -1,7 +1,10 @@
 import React, { useState } from "react";
-import { Form, Button, ListGroup, Card, Table, Badge } from "react-bootstrap";
+import { Form, Button, ListGroup, Card, Table, Badge, Nav } from "react-bootstrap";
 import MediaUpload from "../components/Common/MediaUpload.jsx";
 import axiosClient from "../axios-client.js";
+import { Upload as UploadIcon, Images } from 'react-bootstrap-icons'
+import checkGeotag from "../checkGeotag.js";
+import appendGeotag from "../appendGeotag.js";
 
 export default function Upload() {
   const [selectedFiles, setSelectedFiles] = useState([]);
@@ -19,30 +22,60 @@ export default function Upload() {
     setSelectedFiles(updatedFiles);
   };
 
-  const handleUploadComplete = ({ overallUploadSuccess, fileResults }) => {
+  const handlePreUpload = async (onUpload) => {
+    try {
+      const geotagChecks = await Promise.all(selectedFiles.map(checkGeotag));
+      const allFilesGeotagged = geotagChecks.every((result) => result);
+
+      if (allFilesGeotagged) {
+        onUpload();
+      } else {
+        alert("Please make sure all selected files are geotagged before uploading.");
+      }
+    } catch (error) {
+      console.error("Error checking geotags:", error.message);
+    }
+  };
+
+  const handleUploadComplete = async ({ overallUploadSuccess, fileResults }) => {
     console.log("Upload success:", overallUploadSuccess);
-    console.log("Upload success 1:", fileResults[0].uploadSuccess);
 
-    if (overallUploadSuccess) {
-      setUploadedFiles((prevFiles) => [...prevFiles, ...fileResults]);
-      setFilesToBeUploaded(false);
-      setShowUploadButton(false);
+    setFilesToBeUploaded(false);
+    setShowUploadButton(false);
 
-      // axiosClient.post('/upload', payload)
-      // .then(({ data }) => {
+    const successfulUploads = fileResults.filter((fileResult) => fileResult.uploadSuccess);
 
-      // })
-      // .catch((err) => {
-      //   const response = err.response;
-      //   if (response && response.status === 422) {
-      //     setErrors(response.data.message)
-      //   }
-      // })
+    const geotaggedUploads = await appendGeotag(successfulUploads);
+
+    console.log("geotaggedUploads", geotaggedUploads);
+
+    setUploadedFiles(fileResults);
+
+    if (geotaggedUploads.length > 0) {
+      const payload = geotaggedUploads.map((upload) => ({
+        path: upload.uploadFileName,
+        mediaType: upload.fileType,
+        locationX: upload.locationX,
+        locationY: upload.locationY,
+      }));
+
+      console.log("payload", payload);
+      axiosClient.post('/media/batch', payload)
+        .then(({ data }) => {
+        })
+        .catch((err) => {
+          console.error("Error in batch upload:", err);
+
+          const response = err.response;
+          if (response && response.status === 422) {
+            setErrors(response.data.message);
+          } else {
+          }
+        });
     }
   };
 
   const openFileDialog = () => {
-    // Trigger the file input dialog
     document.getElementById("fileInput").click();
   };
 
@@ -54,11 +87,11 @@ export default function Upload() {
   };
 
   return (
-    <div className="default-container" style={{ margin: "10px", }}>
-      <h1>Upload Litter</h1>
+    <div className="default-container" style={{ margin: "15px", }}>
+      <h1>Upload Media</h1>
       <Form>
         <Card className="custom-card"
-          style={{ width: "715px", height: "500px", backgroundColor: "" }}>
+          style={{ width: "715px", height: "450px", backgroundColor: "" }}>
           <input
             type="file"
             id="fileInput"
@@ -68,10 +101,10 @@ export default function Upload() {
           />
           {filesToBeUploaded && (
             <Button variant="dark" onClick={openFileDialog} style={{ width: "400px", height: "50px" }}>
-              Select Media Files
+              Select Media Files <Images className="ml-4" size={18} />
             </Button>
           )}
-          <Card body className="default-card" style={{ width: "600px", height: "400px", overflowY: 'auto', overflowX: 'hidden' }}>
+          <Card body className="default-card" style={{ width: "600px", height: "350px", overflowY: 'auto', overflowX: 'hidden' }}>
             {/* Display selected files list */}
             {filesToBeUploaded && selectedFiles.length > 0 && (
               <Table>
@@ -92,11 +125,11 @@ export default function Upload() {
               <Table>
                 <tbody>
                   {uploadedFiles.map((file, index) => (
-                      <tr key={index} className="border-top">
-                        <td style={{ width: '5%' }}>{`${index + 1}. `}</td>
-                        <td style={{ width: '95%' }}>{file.fileName}</td>
-                        <td style={{ width: '5%' }}><Badge bg={file.uploadSuccess ? "success" : "danger"}>{file.uploadSuccess ? "Success" : "Failed"}</Badge></td>
-                      </tr>
+                    <tr key={index} className="border-top">
+                      <td style={{ width: '5%' }}>{`${index + 1}. `}</td>
+                      <td style={{ width: '95%' }}>{file.fileName}</td>
+                      <td style={{ width: '5%' }}><Badge bg={file.uploadSuccess ? "success" : "danger"}>{file.uploadSuccess ? "Success" : "Failed"}</Badge></td>
+                    </tr>
                   ))}
                 </tbody>
               </Table>
@@ -107,11 +140,15 @@ export default function Upload() {
               selectedFiles={selectedFiles}
               pathFolder="litter"
               onUploadComplete={handleUploadComplete}
-              customButton={({ onUpload, overallUploadSuccess, fileNames }) => (
-                <Button variant="success" onClick={onUpload}>
-                  Upload Selected Files
+              customButton={({ onPreUpload, onUpload }) => (
+                <Button
+                  variant="success"
+                  onClick={() => (onPreUpload ? onPreUpload(onUpload) : onUpload())}
+                >
+                  Upload Selected Files <UploadIcon className="ml-4" size={18} />
                 </Button>
               )}
+              onPreUpload={handlePreUpload}
             />
           )}
 
@@ -122,6 +159,11 @@ export default function Upload() {
           )}
         </Card>
       </Form>
+      <Nav.Link className="me-2" href="/litter">
+        <Button variant="dark" style={{ margin: "30px 0px", height: "60px", width: "300px" }}>
+          Tag Your Litters Here !
+        </Button>
+      </Nav.Link>
     </div>
   );
 }

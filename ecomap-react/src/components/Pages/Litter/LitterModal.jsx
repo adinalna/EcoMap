@@ -7,8 +7,6 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 export default function LitterModal({
   open,
   handleClose,
-  handlePrevImage,
-  handleNextImage,
   currentIndex,
   modalContent,
 }) {
@@ -58,7 +56,7 @@ export default function LitterModal({
               )}
             </div>
 
-            <IconButton
+            {/* <IconButton
               onClick={handlePrevImage}
               sx={{
                 position: 'absolute',
@@ -81,7 +79,7 @@ export default function LitterModal({
               }}
             >
               <ArrowForwardIosIcon />
-            </IconButton>
+            </IconButton> */}
 
             <IconButton
               onClick={handleClose}
