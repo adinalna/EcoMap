@@ -40,7 +40,7 @@ public class User {
     
     @NonNull
     private String password;
-
+    
     @NonNull
     @ManyToOne
     @JoinColumn(name = "country_id")
@@ -65,11 +65,30 @@ public class User {
         inverseJoinColumns = @JoinColumn(name = "cleanup_id")
     )
     private Set<Cleanup> cleanups;
+//    
+//    @Builder.Default
+//    @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+//    @JoinTable(
+//        name = "user_cleanup",
+//        joinColumns = @JoinColumn(name = "user_id"),
+//        inverseJoinColumns = @JoinColumn(name = "cleanup_id")
+//    )
+//    private Set<Cleanup> cleanups = new HashSet<>();
     
-    @Builder.Default
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private Set<UserCleanup> userCleanups = new HashSet<>();
+//    @Builder.Default
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+//    private Set<UserCleanup> userCleanups = new HashSet<>();
     
     @OneToMany(mappedBy = "user")
     private Set<Litter> litters;
+    
+    public void setCountry(Country country) {
+        if (this.country != null) {
+            this.country.getUsers().remove(this);
+        }
+        this.country = country;
+        if (country != null) {
+            country.getUsers().add(this);
+        }
+    }
 }

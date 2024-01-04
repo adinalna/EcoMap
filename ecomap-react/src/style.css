@@ -1,72 +1,120 @@
 /* Cleanup.css */
+.centered {
+  text-align: center;
+}
 
 .cleanup-container {
-    text-align: center;
-    margin: 20px;
-  }
-  
-  .cleanup-buttons {
-    margin-bottom: 20px;
-  }
-  
-  .cleanup-buttons button {
-    margin-right: 10px;
-    padding: 10px;
-    font-size: 16px;
-  }
-  
-  .cleanup-modal {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
-    border: 2px solid black; /* Add border property */
-    padding: 20px;
-    border-radius: 8px;
-    outline: none;
-    width: 80%; /* Adjusted width */
-    max-width: 500px; /* Set max-width for larger screens */
-  }
-  
-  .cleanup-modal h2 {
-    margin-bottom: 20px;
-  }
-  
-  .cleanup-modal form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .cleanup-modal label {
-    margin-bottom: 10px;
-  }
-  
-  .cleanup-modal input,
-  .cleanup-modal textarea {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .cleanup-modal button {
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .cleanup-modal input[type="radio"] {
-    margin-right: 5px;
-  }
+  text-align: center;
+  margin: 20px;
+}
 
-  .cleanup-modal label select {
-    margin-left: 10px; /* Add margin to create space between the label and the select element */
-    font-size: 20px; /* Adjust the font size as needed */
-  }
-  
-  
+.cleanup-buttons {
+  margin-bottom: 20px;
+}
+
+.cleanup-buttons button {
+  margin-right: 10px;
+  padding: 10px;
+  font-size: 16px;
+}
+.cleanup-modalMap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border: 2px solid black; /* Add border property */
+  padding: 20px;
+  border-radius: 8px;
+  outline: none;
+  width: 80%; /* Adjusted width */
+  max-width: 500px; /* Set max-width for larger screens */
+}
+.cleanup-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border: 2px solid black; /* Add border property */
+  padding: 20px;
+  border-radius: 8px;
+  outline: none;
+  width: 80%; /* Adjusted width */
+  max-width: 1000px; /* Set max-width for larger screens */
+}
+
+.cleanup-modal h2 {
+  margin-bottom: 20px;
+}
+
+.cleanup-modal form {
+  display: flex;
+  flex-direction: column;
+}
+
+.cleanup-modal label {
+  margin-bottom: 10px;
+}
+
+.cleanup-modal input,
+.cleanup-modal textarea {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.cleanup-modal button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.cleanup-modal input[type="radio"] {
+  margin-right: 5px;
+}
+
+.cleanup-modal label select {
+  margin-left: 10px; /* Add margin to create space between the label and the select element */
+  font-size: 20px; /* Adjust the font size as needed */
+}
+
+.cleanup-listing {
+  border: 2px solid black;
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 10px; /* Adjust margin as needed */
+}
+
+th, td {
+  border: 1px solid black;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2; /* Add a light background color to header */
+}
+
+button {
+  background-color: #4caf50; /* Green background color for the button */
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.search-container {
+  display: flex;
+  align-items: center; /* Vertically align items in the center */
+  max-width: 500px;
+}
