@@ -129,15 +129,12 @@
 .leaderBoardTable thead {
   font-weight: bold;
   text-align: center;
-
 }
 
 .leaderBoardTable thead th {
   font-weight: bold;
   text-align: center;
-  border: 2px solid #163020;
-  background-color: #355c44;
-  color: #f0faf0;
+  color: #163020;
 }
 
 
