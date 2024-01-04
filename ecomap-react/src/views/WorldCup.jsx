@@ -1,11 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import {TypeAnimation} from "react-type-animation";
-import {LinearProgress, Stack} from "@mui/material";
-import {Button, Card, Col, Container, ProgressBar, Row} from "react-bootstrap";
-import {ArrowForwardCircleOutline, ArrowForwardOutline} from "react-ionicons";
+import {Button, Card, Col, Container, ProgressBar, Row, Stack, Badge} from "react-bootstrap";
+import { ArrowForwardOutline} from "react-ionicons";
 import CountUp from "react-countup";
+import getCountryFlag from "../components/Pages/WorldCup/getCountryFlag.jsx";
+import {LinearProgress, Typography} from "@mui/joy";
+import { useCountUp } from 'use-count-up';
+
 
 export default function WorldCup() {
+    // Litter Target Logic
+    const targetValue = 1000000; // Example target
+    const currentData = 752456;  // Example current data
+    const previousTarget = 500000;
+    // Calculate the percentage of current data towards the target
+    const progressPercentage = parseFloat((currentData / targetValue * 100).toFixed(2));
 
     //Litter Overall Totals Logic
     const totals = [
@@ -24,13 +33,20 @@ export default function WorldCup() {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
-    // Litter Target Logic
-    const targetValue = 1000000; // Example target
-    const currentData = 752456;  // Example current data
-    const previousTarget = 500000;
+    const [buffer, setBuffer] = React.useState(10);
+    const { value } = useCountUp({
+        isCounting: true,
+        duration: 5,
+        easing: 'linear',
+        start: 0,
+        end: progressPercentage,
+        onComplete: () => ({
+            shouldRepeat: false,
+            delay: 2,
+        }),
+    });
 
-    // Calculate the percentage of current data towards the target
-    const progressPercentage = parseFloat((currentData / targetValue * 100).toFixed(2));
+
 
 
     return (
@@ -84,30 +100,49 @@ export default function WorldCup() {
                         <Col>
                             <Card>
                                 <Card.Body className='otherCards'>
-                                    <h3 style={{fontWeight: 'bold'}}>Litter Target</h3>
-                                    <hr/>
+                                    <h3 style={{fontWeight: 'bold', paddingBottom:20}}>Litter Target</h3>
                                     <Card>
-                                        <p style={{
-                                            fontSize: 50,
-                                            fontWeight: 'bold',
-                                            fontStyle: 'italic',
-                                            color: '#163020'
-                                        }}>{numberWithCommas(targetValue)}</p>
+                                        <CountUp
+                                            style={{
+                                                fontSize: 65,
+                                                fontWeight: 'bold',
+                                                color: '#163020'
+                                            }}
+                                            delay={0.5}
+                                            duration={5}
+                                            end={targetValue}/>
+                                        <p>litters targeted to be tagged using <b>EcoMap</b></p>
                                     </Card>
+                                    <br/>
                                     <hr/>
-                                    <h5 style={{fontWeight: 'bold'}}>Current Progress</h5>
-                                    <Card>
-                                        <Card.Body>
-                                            <ProgressBar
-                                                now={progressPercentage}
-                                                variant='success'
-                                                label={`${progressPercentage}%`}
-                                                style={{height: 30}}
-                                                animated='true'
-                                            />
-                                            <p>Previous Target: {numberWithCommas(previousTarget)}</p>
-                                        </Card.Body>
-                                    </Card>
+                                    <h5 style={{fontWeight: 'bold',paddingBottom:20}}>Current Progress</h5>
+                                    <>
+                                        <>
+                                            <LinearProgress
+                                                determinate
+                                                variant="outlined"
+                                                color="neutral"
+                                                size="sm"
+                                                thickness={50}
+                                                value={Number(value)}
+                                                sx={{
+                                                    '--LinearProgress-radius': '20px',
+                                                    '--LinearProgress-thickness': '50px',
+                                                }}
+                                            >
+                                                <Typography
+                                                    level="body-xs"
+                                                    fontWeight="xl"
+                                                    textColor="common.white"
+                                                    sx={{ mixBlendMode: 'difference' }}
+                                                >
+                                                    {`${Math.round(Number(value))}%`}
+                                                </Typography>
+                                            </LinearProgress>
+
+                                            <p style={{paddingTop:20}}>Previous Target: {numberWithCommas(previousTarget)}</p>
+                                        </>
+                                    </>
                                 </Card.Body>
                             </Card>
                         </Col>
@@ -116,26 +151,28 @@ export default function WorldCup() {
                                 <Card.Body className='otherCards'>
                                     <Row>
                                         <Col>
-                                            <h3 style={{fontWeight: 'bold'}}>Leaderboards</h3>
-                                            <hr/>
-                                            <Stack gap={2}>
+                                            <h3 style={{fontWeight: 'bold',paddingBottom:20}}>Leaderboards</h3>
+                                            <Stack direction='horizontal' gap={2} style={{justifyContent:"center"}}>
                                                 {topCountries.map((item) => (
                                                     <div key={item.number}>
-                                                        <Card>
-                                                            <Stack direction='horizontal' gap={3}>
-                                                                <p>{item.number}</p>
-                                                                <p>{item.country}</p>
-                                                                <p>{item.totalLitter}</p>
-                                                            </Stack>
+                                                        <Card style={{width:180}}>
+                                                            <Card.Header style={{fontStyle:"italic", fontWeight:"bolder",fontSize:20}}>{item.number}</Card.Header>
+                                                            <Card.Title>{getCountryFlag(item.country)}</Card.Title>
+                                                            <Card.Title style={{fontSize:22, fontWeight:"bold",paddingTop:10}}>{item.country}</Card.Title>
+                                                            <Card.Body>
+                                                                Total Litter:
+                                                                <h3>
+                                                                    {item.totalLitter}
+                                                                </h3>
+                                                            </Card.Body>
                                                         </Card>
                                                     </div>
                                                 ))}
                                             </Stack>
-                                            <hr/>
                                         </Col>
                                     </Row>
                                     <Row>
-                                        <Col className="d-flex justify-content-end">
+                                        <Col className="d-flex justify-content-end" style={{paddingTop:10}}>
                                             <Button style={{
                                                 display: 'flex',
                                                 alignItems: 'center',

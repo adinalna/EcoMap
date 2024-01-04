@@ -2,8 +2,23 @@ import React, { useState, useRef } from 'react';
 import {Table, Container, Row, Col, Nav, Modal, Button} from 'react-bootstrap'
 import TotalLitterData from "./TotalLitterData.jsx";
 import LitterTypeData from "./LitterTypeData.jsx";
-import ContributorsData from "./ContributorsData.jsx";
+import getCountryFlag from "./getCountryFlag.jsx";
+// import ContributorsData from "./ContributorsData.jsx";
 
+const nodes = [
+    {
+        rank: 1,
+        country: "Netherlands",
+        totalLitter: "10000000",
+        avgLitterPerPerson: "12331213",
+        avgImagePerPerson: "129387",
+        totalContributors: "66",
+        lastUpdated: "Date",
+        totalPhotos: "1232131",
+        dateCreated: 'DMY',
+        createdBy: "Izzat"
+    },
+];
 const CountryGraphOverlay = (data) => {
     const [show, setShow] = useState(false);
 
@@ -30,37 +45,43 @@ const CountryGraphOverlay = (data) => {
                 fullscreen
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>Country Litter Data</Modal.Title>
+                    <div style={{paddingRight:20}}>
+                        <Modal.Title style={{fontWeight: 'bold', fontSize: 35,}}>
+                            <div style={{height: 40, width: 60}}>
+                                {getCountryFlag(nodes[0].country)}
+                            </div>
+                        </Modal.Title>
+                    </div>
+                    <Nav
+                        variant="underline"
+                        defaultActiveKey="totalLitterData"
+                        activeKey={activeKey}
+                        onSelect={handleSelect}
+                    >
+                        <Nav.Item>
+                            <Nav.Link eventKey="totalLitterData" style={{color:"black"}}>
+                                Total Litter
+                            </Nav.Link>
+                        </Nav.Item>
+                        <Nav.Item>
+                            <Nav.Link eventKey="totalTypeData" style={{color:"black"}}>
+                                Litter Type
+                            </Nav.Link>
+                        </Nav.Item>
+                        {/*<Nav.Item>
+                                        <Nav.Link eventKey="contributorsData" style={{color:"black"}}>
+                                            Contributors
+                                        </Nav.Link>
+                                    </Nav.Item>*/}
+                    </Nav>
                 </Modal.Header>
                 <Modal.Body>
                     <Container>
                         <Row>
                             <Col>
-                                <Nav
-                                    variant="underline"
-                                    defaultActiveKey="totalLitterData"
-                                    activeKey={activeKey}
-                                    onSelect={handleSelect}
-                                >
-                                    <Nav.Item>
-                                        <Nav.Link eventKey="totalLitterData" style={{color:"black"}}>
-                                            Total Litter
-                                        </Nav.Link>
-                                    </Nav.Item>
-                                    <Nav.Item>
-                                        <Nav.Link eventKey="totalTypeData" style={{color:"black"}}>
-                                            Litter Type
-                                        </Nav.Link>
-                                    </Nav.Item>
-                                    <Nav.Item>
-                                        <Nav.Link eventKey="contributorsData" style={{color:"black"}}>
-                                            Contributors
-                                        </Nav.Link>
-                                    </Nav.Item>
-                                </Nav>
                                 {activeKey === 'totalLitterData' && <TotalLitterData />}
                                 {activeKey === 'totalTypeData' && <LitterTypeData />}
-                                {activeKey === 'contributorsData' && <ContributorsData />}
+                                {/*{activeKey === 'contributorsData' && <ContributorsData />}*/}
                             </Col>
                         </Row>
                     </Container>

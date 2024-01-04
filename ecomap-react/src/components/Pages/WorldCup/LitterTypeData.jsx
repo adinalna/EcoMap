@@ -1,9 +1,78 @@
-import {Col, Container, Row, Table} from "react-bootstrap";
-import {PieChart} from "@mui/x-charts/PieChart";
-import { cheerfulFiestaPalette } from '@mui/x-charts/colorPalettes';
 import React from "react";
+import {Col, Container, Row, Stack} from "react-bootstrap";
+import {CompactTable} from "@table-library/react-table-library/compact";
+import {useSort} from "@table-library/react-table-library/sort";
+import {PieChart} from "@mui/x-charts/PieChart";
+import UnfoldMoreOutlinedIcon from "@mui/icons-material/UnfoldMoreOutlined.js";
+import KeyboardArrowUpOutlinedIcon from "@mui/icons-material/KeyboardArrowUpOutlined.js";
+import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined.js";
+import getCountryFlag from "./getCountryFlag.jsx";
 
+const nodes = [
+    {
+        rank: 1,
+        country: "Netherlands",
+        totalLitter: "10000000",
+        avgLitterPerPerson: "12331213",
+        avgImagePerPerson: "129387",
+        totalContributors: "66",
+        lastUpdated: "Date",
+        totalPhotos: "1232131",
+        dateCreated: 'DMY',
+        createdBy: "Izzat"
+    },
+];
+
+const COLUMNS = [
+    { label: 'Rank', renderCell: (item) => item.rank, sort: { sortKey: "RANK" },},
+    { label: 'Litter Type', renderCell: (item) => (
+            <Stack direction='horizontal' gap={3}>
+                <div style={{height: 30, width: 45}}>
+                    {getCountryFlag(item.country)}
+                </div>
+                <div>
+                    {item.country}
+                </div>
+            </Stack>
+        ),
+        sort: { sortKey: "COUNTRY" },
+    },
+    { label: 'Percentage', renderCell: (item) => item.totalLitter, sort: { sortKey: "TOTALLITTER" },},
+    { label: 'Total Litter', renderCell: (item) => item.avgLitterPerPerson, sort: { sortKey: "AVGLITTER" }, },
+];
 const LitterTypeData = () => {
+    const data = { nodes };
+
+    const sort = useSort(
+        data,
+        {
+            onChange: onSortChange,
+        },
+        {
+            sortIcon: {
+                margin: "0px",
+                iconDefault: <UnfoldMoreOutlinedIcon fontSize="small" />,
+                iconUp: <KeyboardArrowUpOutlinedIcon fontSize="small" />,
+                iconDown: <KeyboardArrowDownOutlinedIcon fontSize="small" />,
+            },
+            sortFns: {
+                RANK: (array) =>
+                    array.sort((a, b) => (a.rank || []).length - (b.rank || []).length),
+                COUNTRY: (array) => array.sort((a, b) => a.country.localeCompare(b.country)),
+                TOTALLITTER: (array) =>
+                    array.sort((a, b) => (a.totalLitter || []).length - (b.totalLitter || []).length),
+                AVGLITTER: (array) =>
+                    array.sort((a, b) => (a.avgLitterPerPerson || []).length - (b.avgLitterPerPerson || []).length),
+                TOTALCONTRIBUTORS: (array) =>
+                    array.sort((a, b) => (a.totalContributors || []).length - (b.totalContributors || []).length),
+                LASTUPDATED: (array) => array.sort((a, b) => a.dateCreated.localeCompare(b.type)),
+            },
+        }
+    );
+
+    function onSortChange(action, state) {
+        console.log(action, state);
+    }
     return (
         <Container>
             <Row>
@@ -34,78 +103,9 @@ const LitterTypeData = () => {
             </Row>
             <Row>
                 <Col>
-                    <Table responsive='lg' hover bordered className='leaderBoardTable'>
-                        <thead>
-                        <tr>
-                            <th>Rank</th>
-                            <th>Litter Type</th>
-                            <th>Percentage (%)</th>
-                            <th>Data</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Animal Waste</td>
-                            <td>20</td>
-                            <td>200</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Animal Waste</td>
-                            <td>20</td>
-                            <td>200</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Animal Waste</td>
-                            <td>20</td>
-                            <td>200</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>Animal Waste</td>
-                            <td>20</td>
-                            <td>200</td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>Animal Waste</td>
-                            <td>20</td>
-                            <td>200</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Animal Waste</td>
-                            <td>20</td>
-                            <td>200</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Animal Waste</td>
-                            <td>20</td>
-                            <td>200</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Animal Waste</td>
-                            <td>20</td>
-                            <td>200</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Animal Waste</td>
-                            <td>20</td>
-                            <td>200</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Animal Waste</td>
-                            <td>20</td>
-                            <td>200</td>
-                        </tr>
-                        </tbody>
-                    </Table>
+                    <div>
+                        <CompactTable columns={COLUMNS} data={data} sort={sort}/>
+                    </div>
                 </Col>
             </Row>
         </Container>
