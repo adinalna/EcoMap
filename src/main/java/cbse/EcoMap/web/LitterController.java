@@ -6,14 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import cbse.EcoMap.dto.LitterDto;
 import cbse.EcoMap.exception.ErrorResponse;
@@ -44,12 +38,14 @@ public class LitterController {
     }
     
     @GetMapping("/all")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<List<LitterDto>> getAllLittersWithMedia() {
         List<LitterDto> allLitters = litterService.getAllLittersWithMedia();
         return ResponseEntity.ok().body(allLitters);
     }
 
     @GetMapping("/{litterId}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<?> getLitterById(@PathVariable Long litterId) {
         try {
             Optional<Litter> litter = litterService.getLitterById(litterId);
@@ -62,12 +58,14 @@ public class LitterController {
     }
     
     @GetMapping("/user/{userId}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<List<Litter>> getAllLittersByUserId(@PathVariable Long userId) {
         List<Litter> litters = litterService.getAllLittersByUserId(userId);
         return ResponseEntity.ok().body(litters);
     }
 
     @PutMapping("/{litterId}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<?> updateLitter(@PathVariable Long litterId, @RequestBody Litter litter) {
         try {
             Litter updatedLitter = litterService.updateLitter(litterId, litter);
@@ -80,6 +78,7 @@ public class LitterController {
     }
 
     @DeleteMapping("/{litterId}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<?> deleteLitter(@PathVariable Long litterId) {
         try {
             litterService.deleteLitter(litterId);

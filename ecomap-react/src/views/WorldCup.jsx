@@ -6,34 +6,26 @@ import CountUp from "react-countup";
 import getCountryFlag from "../components/Pages/WorldCup/getCountryFlag.jsx";
 import {LinearProgress, Typography} from "@mui/joy";
 import { useCountUp } from 'use-count-up';
+import axios from "axios";
 
 
 export default function WorldCup() {
-    // Litter Target Logic
-    const targetValue = 1000000; // Example target
-    const currentData = 752456;  // Example current data
-    const previousTarget = 500000;
-    // Calculate the percentage of current data towards the target
-    const progressPercentage = parseFloat((currentData / targetValue * 100).toFixed(2));
-
-    //Litter Overall Totals Logic
-    const totals = [
-        { title: 'Total Litter', number: '752456' },
-        { title: 'Total Photos', number: '478456' },
-        { title: 'Total LitterCoin', number: '5456' }
-    ];
-
-    const topCountries = [
+    const [targetValue, setTargetValue] = useState(100);
+    const [previousTarget, setPreviousTarget] = useState(10);
+    const [totalLitter,setTotalLitter] = useState(0);
+    const [totalPhotos,setTotalPhotos] = useState(0);
+    const [topThreeCountries,setTopThreeCountries] = useState([
         { number: 1, country: 'Netherlands', totalLitter: 216115 },
         { number: 2, country: 'UK', totalLitter: 145348 },
-        { number: 3, country: 'USA', totalLitter: 141217 }
-    ];
+        { number: 3, country: 'Singapore', totalLitter: 141217 }
+    ]);
+
+    const progressPercentage = parseFloat((totalLitter / targetValue * 100).toFixed(2));
 
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
-    const [buffer, setBuffer] = React.useState(10);
     const { value } = useCountUp({
         isCounting: true,
         duration: 5,
@@ -46,8 +38,19 @@ export default function WorldCup() {
         }),
     });
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8080/api/litter/all`);
+                setTotalLitter(response.data.length);
+                setTotalPhotos(response.data.length);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
 
-
+        fetchData();
+    }, []);
 
     return (
         <>
@@ -73,24 +76,38 @@ export default function WorldCup() {
                                         repeat={Infinity}
                                     />
                                     <Row style={{paddingTop:20}}>
-                                        {totals.map((item) => (
-                                            <Col key={item.title}>
-                                                <Card className='otherCardsOutline'>
-                                                    <Card.Body className='totalOverall'>
-                                                        <h4 style={{fontWeight:'bold', fontStyle:'italic', color:'#163020'}}>{item.title}</h4>
-                                                        <CountUp
-                                                            style={{
-                                                                fontSize:65,
-                                                                fontWeight:'bold',
-                                                                color:'#163020'
-                                                            }}
-                                                            delay={0.5}
-                                                            duration={5}
-                                                            end={item.number}/>
-                                                    </Card.Body>
-                                                </Card>
-                                            </Col>
-                                        ))}
+                                        <Col>
+                                            <Card className='otherCardsOutline'>
+                                                <Card.Body className='totalOverall'>
+                                                    <h4 style={{fontWeight:'bold', fontStyle:'italic', color:'#163020'}}>Total Litter</h4>
+                                                    <CountUp
+                                                        style={{
+                                                            fontSize:65,
+                                                            fontWeight:'bold',
+                                                            color:'#163020'
+                                                        }}
+                                                        delay={0.5}
+                                                        duration={5}
+                                                        end={totalLitter}/>
+                                                </Card.Body>
+                                            </Card>
+                                        </Col>
+                                        <Col>
+                                            <Card className='otherCardsOutline'>
+                                                <Card.Body className='totalOverall'>
+                                                    <h4 style={{fontWeight:'bold', fontStyle:'italic', color:'#163020'}}>Total Photos</h4>
+                                                    <CountUp
+                                                        style={{
+                                                            fontSize:65,
+                                                            fontWeight:'bold',
+                                                            color:'#163020'
+                                                        }}
+                                                        delay={0.5}
+                                                        duration={5}
+                                                        end={totalPhotos}/>
+                                                </Card.Body>
+                                            </Card>
+                                        </Col>
                                     </Row>
                                 </Card.Body>
                             </Card>
@@ -153,7 +170,7 @@ export default function WorldCup() {
                                         <Col>
                                             <h3 style={{fontWeight: 'bold',paddingBottom:20}}>Leaderboards</h3>
                                             <Stack direction='horizontal' gap={2} style={{justifyContent:"center"}}>
-                                                {topCountries.map((item) => (
+                                                {topThreeCountries.map((item) => (
                                                     <div key={item.number}>
                                                         <Card style={{width:180}}>
                                                             <Card.Header style={{fontStyle:"italic", fontWeight:"bolder",fontSize:20}}>{item.number}</Card.Header>

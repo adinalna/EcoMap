@@ -61,6 +61,8 @@ public class LitterService {
         }
     }
 
+
+
     public void deleteLitter(Long litterId) {
         litterRepository.deleteById(litterId);
     }
