@@ -16,10 +16,12 @@ import jakarta.persistence.*;
 @AllArgsConstructor
 @Builder
 @Entity
+@Table(name = "media")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@SequenceGenerator(name = "media_seq", sequenceName = "media_id_seq", allocationSize = 1)
 public class Media {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "media_seq")
     private Long id;
 
     @Column(name = "path")
@@ -38,8 +40,8 @@ public class Media {
     @Column(name = "date_created")
     private Instant dateCreated = Instant.now();
 
-    @ManyToOne(optional = true)
-    @JoinColumn(name = "litter_id")
+    @ManyToOne
+    @JoinColumn(name = "litter_id", nullable = true)
     @JsonBackReference
     private Litter litter;
 

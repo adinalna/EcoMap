@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import cbse.EcoMap.security.SecurityConfig;
 
-@ComponentScan(basePackages = {"cbse.EcoMap", "cbse.EcoMap.security", "cbse.EcoMap.filters"})
+@ComponentScan(basePackages = {"cbse.EcoMap", "cbse.EcoMap.security", "cbse.EcoMap.client", "cbse.EcoMap.filters"})
 @EnableJpaRepositories(basePackages = "cbse.EcoMap.repository")
 @SpringBootApplication
 public class EcoMapApplication {
