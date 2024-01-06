@@ -72,7 +72,7 @@ public class UserTeamController {
 			UserTeam userTeam = UserTeam.builder()
 	                .team(team)
 	                .user(foundUser)
-	                .role("Member") // Set the role accordingly
+	                .role("Member")
 	                .date_created(Instant.now())
 	                .build();		
 			 
@@ -80,9 +80,8 @@ public class UserTeamController {
 
 			 return ResponseEntity.ok().body(createdUserTeam);
 		} catch (Exception e) {
-			// Handle errors and return an appropriate response
 			System.err.println("Error during search: " + e.getMessage());
-			e.printStackTrace(); // Print the full exception stack trace
+			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 					.body(new ErrorResponse("Internal Server Error"));
 		}

@@ -5,6 +5,7 @@ const JoinTeam = () => {
   const [teamName, setTeamName] = useState('');
   const [teamEvents, setTeamEvents] = useState([]);
   const [specificTeam, setSpecificTeam] = useState([]);
+  const [uniqueIdentifier, setUniqueIdentifier] = useState('');
 
   useEffect(() => {
     // Fetch public teams when the component mounts
@@ -14,24 +15,20 @@ const JoinTeam = () => {
   const handleSearch = async () => {
     const userId = 1;
     try {
-      const response = await axios.get(
-        `http://localhost:8080/api/team/findSpecificByName?teamName=${teamName}&userID=${userId}`
-      );
-      if (response.data) {
-        setSpecificTeam([response.data]); // Set the specific team data
-        setTeamEvents([]); // Clear public teams data
-      } else {
-        alert("No such team exists or you are already a member.");
-      }
+        const response = await axios.get(
+            `http://localhost:8080/api/team/findPrivateByUniqueIdentifier?uniqueIdentifier=${uniqueIdentifier}`
+        );
+        setSpecificTeam([response.data]);
+        setTeamEvents([]);
     } catch (error) {
-      if (error.response && error.response.status === 404) {
-        alert("No such team exists or you are already a member.");
-      } else {
-        console.error("Error searching team name:", error.message);
+        if (error.response && error.response.status === 404) {
+          alert("No such private team exists.");
+        } else {
+          console.error("Error searching for team:", error.message);
+        }
       }
-    }
-    setTeamName(''); // Clear the search input field
-  };
+      setUniqueIdentifier('');
+    };
 
   const handleJoinTeam = async (teamId, isPrivate = false) => {
     const userId = 1;
@@ -42,7 +39,7 @@ const JoinTeam = () => {
       alert("User has successfully joined the Team", response.data);
       if (isPrivate) {
         setSpecificTeam([]);
-        refreshPublicTeams(); // Refresh public teams list
+        refreshPublicTeams();
       }
       setTeamEvents(prev => prev.filter(team => team.id !== teamId));
     } catch (error) {
@@ -69,14 +66,14 @@ const JoinTeam = () => {
       {/* Private Team Join Form */}
       <div className='card p-3 mb-4' style={{ backgroundColor: '#f0faf0' }}>
         <div className='mb-3'>
-          <label htmlFor='joinIdentifier' className='form-label'>Enter Team Name</label>
+          <label htmlFor='joinIdentifier' className='form-label'>Enter Unique Identifier</label>
           <input
             type='text'
             className='form-control'
             id='joinIdentifier'
-            placeholder='Enter Team Name'
-            value={teamName}
-            onChange={(e) => setTeamName(e.target.value)}
+            placeholder='Enter Unique Identifier'
+            value={uniqueIdentifier}
+            onChange={(e) => setUniqueIdentifier(e.target.value)}
           />
         </div>
         <div className='d-grid'>

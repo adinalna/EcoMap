@@ -35,8 +35,8 @@ public class UserTeamService {
             return savedUserTeam;
         } catch (Exception e) {
             System.out.println("Error creating UserTeam: " + e.getMessage());
-            e.printStackTrace(); // Print the full exception stack trace
-            throw e; // Re-throw the exception to propagate it up
+            e.printStackTrace();
+            throw e;
         }
     }
 }

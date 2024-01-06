@@ -28,6 +28,9 @@ public class Team {
     private String name;
     private Boolean isPublic; 
     private Instant date_created = Instant.now();
+
+    @Column(name = "unique_identifier", unique = true, nullable = true)
+    private String uniqueIdentifier;
     
     // @ManyToOne
     // @JoinColumn(name = "country_id")

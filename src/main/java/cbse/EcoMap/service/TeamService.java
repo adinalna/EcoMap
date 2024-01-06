@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -27,11 +28,14 @@ public class TeamService {
 	}
 
 	public Team createTeam(Team team) throws IllegalArgumentException {
-        if (teamRepository.existsByName(team.getName())) {
-            throw new IllegalArgumentException("A team with this name already exists.");
-        }
-        return teamRepository.save(team);
-    }
+		if (teamRepository.existsByName(team.getName())) {
+			throw new IllegalArgumentException("A team with this name already exists.");
+		}		
+		if (!team.getIsPublic() && teamRepository.existsByUniqueIdentifier(team.getUniqueIdentifier())) {
+			throw new IllegalArgumentException("A team with this unique identifier already exists.");
+		}	
+		return teamRepository.save(team);
+	}
 
 	public List<Team> getAllTeams() {
 		return teamRepository.findAll();
@@ -81,6 +85,11 @@ public class TeamService {
 			return team;
 		}
 		return null;
+	}
+	
+	public Team findTeamByUniqueIdentifier(String uniqueIdentifier) {
+		return teamRepository.findByUniqueIdentifier(uniqueIdentifier)
+				.orElseThrow(() -> new NoSuchElementException("No private team found with the given unique identifier."));
 	}	
 
 	public List<Team> getTeamsByUserId(Long userId) {

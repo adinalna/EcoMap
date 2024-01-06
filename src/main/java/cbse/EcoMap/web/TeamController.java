@@ -3,6 +3,7 @@ package cbse.EcoMap.web;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -42,7 +43,7 @@ public class TeamController {
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorResponse("Internal Server Error"));
+            return ResponseEntity.internalServerError().body(new ErrorResponse("An unexpected error occurred."));
         }
     }
 
@@ -68,6 +69,21 @@ public class TeamController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No such team found or already a member.");
         }
         return ResponseEntity.ok().body(foundTeam);
+    }
+
+    @GetMapping("/findPrivateByUniqueIdentifier")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ResponseEntity<?> findPrivateByUniqueIdentifier(@RequestParam String uniqueIdentifier) {
+        try {
+            Team foundTeam = teamService.findTeamByUniqueIdentifier(uniqueIdentifier);
+            if (!foundTeam.getIsPublic()) {
+                return ResponseEntity.ok(foundTeam);
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("The identifier provided is for a public team.");
+            }
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
 
     @GetMapping("/userTeams")

@@ -26,7 +26,6 @@ const ViewTeam = () => {
       await axios.post(`http://localhost:8080/api/team/unjoin`, null, {
         params: { userId, teamId }
       });
-      // Remove the team from the state
       setUserTeams(userTeams.filter((team) => team.id !== teamId));
       alert("You have successfully left the team.");
     } catch (error) {
