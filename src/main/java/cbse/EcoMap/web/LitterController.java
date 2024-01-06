@@ -12,6 +12,7 @@ import cbse.EcoMap.dto.LitterDto;
 import cbse.EcoMap.exception.ErrorResponse;
 import cbse.EcoMap.model.Litter;
 import cbse.EcoMap.service.LitterService;
+import jakarta.persistence.EntityNotFoundException;
 
 @RestController
 @RequestMapping("/api/litter")
@@ -61,15 +62,16 @@ public class LitterController {
         return ResponseEntity.ok().body(litters);
     }
 
-    @DeleteMapping("/{litterId}")
+    @PostMapping("{litterId}/delete")
     public ResponseEntity<?> deleteLitter(@PathVariable Long litterId) {
         try {
-            litterService.deleteLitter(litterId);
-            return ResponseEntity.ok().build();
-
+            litterService.deleteLitterById(litterId);
+            return ResponseEntity.ok("Litter successfully deleted");
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ErrorResponse("Internal Server Error"));
+                                 .body("Internal Server Error: " + e.getMessage());
         }
     }
     

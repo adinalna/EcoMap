@@ -145,8 +145,18 @@ export default function LitterTagForm({ litter }) {
 
     const handleDeleteLitter = () => {
         const litterIdToDelete = litter.id;
-        console.log('Tag to delete:', litterIdToDelete);
+        console.log('Litter to delete:', litterIdToDelete);
+    
+        axiosClient.delete(`/litter/${litterIdToDelete}/delete`)
+            .then(({ data }) => {
+                console.log("Litter successfully deleted");
+                window.location.reload();
+            })
+            .catch((err) => {
+                console.error("Error in litter deletion:", err);
+            });
     };
+    
 
     return (
         <Sheet color="success" variant="plain"
