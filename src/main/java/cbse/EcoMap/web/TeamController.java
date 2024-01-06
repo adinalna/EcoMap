@@ -15,6 +15,7 @@ import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:4200") // Change to Port 4200
 @RestController
 @RequestMapping("/api")
 
