@@ -54,7 +54,7 @@ export default function LitterGallery() {
     try {
       const response = await axiosClient.get("/tag/trending/all", { timeout: 5000 });
       const list = response.data;
-      console.log(list);
+      // console.log(list);
       setTrendingTagData(list);
     } catch (error) {
       console.error(error);
