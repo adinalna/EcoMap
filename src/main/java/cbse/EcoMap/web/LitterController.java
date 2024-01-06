@@ -22,7 +22,7 @@ import cbse.EcoMap.exception.ErrorResponse;
 import cbse.EcoMap.model.Litter;
 import cbse.EcoMap.service.LitterService;
 
-@CrossOrigin(origins = "http://localhost:3000") // Change to Port 4200
+@CrossOrigin(origins = "http://localhost:4200") // Change to Port 4200
 @RestController
 @RequestMapping("/api/litter")
 public class LitterController {

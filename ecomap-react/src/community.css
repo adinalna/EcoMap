@@ -46,3 +46,28 @@
   margin: 0 auto;
   text-align: center;
 }
+
+.imageDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center; /* For centering text content */
+}
+
+/* Add styles for Avatar */
+.imageDiv > .MuiAvatar-root {
+  margin-bottom: 10px; /* Adjust as needed */
+}
+
+.ab-p-div {
+  margin: 10px 0;
+  margin-bottom: 30px;
+}
+
+.fade-in-card {
+  min-width: 180px;
+}
+
+.fade-in-text {
+  color: black;
+}
