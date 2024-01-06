@@ -35,7 +35,7 @@ public class LitterTag {
     private Tag tag;
     
     @Column(name = "count")
-    @Min(0)
+    @Min(1)
     private int count;
 
     @Builder.Default

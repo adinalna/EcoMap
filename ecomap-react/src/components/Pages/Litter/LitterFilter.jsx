@@ -30,24 +30,6 @@ export default function LitterFilter({ tags, onFilterChange }) {
         >
             <Stack direction="row" spacing={1}>
                 <FormControl size="small">
-                    <InputLabel>Sort By</InputLabel>
-                    <Select
-                        sx={{
-                            backgroundColor: '#fff',
-                            marginRight: '8px',
-                            minWidth: '150px',
-                        }}
-                        label="Sort By"
-                        size="small"
-                        value={sortLitter}
-                        onChange={(e) => setSortLitter(e.target.value)}
-                    >
-                        <MenuItem value={"Latest"}>Latest</MenuItem>
-                        <MenuItem value={"Oldest"}>Oldest</MenuItem>
-                    </Select>
-                </FormControl>
-
-                <FormControl size="small">
                     <InputLabel>Litter Pickup</InputLabel>
                     <Select
                         sx={{
@@ -68,7 +50,7 @@ export default function LitterFilter({ tags, onFilterChange }) {
             </Stack>
             <Autocomplete
                 sx={{
-                    width: '500px',
+                    width: '700px',
                     backgroundColor: '#fff',
                 }}
                 multiple

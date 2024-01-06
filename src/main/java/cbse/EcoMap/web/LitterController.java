@@ -72,4 +72,17 @@ public class LitterController {
                     .body(new ErrorResponse("Internal Server Error"));
         }
     }
+    
+    @PutMapping("/{litterId}/pickup")
+    public ResponseEntity<?> updateLitterPickupStatus(@PathVariable Long litterId, @RequestParam Boolean pickedUp) {
+        try {
+            Litter updatedLitter = litterService.updateLitterPickupStatus(litterId, pickedUp);
+            return ResponseEntity.ok().body(updatedLitter);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ErrorResponse("Internal Server Error"));
+        }
+    }
+
 }

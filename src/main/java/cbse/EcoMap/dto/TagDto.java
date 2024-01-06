@@ -2,13 +2,14 @@ package cbse.EcoMap.dto;
 
 import cbse.EcoMap.model.Tag;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class TagDto {
     private Long id;
     private String titleKey;
     private String titleValue;
-    private int count;
     private String group;
 
     public TagDto(Tag tag) {

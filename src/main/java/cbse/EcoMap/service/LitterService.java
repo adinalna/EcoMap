@@ -113,6 +113,18 @@ public class LitterService {
     public void deleteLitter(Long litterId) {
         litterRepository.deleteById(litterId);
     }
+    
+    public Litter updateLitterPickupStatus(Long litterId, Boolean pickedUp) {
+        Optional<Litter> optionalLitter = litterRepository.findById(litterId);
+        if (optionalLitter.isPresent()) {
+            Litter litter = optionalLitter.get();
+            litter.setPickedUp(pickedUp);
+            return litterRepository.save(litter);
+        } else {
+            throw new IllegalArgumentException("Litter not found with ID: " + litterId);
+        }
+    }
+
 }
 
 
