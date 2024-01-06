@@ -87,10 +87,19 @@ public class TeamService {
 		return null;
 	}
 	
-	public Team findTeamByUniqueIdentifier(String uniqueIdentifier) {
-		return teamRepository.findByUniqueIdentifier(uniqueIdentifier)
+	public Team findTeamByUniqueIdentifier(String uniqueIdentifier, Long userId) {
+		Team team = teamRepository.findByUniqueIdentifier(uniqueIdentifier)
 				.orElseThrow(() -> new NoSuchElementException("No private team found with the given unique identifier."));
-	}	
+		
+		boolean isMember = userTeamRepository.findByUserId(userId).stream()
+							.anyMatch(userTeam -> userTeam.getTeam().equals(team));
+		
+		if (isMember) {
+			throw new IllegalStateException("User is already a member of this team.");
+		}
+		
+		return team;
+	}
 
 	public List<Team> getTeamsByUserId(Long userId) {
 		return userTeamRepository.findByUserId(userId).stream()

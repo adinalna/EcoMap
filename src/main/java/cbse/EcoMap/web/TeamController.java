@@ -73,18 +73,22 @@ public class TeamController {
 
     @GetMapping("/findPrivateByUniqueIdentifier")
     @CrossOrigin(origins = "http://localhost:4200")
-    public ResponseEntity<?> findPrivateByUniqueIdentifier(@RequestParam String uniqueIdentifier) {
-        try {
-            Team foundTeam = teamService.findTeamByUniqueIdentifier(uniqueIdentifier);
-            if (!foundTeam.getIsPublic()) {
-                return ResponseEntity.ok(foundTeam);
-            } else {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("The identifier provided is for a public team.");
-            }
-        } catch (NoSuchElementException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    public ResponseEntity<?> findPrivateByUniqueIdentifier(
+        @RequestParam String uniqueIdentifier,
+        @RequestParam Long userId) {
+    try {
+        Team foundTeam = teamService.findTeamByUniqueIdentifier(uniqueIdentifier, userId);
+        if (!foundTeam.getIsPublic()) {
+            return ResponseEntity.ok(foundTeam);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("The identifier provided is for a public team.");
         }
+    } catch (NoSuchElementException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    } catch (IllegalStateException e) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
     }
+}
 
     @GetMapping("/userTeams")
 	@CrossOrigin(origins = "http://localhost:4200")
