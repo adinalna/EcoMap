@@ -7,6 +7,10 @@ import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import java.time.Instant;
 import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import java.util.HashSet;
 
 import jakarta.persistence.*;
@@ -17,10 +21,12 @@ import jakarta.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "users")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@SequenceGenerator(name = "users_seq", sequenceName = "users_id_seq", allocationSize = 1)
 public class User {
     
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_seq")
     private Long id;
     
     @Builder.Default

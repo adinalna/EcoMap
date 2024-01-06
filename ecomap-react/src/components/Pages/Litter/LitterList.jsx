@@ -1,15 +1,20 @@
 import React, { useState } from 'react';
-import { Grid, Card, CardCover, CardContent, Typography, IconButton } from '@mui/joy';
+import { Grid, Card, CardCover, CardContent, Typography, IconButton, Chip } from '@mui/joy';
+import Pagination from '@mui/material/Pagination';
 import { Button } from 'react-bootstrap';
 import LitterModal from './LitterModal.jsx';
+import LitterTagModal from './LitterTagModal.jsx';
 
-export default function LitterList({ litterList }) {
+export default function LitterList({ litterList, type }) {
   const [openModal, setOpenModal] = useState(false);
   const [modalContent, setModalContent] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [page, setPage] = useState(1);
+  const cardsPerRow = 3;
+  const rowsPerPage = 3;
 
-  const BUCKET_URL= import.meta.env.VITE_APP_SUPABASE_STORAGE_BUCKET_URL;
+  const BUCKET_URL = import.meta.env.VITE_APP_SUPABASE_STORAGE_BUCKET_URL;
 
   const handleCardClick = (litter, index) => {
     setModalContent({ ...litter, index });
@@ -21,14 +26,14 @@ export default function LitterList({ litterList }) {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % modalContent.medias.length);
     }
   };
-  
+
   const handlePrevImage = () => {
     if (modalContent && modalContent.medias && modalContent.medias.length > 1) {
       setCurrentIndex((prevIndex) =>
         prevIndex === 0 ? modalContent.medias.length - 1 : prevIndex - 1
       );
     }
-  };  
+  };
 
   const handleCloseModal = () => {
     setModalContent(null);
@@ -36,10 +41,20 @@ export default function LitterList({ litterList }) {
     setOpenModal(false);
   };
 
+  const isGalleryType = type === 'gallery';
+  const ModalComponent = isGalleryType ? LitterModal : LitterTagModal;
+
+  const handlePageChange = (event, value) => {
+    setPage(value);
+  };
+
+  const startIndex = (page - 1) * rowsPerPage * cardsPerRow;
+  const endIndex = startIndex + rowsPerPage * cardsPerRow;
+
   return (
     <div>
       <Grid container spacing={2}>
-        {litterList.map((litter, index) => (
+        {litterList.slice(startIndex, endIndex).map((litter, index) => (
           <Grid
             key={index}
             item
@@ -59,16 +74,16 @@ export default function LitterList({ litterList }) {
               onMouseLeave={() => setIsHovered(false)}
             >
               <CardCover>
-                {litter.medias.map((media, mediaIndex) => (
+                {litter.media.map((litterMedia, mediaIndex) => (
                   <div
                     key={mediaIndex}
                     style={{
                       display: mediaIndex === currentIndex ? 'block' : 'none',
                     }}
                   >
-                    {media.type === 'image' && (
+                    {litterMedia.mediaType === 'image' && (
                       <img
-                        src={`${BUCKET_URL}/${media.src}`}
+                        src={`${BUCKET_URL}/${litterMedia.path}`}
                         loading="lazy"
                         alt=""
                         style={{
@@ -79,13 +94,13 @@ export default function LitterList({ litterList }) {
                         }}
                       />
                     )}
-                    {media.type === 'video' && (
+                    {litterMedia.mediaType === 'video' && (
                       <video
                         ref={(videoRef) => {
                           if (videoRef) {
                             if (mediaIndex === currentIndex) {
                               if (isHovered) {
-                                videoRef.play(); 
+                                videoRef.play();
                               } else {
                                 videoRef.pause();
                                 videoRef.currentTime = 0;
@@ -102,7 +117,7 @@ export default function LitterList({ litterList }) {
                           borderRadius: '5px',
                         }}
                       >
-                        <source src={`${BUCKET_URL}/${media.src}`} type="video/mp4" />
+                        <source src={`${BUCKET_URL}/${litterMedia.path}`} type="video/mp4" />
                       </video>
                     )}
                   </div>
@@ -134,18 +149,21 @@ export default function LitterList({ litterList }) {
                     bottom: 0,
                   }}
                 >
-                  <Typography
+                  <Chip variant="soft" color="success">
+                    {litter.country}
+                  </Chip>
+                  {/* <Typography
                     level="body-lg"
                     fontWeight="lg"
                     textColor="#fff"
                   >
-                    {litter.title}
-                  </Typography>
+                    {litter.country}
+                  </Typography> */}
                   <Button
-                    variant="light"
+                    variant="dark"
                     onClick={() => handleCardClick(litter, index)}
                   >
-                    View
+                    {type === "gallery" ? "View" : "Tag Litter"}
                   </Button>
                 </div>
               </CardContent>
@@ -154,11 +172,21 @@ export default function LitterList({ litterList }) {
         ))}
       </Grid>
 
-      <LitterModal
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+        <Pagination
+          color="success"
+          count={Math.ceil(litterList.length / (rowsPerPage * cardsPerRow))}
+          page={page}
+          onChange={handlePageChange}
+        />
+      </div>
+
+      <ModalComponent
         open={openModal}
         handleClose={handleCloseModal}
         currentIndex={currentIndex}
-        modalContent={modalContent}
+        litter={modalContent}
+        bucketUrl={BUCKET_URL}
       />
     </div>
   );

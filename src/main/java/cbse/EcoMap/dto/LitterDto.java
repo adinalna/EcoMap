@@ -15,15 +15,25 @@ public class LitterDto {
     private Boolean pickedUp;
     private Instant dateCreated;
 	private String user;
+	private String country;
+	private String state;
+	private String city;
+	private String postcode;
+	private String address;
     private Set<MediaDto> media;
-    private Set<TagDto> tags; 
+    private Set<LitterTagDto> litterTags; 
 
     public LitterDto(Litter litter) {
     	this.id = litter.getId();
         this.pickedUp = litter.getPickedUp();
-        this.dateCreated = litter.getDateCreated();
-        this.user = litter.getUser().getName();  
+        this.user = litter.getUser().getName();
         this.media = litter.getMedia().stream().map(MediaDto::new).collect(Collectors.toSet());
-        this.tags = litter.getTags().stream().map(TagDto::new).collect(Collectors.toSet());
+        this.litterTags = litter.getLitterTags().stream().map(LitterTagDto::new).collect(Collectors.toSet());
+        this.country = litter.getCountry().getName();
+        this.state = litter.getState();
+        this.city = litter.getCity();
+        this.postcode = litter.getPostcode();
+        this.address = litter.getAddress();
+        this.dateCreated = litter.getDateCreated();
     }
 }
