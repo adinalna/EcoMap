@@ -49,7 +49,7 @@ public class LitterService {
         JsonNode jsonData = null;
 
         System.out.print("locationY" + locationY);
-        System.out.print("locationX" + locationX);
+        System.out.print("location i X" + locationX);
 
         try {
             jsonData = geocodeMapsApiClient.Reverse(locationY, locationX);
