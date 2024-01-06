@@ -59,16 +59,6 @@ public class TeamController {
         List<Team> teamList = teamService.filteredTeams(userID);
         return ResponseEntity.ok().body(teamList);
     }
-    
-    // @GetMapping("/findSpecific")
-    // @CrossOrigin(origins = "http://localhost:4200")
-    // public ResponseEntity<?> findSpecific(@RequestParam Long teamID, @RequestParam Long userID) {
-    //     Team foundTeam = teamService.findSpecificTeam(teamID, userID);
-    //     if (foundTeam == null) {
-    //         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No such team found or already a member.");
-    //     }
-    //     return ResponseEntity.ok().body(foundTeam);
-    // }
 
     @GetMapping("/findSpecificByName")
     @CrossOrigin(origins = "http://localhost:4200")
@@ -79,4 +69,24 @@ public class TeamController {
         }
         return ResponseEntity.ok().body(foundTeam);
     }
+
+    @GetMapping("/userTeams")
+	@CrossOrigin(origins = "http://localhost:4200")
+	public ResponseEntity<?> getUserTeams(@RequestParam Long userId) {
+		List<Team> teams = teamService.getTeamsByUserId(userId);
+		return ResponseEntity.ok().body(teams);
+	}
+
+	@PostMapping("/unjoin")
+	@CrossOrigin(origins = "http://localhost:4200")
+	public ResponseEntity<?> unjoinTeam(@RequestParam Long userId, @RequestParam Long teamId) {
+		try {
+			teamService.unjoinTeam(userId, teamId);
+			return ResponseEntity.ok().build();
+		} catch (Exception e) {
+			// Handle exceptions
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("Error unjoining team: " + e.getMessage());
+		}
+	}
 }

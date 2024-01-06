@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import cbse.EcoMap.model.Team;
 import cbse.EcoMap.model.User;
@@ -33,12 +34,10 @@ public class TeamService {
     }
 
 	public List<Team> getAllTeams() {
-		// Implement logic to retrieve all teams (e.g., from the database)
 		return teamRepository.findAll();
 	}
 
 	public Team findTeamById(Long teamId) {
-		// Implement logic to retrieve a cleanup by its ID
 		Optional<Team> optionalTeam = teamRepository.findById(teamId);
 		return optionalTeam.orElse(null);
 	}
@@ -60,44 +59,41 @@ public class TeamService {
 		        }
 	            
 	        }
-	        
-	        // Remove Private Cleanup using removeIf
 	        filteredList.removeIf(team -> !team.getIsPublic());
 
 	           
 	        return filteredList;
 	    } catch (Exception e) {
-	        // Handle exceptions appropriately, log or throw as needed
 	        e.printStackTrace();
-	        return Collections.emptyList(); // Or handle the error and return an appropriate response
+	        return Collections.emptyList();
 	    }
 	}
-	
-	// public Team findSpecificTeam(Long teamId, Long userId) {
-	// 	Optional<Team> optionalTeam = teamRepository.findById(teamId);
-	// 	if (optionalTeam.isPresent()) {
-	// 		Team team = optionalTeam.get();
-	// 		boolean isMember = userTeamRepository.findByUserId(userId).stream()
-	// 						  .anyMatch(ut -> ut.getTeam().getId().equals(teamId));
-	// 		if (isMember) {
-	// 			return null; // User is already a member
-	// 		}
-	// 		return team;
-	// 	}
-	// 	return null;
-	// }
 	
 	public Team findSpecificTeamByName(String teamName, Long userId) {
 		List<Team> teams = teamRepository.findByName(teamName);
 		if (!teams.isEmpty()) {
-			Team team = teams.get(0); // Assuming name uniqueness, otherwise handle list
+			Team team = teams.get(0);
 			boolean isMember = userTeamRepository.findByUserId(userId).stream()
 							  .anyMatch(ut -> ut.getTeam().getId().equals(team.getId()));
 			if (isMember) {
-				return null; // User is already a member
+				return null;
 			}
 			return team;
 		}
 		return null;
 	}	
+
+	public List<Team> getTeamsByUserId(Long userId) {
+		return userTeamRepository.findByUserId(userId).stream()
+				.map(UserTeam::getTeam)
+				.collect(Collectors.toList());
+	}
+
+	public void unjoinTeam(Long userId, Long teamId) {
+		List<UserTeam> userTeams = userTeamRepository.findByUserId(userId);
+		userTeams.stream()
+				.filter(userTeam -> userTeam.getTeam().getId().equals(teamId))
+				.findFirst()
+				.ifPresent(userTeamRepository::delete);
+	}
 }
