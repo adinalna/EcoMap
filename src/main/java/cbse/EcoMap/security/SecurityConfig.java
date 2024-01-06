@@ -17,8 +17,7 @@ import cbse.EcoMap.repository.UserRepository;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-
-	 private final UserRepository userRepository;
+    private final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
 
     public SecurityConfig(UserRepository userRepository, JwtTokenProvider jwtTokenProvider) {

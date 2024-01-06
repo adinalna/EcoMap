@@ -8,21 +8,20 @@ import lombok.AllArgsConstructor;
 import jakarta.persistence.*;
 
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "cleanups")@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-@SequenceGenerator(name = "cleanups_seq", sequenceName = "cleanups_id_seq", allocationSize = 1)
+@Table(name = "cleanups")
 public class Cleanup {
 
     @Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cleanups_seq")
+    @GeneratedValue
     private Long id;
 
     @NonNull
@@ -30,9 +29,13 @@ public class Cleanup {
     private String location_x;
     private String location_y;
     private String image;
+    private String date;
+    private String description;
     private Boolean isPublic;
     private Instant date_created = Instant.now();
 
-    @OneToMany(mappedBy = "cleanup", cascade = CascadeType.ALL)
-    private Set<UserCleanup> userCleanups;
+    @OneToMany(mappedBy = "cleanup", cascade = CascadeType.REMOVE)
+    @JsonIgnore 
+    private Set<UserCleanup> userCleanups = new HashSet<>();
 }
+

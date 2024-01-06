@@ -8,7 +8,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import axiosClient from '../../../axios-client';
 
 export default function LitterTagForm({ litter }) {
-    const tags = litter.litterTags;
+    const [tags, setTags] = useState(litter.litterTags);
     const [selected, setSelected] = useState([]);
     const [unusedTag, setUnusedTag] = useState([]);
     const [selectedTags, setSelectedTags] = useState([]);
@@ -17,6 +17,7 @@ export default function LitterTagForm({ litter }) {
 
     useEffect(() => {
         fetchUnusedTagList();
+        console.log("Litter", litter)
     }, []);
 
     const fetchUnusedTagList = async () => {
@@ -30,40 +31,51 @@ export default function LitterTagForm({ litter }) {
         }
     };
 
-    const handleSelectAllClick = (event) => {
+    const handleSwitchChange = (isChecked) => {
+        const payload = {
+            pickedUp: isChecked
+        };
+
+        axiosClient.put(`/litter/${litter.id}/pickup`, null, {
+            params: payload
+        })
+            .then(({ data }) => {
+            })
+            .catch((err) => {
+                console.error("Error in litter pickup update:", err);
+            });
+    };
+
+    const handleSelectAllTag = (event) => {
         if (event.target.checked) {
-            // If the header checkbox is checked, select all tags
-            setSelected(tags.map((tag, index) => index));
+            setSelected([...tags]);
         } else {
-            // If the header checkbox is unchecked, clear the selection
             setSelected([]);
         }
     };
 
-    const handleClick = (event, index) => {
-        const selectedIndex = selected.indexOf(index);
+    const isSelectedTag = (tag) => selected.some((selectedTag) => selectedTag.id === tag.id);
+
+    const handleSelectTag = (event, index) => {
+        const clickedTag = tags[index];
+        const isCurrentlySelected = isSelectedTag(clickedTag);
+
         let newSelected = [];
 
-        if (selectedIndex === -1) {
-            // If the clicked tag is not selected, add it to the selection
-            newSelected = [...selected, index];
+        if (!isCurrentlySelected) {
+            newSelected = [...selected, clickedTag];
         } else {
-            // If the clicked tag is already selected, remove it from the selection
-            newSelected = selected.filter((i) => i !== index);
+            newSelected = selected.filter((selectedTag) => selectedTag.id !== clickedTag.id);
         }
 
-        // Update the selected state
         setSelected(newSelected);
     };
-
-    const isSelected = (name) => selected.indexOf(name) !== -1;
 
     const handleTagsChange = (_, newValue) => {
         setSelectedTags(newValue.slice(0, 6));
     };
 
     const handleCountChange = (event) => {
-        // Validate if the input is within the desired range
         const newCount = Math.min(100, Math.max(1, parseInt(event.target.value, 10) || 1));
         setCount(newCount);
     };
@@ -74,34 +86,77 @@ export default function LitterTagForm({ litter }) {
     };
 
     const handleConfirmEdit = () => {
-        // Implement your logic to confirm the edit
-        // You can use the count state for any further processing
-        // ...
+        const updatedTags = selected.map(tag => ({ ...tag, count: count }));
 
-        // Reset the editing state
+        axiosClient.post(`/tag/count/update/batch`, updatedTags)
+            .then(({ data }) => {
+                const newTags = tags.map(tag => {
+                    const updatedTag = data.find(t => t.id === tag.id);
+                    return updatedTag ? updatedTag : tag;
+                });
+                setTags(newTags);
+                setSelected([]);
+            })
+            .catch((err) => {
+                console.error("Error in litter pickup update:", err);
+            });
+
         setIsEditingCount(false);
     };
 
     const handleCancelEdit = () => {
-        // Reset the count to its original value
-        setCount(1);
-
-        // Reset the editing state
         setIsEditingCount(false);
     };
 
 
-    const handleDelete = () => {
-        setCount(1);
+    const handleDeleteTag = () => {
+        // console.log('Selected Tags for delete:', selected);
+
+        // Map the selected array to get only the ids
+        const selectedIds = selected.map(tag => tag.id);
+
+        axiosClient.post(`/tag/delete/batch`, selectedIds)
+            .then(({ data }) => {
+                const updatedTags = tags.filter(tag => !selectedIds.includes(tag.id));
+                setTags(updatedTags);
+                setSelected([]);
+
+            })
+            .catch((err) => {
+                console.error("Error in litter pickup update:", err);
+            });
     };
 
-    const handleFormSubmit = (event) => {
+
+    const handleAddNewTags = (event) => {
         event.preventDefault();
-        // Handle the form submission here
-        console.log('Selected Tag:', selectedTags);
-        alert('Selected Tag:', selectedTags);
-        // Add your logic to submit the form data
+        // console.log('Selected Tag:', selectedTags);
+        axiosClient.post(`/tag/litter-tag/create/batch/${litter.id}`, selectedTags)
+            .then(({ data }) => {
+                // console.log("Added: ", data);
+                const updatedTags = [...tags, ...data];
+                setTags(updatedTags);
+                setSelected([]);
+            })
+            .catch((err) => {
+                console.error("Error in litter pickup update:", err);
+            });
     };
+
+    const handleDeleteLitter = () => {
+        const litterIdToDelete = litter.id;
+        console.log('Litter to delete:', litterIdToDelete);
+    
+        axiosClient.delete(`/litter/${litterIdToDelete}/delete`)
+            .then(({ data }) => {
+                console.log("Litter successfully deleted");
+                window.location.reload();
+            })
+            .catch((err) => {
+                console.error("Error in litter deletion:", err);
+            });
+    };
+    
 
     return (
         <Sheet color="success" variant="plain"
@@ -117,7 +172,16 @@ export default function LitterTagForm({ litter }) {
                 justifyContent: 'start'
             }}>
             <h2>Tag Litter</h2>
-            <FormControlLabel control={<Switch color="success" />} label="Litter Picked Up" />
+            <FormControlLabel
+                control={
+                    <Switch
+                        color="success"
+                        defaultChecked={litter.pickedUp}
+                        onChange={(event) => handleSwitchChange(event.target.checked)}
+                    />
+                }
+                label="Litter Picked Up"
+            />
             <Stack direction="horizontal" style={{ height: "20px" }}>
                 <div className="p-2">
                     <Typography level="body-lg">{"Current Tags"}</Typography>
@@ -158,7 +222,7 @@ export default function LitterTagForm({ litter }) {
                 <div className="p-2">
                     {selected.length > 0 && (
                         <Tooltip title="Delete">
-                            <IconButton size="sm" color="danger" variant="solid" disabled={isEditingCount} onClick={handleDelete}>
+                            <IconButton size="sm" color="danger" variant="solid" disabled={isEditingCount} onClick={handleDeleteTag}>
                                 <DeleteIcon />
                             </IconButton>
                         </Tooltip>
@@ -181,7 +245,7 @@ export default function LitterTagForm({ litter }) {
                                     color='success'
                                     indeterminate={selected.length > 0 && selected.length < tags.length}
                                     checked={tags.length > 0 && selected.length === tags.length}
-                                    onChange={handleSelectAllClick}
+                                    onChange={handleSelectAllTag}
                                     inputProps={{
                                         'aria-label': 'select all rows',
                                     }}
@@ -193,20 +257,23 @@ export default function LitterTagForm({ litter }) {
                     </thead>
                     <tbody>
                         {tags.map((tag, index) => (
-                            <tr key={index} onClick={(event) => handleClick(event, index)}>
+                            <tr key={index} onClick={(event) => handleSelectTag(event, index)}>
                                 <td style={{ width: "12%" }}>
                                     <Checkbox
                                         color='success'
-                                        checked={isSelected(index)}
+                                        checked={isSelectedTag(tag)}
                                         inputProps={{
                                             'aria-labelledby': `checkbox-${index}`,
                                         }}
                                     />
                                 </td>
                                 <td style={{ width: "70%" }}>{tag.titleValue}</td>
-                                <td style={{ width: "15%" }}>{tag.count}</td>
+                                <td style={{ width: "15%" }}>
+                                    {selected.find(s => s.id === tag.id)?.count || tag.count}
+                                </td>
                             </tr>
                         ))}
+
                     </tbody>
                 </Table>
             </Sheet>
@@ -217,7 +284,7 @@ export default function LitterTagForm({ litter }) {
                     </div>
                     <div className="p-2 ms-auto">
                         {selectedTags.length > 0 && (
-                            <Button variant="success" onClick={handleFormSubmit}>
+                            <Button variant="success" onClick={handleAddNewTags}>
                                 Add Selected
                             </Button>
                         )}
@@ -245,7 +312,9 @@ export default function LitterTagForm({ litter }) {
                     )}
                     value={selectedTags}
                 />
-                <Button variant="outline-danger" style={{ width: "100%" }}>Delete Litter</Button>
+                <Button variant="outline-danger" style={{ width: "100%" }} onClick={handleDeleteLitter}>
+                    Delete Litter
+                </Button>
             </FormControl>
         </Sheet >
     );

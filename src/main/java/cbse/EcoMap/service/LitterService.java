@@ -7,6 +7,8 @@ import cbse.EcoMap.model.Country;
 import cbse.EcoMap.model.User;
 import cbse.EcoMap.repository.LitterRepository;
 import cbse.EcoMap.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import cbse.EcoMap.repository.CountryRepository;
 //import cbse.EcoMap.security.UserDetailsImpl;
 
@@ -110,18 +112,24 @@ public class LitterService {
                 .collect(Collectors.toList());
     }
 
-    public Litter updateLitter(Long litterId, Litter updatedLitter) {
-        if (litterRepository.existsById(litterId)) {
-            updatedLitter.setId(litterId);
-            return litterRepository.save(updatedLitter);
+    public void deleteLitterById(Long litterId) {
+        Litter litter = litterRepository.findById(litterId)
+            .orElseThrow(() -> new EntityNotFoundException("Litter not found with id: " + litterId));
+
+        litterRepository.delete(litter);
+    }
+    
+    public Litter updateLitterPickupStatus(Long litterId, Boolean pickedUp) {
+        Optional<Litter> optionalLitter = litterRepository.findById(litterId);
+        if (optionalLitter.isPresent()) {
+            Litter litter = optionalLitter.get();
+            litter.setPickedUp(pickedUp);
+            return litterRepository.save(litter);
         } else {
             throw new IllegalArgumentException("Litter not found with ID: " + litterId);
         }
     }
 
-    public void deleteLitter(Long litterId) {
-        litterRepository.deleteById(litterId);
-    }
 }
 
 
