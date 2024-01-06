@@ -15,21 +15,29 @@ const JoinTeam = () => {
   const handleSearch = async () => {
     const userId = 1;
     try {
-        const response = await axios.get(
-            `http://localhost:8080/api/team/findPrivateByUniqueIdentifier?uniqueIdentifier=${uniqueIdentifier}`
-        );
-        setSpecificTeam([response.data]);
-        setTeamEvents([]);
-    } catch (error) {
-        if (error.response && error.response.status === 404) {
-          alert("No such private team exists.");
-        } else {
-          console.error("Error searching for team:", error.message);
+      const response = await axios.get(
+        `http://localhost:8080/api/team/findPrivateByUniqueIdentifier`,
+        {
+          params: {
+            uniqueIdentifier: uniqueIdentifier,
+            userId: userId
+          }
         }
+      );
+      setSpecificTeam([response.data]);
+      setTeamEvents([]);
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        alert("No such private team exists.");
+      } else if (error.response && error.response.status === 403) {
+        alert("You are already a member of this team.");
+      } else {
+        console.error("Error searching for team:", error.message);
       }
-      setUniqueIdentifier('');
-    };
-
+    }
+    setUniqueIdentifier('');
+  };
+  
   const handleJoinTeam = async (teamId, isPrivate = false) => {
     const userId = 1;
     try {
