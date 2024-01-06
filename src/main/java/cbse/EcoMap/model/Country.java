@@ -29,8 +29,8 @@ public class Country {
     @Min(0)
     private int xp_score;
 
-    @OneToMany(mappedBy = "country")
-    private Set<Team> teams;
+    // @OneToMany(mappedBy = "country")
+    // private Set<Team> teams;
 
     @OneToMany(mappedBy = "country")
     private Set<User> users = new HashSet<>(); // Initialize with an empty HashSet

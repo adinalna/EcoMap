@@ -38,7 +38,7 @@ export default function CustomNavbar({ user, token }) {
             <Row className="d-flex flex-row align-items-center">
               <NavDropdown align="end" title="More" className="me-2">
                 <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
-                <NavDropdown.Item href="/teams">Teams</NavDropdown.Item>
+                <NavDropdown.Item href="/team">Team</NavDropdown.Item>
                 <NavDropdown.Item href="/settings">Settings</NavDropdown.Item>
                 <NavDropdown.Item href="/language">Language</NavDropdown.Item>
                 <NavDropdown.Item href="/logout">Logout</NavDropdown.Item>
