@@ -49,7 +49,7 @@ const router = createBrowserRouter([
                         element: <JoinTeam />
                     },
                     {
-                        path: "/viewTeam",
+                        path: "/myTeam",
                         element: <ViewTeam />
                     }
                 ]

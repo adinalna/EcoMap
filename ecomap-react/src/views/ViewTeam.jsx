@@ -37,7 +37,7 @@ const ViewTeam = () => {
   
   return (
     <div style={{ margin: "10px 200px" }}>
-      <h1 className='mb-4'>Your Teams</h1>
+      <h1 className='mb-4'>My Teams</h1>
       <div className='table-responsive'>
         <table className='table'>
         <thead style={{ backgroundColor: '#f0faf0' }}>
