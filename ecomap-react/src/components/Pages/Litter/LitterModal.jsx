@@ -71,30 +71,6 @@ export default function LitterModal({
                 )}
               </div>
 
-              {/* <IconButton
-              onClick={handlePrevImage}
-              sx={{
-                position: 'absolute',
-                top: '50%',
-                left: '15%',
-                transform: 'translateY(-50%)',
-                color: 'white',
-              }}
-            >
-              <ArrowBackIosIcon />
-            </IconButton>
-            <IconButton
-              onClick={handleNextImage}
-              sx={{
-                position: 'absolute',
-                top: '50%',
-                right: '15%',
-                transform: 'translateY(-50%)',
-                color: 'white',
-              }}
-              >
-              <ArrowForwardIosIcon />
-            </IconButton> */}
 
               <Table color="success" variant="outlined" sx={{ width: "700px" }}>
                 <tbody>

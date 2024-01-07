@@ -10,6 +10,7 @@ export default function LitterList({ litterList, type }) {
   const [modalContent, setModalContent] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [hoveredCardIndex, setHoveredCardIndex] = useState(null);
   const [page, setPage] = useState(1);
   const cardsPerRow = 3;
   const rowsPerPage = 3;
@@ -70,8 +71,8 @@ export default function LitterList({ litterList, type }) {
                 borderRadius: '5px',
                 cursor: 'default',
               }}
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
+              onMouseEnter={() => setHoveredCardIndex(index)}
+              onMouseLeave={() => setHoveredCardIndex(null)}
             >
               <CardCover>
                 {litter.media.map((litterMedia, mediaIndex) => (
@@ -96,20 +97,16 @@ export default function LitterList({ litterList, type }) {
                     )}
                     {litterMedia.mediaType === 'video' && (
                       <video
-                        ref={(videoRef) => {
-                          if (videoRef) {
-                            if (mediaIndex === currentIndex) {
-                              if (isHovered) {
-                                videoRef.play();
-                              } else {
-                                videoRef.pause();
-                                videoRef.currentTime = 0;
-                              }
-                            }
-                          }
-                        }}
-                        loop
-                        muted
+                      ref={(videoRef) => {
+                        if (videoRef && index === hoveredCardIndex && mediaIndex === currentIndex) {
+                          videoRef.play();
+                        } else if (videoRef) {
+                          videoRef.pause();
+                          videoRef.currentTime = 0;
+                        }
+                      }}
+                      loop
+                      muted
                         style={{
                           width: '100%',
                           height: '100%',
