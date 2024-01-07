@@ -62,7 +62,7 @@ public class LitterController {
         return ResponseEntity.ok().body(litters);
     }
 
-    @PostMapping("{litterId}/delete")
+    @DeleteMapping("{litterId}/delete")
     public ResponseEntity<?> deleteLitter(@PathVariable Long litterId) {
         try {
             litterService.deleteLitterById(litterId);
