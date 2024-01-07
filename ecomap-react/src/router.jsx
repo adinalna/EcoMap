@@ -14,6 +14,7 @@ import GlobalMap from "./views/GlobalMap.jsx";
 import CreateTeam from "./views/CreateTeam.jsx";
 import JoinTeam from "./views/JoinTeam.jsx";
 import ViewTeam from "./views/ViewTeam.jsx";
+import Community from "./views/Community.jsx";
 
 const router = createBrowserRouter([
     {
@@ -75,6 +76,10 @@ const router = createBrowserRouter([
                         element: <Signup />,
                     },
                 ],
+            },
+            {
+                path: '/community',
+                element: <Community />
             },
         ],
     },
