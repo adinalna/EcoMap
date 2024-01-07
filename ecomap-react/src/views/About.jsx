@@ -25,9 +25,7 @@ export default function About() {
                 headers.append('Accept-Language', 'en');
                 // headers.set('Accept-Language', 'en');
             } else if (language === "Malay") {
-                headers.delete('Accept-Language');
-                headers.append('Accept-Language', 'ms_MY');
-                // headers.set('Accept-Language', 'ms-MY');
+                headers.set('Accept-Language', 'ms-MY');
             } else if (language === "French") {
                 headers.delete('Accept-Language');
                 headers.append('Accept-Language', 'fr');

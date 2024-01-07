@@ -15,7 +15,6 @@ import cbse.EcoMap.model.Litter;
 import cbse.EcoMap.service.LitterService;
 import jakarta.persistence.EntityNotFoundException;
 
-@CrossOrigin(origins = "http://localhost:4200") // Change to Port 4200
 @RestController
 @RequestMapping("/api/litter")
 @CrossOrigin(origins = "http://localhost:4200") // Replace with your frontend URL
