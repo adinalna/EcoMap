@@ -9,6 +9,7 @@ import cbse.EcoMap.model.Litter;
 import cbse.EcoMap.model.Team;
 import cbse.EcoMap.model.User;
 import cbse.EcoMap.model.UserCleanup;
+import cbse.EcoMap.model.UserTeam;
 import cbse.EcoMap.repository.UserRepository;
 
 import java.time.Instant;

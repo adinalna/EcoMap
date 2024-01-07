@@ -38,3 +38,4 @@ public class Cleanup {
     @JsonIgnore 
     private Set<UserCleanup> userCleanups = new HashSet<>();
 }
+

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/media")
+@CrossOrigin(origins = "http://localhost:4200") // Replace with your frontend URL
 public class MediaController {
 
     private final MediaService mediaService;
@@ -48,7 +49,7 @@ public class MediaController {
         }
     }
     
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<Media>> getAllMedia() {
         List<Media> mediaList = mediaService.getAllMedia();
         return ResponseEntity.ok().body(mediaList);

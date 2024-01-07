@@ -14,9 +14,16 @@ export default function Upload() {
 
   const handleFileChange = (e) => {
     const files = Array.from(e.target.files);
-    setSelectedFiles((prevFiles) => [...prevFiles, ...files]);
-  };
-
+  
+    if (selectedFiles.length >= 10) {
+      alert('You can only upload up to 10 files.');
+      e.target.value = null;
+    } else {
+      // Process the selected files
+      setSelectedFiles((prevFiles) => [...prevFiles, ...files]);
+    }
+  };  
+  
   const removeFile = (file) => {
     const updatedFiles = selectedFiles.filter((selectedFile) => selectedFile !== file);
     setSelectedFiles(updatedFiles);
@@ -24,7 +31,11 @@ export default function Upload() {
 
   const handlePreUpload = async (onUpload) => {
     try {
-      const geotagChecks = await Promise.all(selectedFiles.map(checkGeotag));
+      const geotagChecks = await Promise.all(
+        selectedFiles.map(file => 
+          file.type.startsWith('video/mp4') ? Promise.resolve(true) : checkGeotag(file)
+        )
+      );
       const allFilesGeotagged = geotagChecks.every((result) => result);
 
       if (allFilesGeotagged) {
@@ -36,6 +47,7 @@ export default function Upload() {
       console.error("Error checking geotags:", error.message);
     }
   };
+
 
   const handleUploadComplete = async ({ overallUploadSuccess, fileResults }) => {
     console.log("Upload success:", overallUploadSuccess);
@@ -91,28 +103,29 @@ export default function Upload() {
       <h1>Upload Media</h1>
       <Form>
         <Card className="custom-card"
-          style={{ width: "715px", height: "450px", backgroundColor: "" }}>
+          style={{ width: "800px", height: "490px", backgroundColor: "" }}>
           <input
             type="file"
             id="fileInput"
             style={{ display: "none" }}
             onChange={handleFileChange}
             multiple
+            accept="image/jpeg, image/jpg, image/png, video/mp4"
           />
           {filesToBeUploaded && (
-            <Button variant="dark" onClick={openFileDialog} style={{ width: "400px", height: "50px" }}>
+            <Button variant="dark" onClick={openFileDialog} style={{ width: "750px", height: "50px" }}>
               Select Media Files <Images className="ml-4" size={18} />
             </Button>
           )}
-          <Card body className="default-card" style={{ width: "600px", height: "350px", overflowY: 'auto', overflowX: 'hidden' }}>
+          <Card body className="default-card" style={{ width: "750px", height: "450px", overflowY: 'auto', overflowX: 'auto' }}>
             {/* Display selected files list */}
             {filesToBeUploaded && selectedFiles.length > 0 && (
               <Table>
-                <tbody>
+                <tbody style={{fontSize:"13px" }}>
                   {selectedFiles.map((file, index) => (
                     <tr key={index} className="border-top">
                       <td style={{ width: '5%' }}>{`${index + 1}. `}</td>
-                      <td style={{ width: '83%' }}>{file.name}</td>
+                      <td style={{ width: '83%'}}>{file.name}</td>
                       <td style={{ width: '7%' }}>
                         <Button variant="danger" size="sm" onClick={() => removeFile(file)}>Remove</Button>
                       </td>
@@ -159,8 +172,8 @@ export default function Upload() {
           )}
         </Card>
       </Form>
-      <Nav.Link className="me-2" href="/litter">
-        <Button variant="dark" style={{ margin: "30px 0px", height: "60px", width: "300px" }}>
+      <Nav.Link className="me-2" href="/tag">
+        <Button variant="dark" style={{ margin: "15px 0px", height: "60px", width: "300px" }}>
           Tag Your Litters Here !
         </Button>
       </Nav.Link>

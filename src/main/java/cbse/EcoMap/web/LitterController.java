@@ -1,5 +1,6 @@
 package cbse.EcoMap.web;
 
+import java.time.Month;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,15 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 import cbse.EcoMap.dto.LitterDto;
 import cbse.EcoMap.exception.ErrorResponse;
 import cbse.EcoMap.model.Litter;
 import cbse.EcoMap.service.LitterService;
+import jakarta.persistence.EntityNotFoundException;
 
 @RestController
 @RequestMapping("/api/litter")
+@CrossOrigin(origins = "http://localhost:4200") // Replace with your frontend URL
 public class LitterController {
 
     private final LitterService litterService;
@@ -109,19 +111,30 @@ public class LitterController {
                     .body(new ErrorResponse("Internal Server Error"));
         }
     }
-    
+
     @GetMapping("/user/{userId}")
-    @CrossOrigin(origins = "http://localhost:4200")
-    public ResponseEntity<List<Litter>> getAllLittersByUserId(@PathVariable Long userId) {
-        List<Litter> litters = litterService.getAllLittersByUserId(userId);
+    public ResponseEntity<List<LitterDto>> getAllLittersByUserId(@PathVariable Long userId) {
+    	List<LitterDto> litters = litterService.getAllLittersByUserId(userId);
         return ResponseEntity.ok().body(litters);
     }
 
-    @PutMapping("/{litterId}")
-    @CrossOrigin(origins = "http://localhost:4200")
-    public ResponseEntity<?> updateLitter(@PathVariable Long litterId, @RequestBody Litter litter) {
+    @DeleteMapping("{litterId}/delete")
+    public ResponseEntity<?> deleteLitter(@PathVariable Long litterId) {
         try {
-            Litter updatedLitter = litterService.updateLitter(litterId, litter);
+            litterService.deleteLitterById(litterId);
+            return ResponseEntity.ok("Litter successfully deleted");
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                                 .body("Internal Server Error: " + e.getMessage());
+        }
+    }
+
+    @PutMapping("/{litterId}/pickup")
+    public ResponseEntity<?> updateLitterPickupStatus(@PathVariable Long litterId, @RequestParam Boolean pickedUp) {
+        try {
+            Litter updatedLitter = litterService.updateLitterPickupStatus(litterId, pickedUp);
             return ResponseEntity.ok().body(updatedLitter);
 
         } catch (Exception e) {
@@ -130,16 +143,37 @@ public class LitterController {
         }
     }
 
-    @DeleteMapping("/{litterId}")
-    @CrossOrigin(origins = "http://localhost:4200")
-    public ResponseEntity<?> deleteLitter(@PathVariable Long litterId) {
-        try {
-            litterService.deleteLitter(litterId);
-            return ResponseEntity.ok().build();
-
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ErrorResponse("Internal Server Error"));
-        }
+    @GetMapping("/{year}/{month}")
+    public ResponseEntity<?> getAllLitterInAMonth(@PathVariable int year, @PathVariable Month month){
+    	List<Litter> allLitters = litterService.getAllLittersInMonth(year, month);
+        return ResponseEntity.ok().body(allLitters);
     }
+
+ // Endpoint to get litter data for the last year
+    @GetMapping("/last_year")
+    public ResponseEntity<List<Litter>> getLitterLastYear() {
+        List<Litter> allLitters = litterService.getAllLittersPastNDays(365);
+        return ResponseEntity.ok().body(allLitters);
+    }
+
+    @GetMapping("/last_three_years")
+    public ResponseEntity<List<Litter>> getLitterLastThreeYears() {
+        List<Litter> allLitters = litterService.getAllLittersPastNDays(365*3);
+        return ResponseEntity.ok().body(allLitters);
+    }
+
+    // Endpoint to get litter data for the last 6 months
+    @GetMapping("/last_six_months")
+    public ResponseEntity<List<Litter>> getLitterLastSixMonths() {
+    	List<Litter> allLitters = litterService.getAllLittersPastNDays(180);
+        return ResponseEntity.ok().body(allLitters);
+    }
+
+    // Endpoint to get litter data for the last 3 months
+    @GetMapping("/last_three_months")
+    public ResponseEntity<List<Litter>> getLitterLastThreeMonths() {
+    	List<Litter> allLitters = litterService.getAllLittersPastNDays(90);
+        return ResponseEntity.ok().body(allLitters);
+    }
+
 }

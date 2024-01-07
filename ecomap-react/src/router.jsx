@@ -12,6 +12,11 @@ import WorldCup from "./views/WorldCup.jsx";
 import WorldCupLeaderboards from "./components/Pages/WorldCup/WorldCupLeaderboards.jsx";
 import LitterGallery from "./views/LitterGallery.jsx";
 import LitterTag from "./views/LitterTag.jsx";
+import GlobalMap from "./views/GlobalMap.jsx";
+import CreateTeam from "./views/CreateTeam.jsx";
+import JoinTeam from "./views/JoinTeam.jsx";
+import ViewTeam from "./views/ViewTeam.jsx";
+import Community from "./views/Community.jsx";
 
 const router = createBrowserRouter([
     {
@@ -23,20 +28,36 @@ const router = createBrowserRouter([
                 element: <DefaultLayout />,
                 children: [
                     {
-                        path: '/upload',
-                        element: <Upload />
+                        path: '/',
+                        element: <Navigate to="/about" />
                     },
                     {
-                        path: '/gallery',
-                        element: <LitterGallery />
+                        path: "/upload",
+                        element: <Upload />,
                     },
                     {
-                        path: '/tag',
-                        element: <LitterTag />
+                        path: "/gallery",
+                        element: <LitterGallery />,
                     },
                     {
-                        path: '/cleanup',
-                        element: <Cleanup />
+                        path: "/tag",
+                        element: <LitterTag />,
+                    },
+                    {
+                        path: "/cleanup",
+                        element: <Cleanup />,
+                    },
+                    {
+                        path: "/createTeam",
+                        element: <CreateTeam />
+                    },
+                    {
+                        path: "/joinTeam",
+                        element: <JoinTeam />
+                    },
+                    {
+                        path: "/myTeam",
+                        element: <ViewTeam />
                     },
                     {
                         path: '/worldcup',
@@ -49,11 +70,15 @@ const router = createBrowserRouter([
                 ]
             },
             {
-                path: '/about',
-                element: <About />
+                path: "/about",
+                element: <About />,
             },
             {
-                path: '/',
+                path: "/global",
+                element: <GlobalMap />,
+            },
+            {
+                path: "/",
                 element: <GuestLayout />,
                 children: [
                     {
@@ -64,7 +89,11 @@ const router = createBrowserRouter([
                         path: '/signup',
                         element: <Signup />
                     }
-                ]
+                ],
+            },
+            {
+                path: '/community',
+                element: <Community />
             },
         ]
     },
