@@ -26,6 +26,10 @@ const router = createBrowserRouter([
                 element: <DefaultLayout />,
                 children: [
                     {
+                        path: '/',
+                        element: <Navigate to="/about" />
+                    },
+                    {
                         path: "/upload",
                         element: <Upload />,
                     },
