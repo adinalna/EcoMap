@@ -1,7 +1,6 @@
 package cbse.EcoMap.repository;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.data.domain.Sort;
@@ -27,9 +26,10 @@ public interface LitterRepository extends JpaRepository<Litter, Long> {
 	List<Litter> findByDateCreatedBetween(@Param("startDate") Instant startDate, @Param("endDate") Instant endDate, Sort sort);
 
 
-	
-	
+	@Query("SELECT l.country, COUNT(l), COUNT(DISTINCT l.user) FROM Litter l GROUP BY l.country")
+	List<Object[]> getCountriesLitterCount();
 
-
+	@Query("SELECT l FROM Litter l LEFT JOIN FETCH l.media m WHERE l.country.id = :countryId")
+	List<Litter> findAllByCountryId(Integer countryId);
 }
 

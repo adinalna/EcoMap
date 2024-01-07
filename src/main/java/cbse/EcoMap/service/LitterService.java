@@ -2,6 +2,7 @@ package cbse.EcoMap.service;
 
 import cbse.EcoMap.client.GeocodeMapsApiClient;
 import cbse.EcoMap.dto.LitterDto;
+import cbse.EcoMap.dto.CountryLitterDto;
 import cbse.EcoMap.model.Litter;
 import cbse.EcoMap.model.Country;
 import cbse.EcoMap.model.User;
@@ -18,6 +19,8 @@ import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -88,6 +91,41 @@ public class LitterService {
             return Optional.ofNullable(countryRepository.findByName(countryName)).orElse(null);
         }
         return null;
+    }
+
+    public List<CountryLitterDto> getCountriesLitterCount() {
+        List<Object[]> counts = litterRepository.getCountriesLitterCount();
+        return counts.stream()
+                .map(obj -> {
+                    Country country = (Country) obj[0];
+                    Long countryId = country.getId();
+                    String countryName = country.getName();
+                    Long litterCount = (Long) obj[1];
+                    Long userCount = (Long) obj[2];
+                    return new CountryLitterDto(countryId, countryName,litterCount, userCount);
+                })
+                .sorted(Comparator.comparing(CountryLitterDto::getLitterCount).reversed())
+                .collect(Collectors.toList());
+    }
+
+    public List<CountryLitterDto> getLitterCountByCountries(Integer n) {
+        List<Object[]> counts = litterRepository.getCountriesLitterCount();
+        return counts.stream()
+                .map(obj -> {
+                    Country country = (Country) obj[0];
+                    Long countryId = country.getId();
+                    String countryName = country.getName();
+                    Long litterCount = (Long) obj[1];
+                    Long userCount = (Long) obj[2];
+                    return new CountryLitterDto(countryId, countryName,litterCount, userCount);
+                })
+                .sorted(Comparator.comparing(CountryLitterDto::getLitterCount).reversed())
+                .limit(n)
+                .collect(Collectors.toList());
+    }
+
+    public List<Litter> getAllLittersByCountryId(Integer countryId) {
+        return litterRepository.findAllByCountryId(countryId);
     }
 
     private User getUser(Long userId) {
