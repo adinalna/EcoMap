@@ -2,10 +2,12 @@ package cbse.EcoMap.dto;
 
 import cbse.EcoMap.model.LitterTag;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.Instant;
 
 @Data
+@NoArgsConstructor  
 public class LitterTagDto {
     private Long id;
     private Long tagId;

@@ -11,6 +11,9 @@ import Cleanup from "./views/Cleanup.jsx";
 import LitterGallery from "./views/LitterGallery.jsx";
 import LitterTag from "./views/LitterTag.jsx";
 import GlobalMap from "./views/GlobalMap.jsx";
+import CreateTeam from "./views/CreateTeam.jsx";
+import JoinTeam from "./views/JoinTeam.jsx";
+import ViewTeam from "./views/ViewTeam.jsx";
 
 const router = createBrowserRouter([
     {
@@ -37,7 +40,19 @@ const router = createBrowserRouter([
                         path: "/cleanup",
                         element: <Cleanup />,
                     },
-                ],
+                    {
+                        path: "/createTeam",
+                        element: <CreateTeam />
+                    },
+                    {
+                        path: "/joinTeam",
+                        element: <JoinTeam />
+                    },
+                    {
+                        path: "/myTeam",
+                        element: <ViewTeam />
+                    }
+                ]
             },
             {
                 path: "/about",
