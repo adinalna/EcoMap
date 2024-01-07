@@ -1,5 +1,6 @@
 package cbse.EcoMap.web;
 
+import java.time.Month;
 import java.util.List;
 import java.util.Optional;
 
@@ -86,5 +87,38 @@ public class LitterController {
                     .body(new ErrorResponse("Internal Server Error"));
         }
     }
+    
+    @GetMapping("/{year}/{month}")
+    public ResponseEntity<?> getAllLitterInAMonth(@PathVariable int year, @PathVariable Month month){
+    	List<Litter> allLitters = litterService.getAllLittersInMonth(year, month);
+        return ResponseEntity.ok().body(allLitters);
+    }
+    
+ // Endpoint to get litter data for the last year
+    @GetMapping("/last_year")
+    public ResponseEntity<List<Litter>> getLitterLastYear() {
+        List<Litter> allLitters = litterService.getAllLittersPastNDays(365);
+        return ResponseEntity.ok().body(allLitters); 
+    }
+    
+    @GetMapping("/last_three_years")
+    public ResponseEntity<List<Litter>> getLitterLastThreeYears() {
+        List<Litter> allLitters = litterService.getAllLittersPastNDays(365*3);
+        return ResponseEntity.ok().body(allLitters); 
+    }
 
+    // Endpoint to get litter data for the last 6 months
+    @GetMapping("/last_six_months")
+    public ResponseEntity<List<Litter>> getLitterLastSixMonths() {
+    	List<Litter> allLitters = litterService.getAllLittersPastNDays(180);
+        return ResponseEntity.ok().body(allLitters);
+    }
+
+    // Endpoint to get litter data for the last 3 months
+    @GetMapping("/last_three_months")
+    public ResponseEntity<List<Litter>> getLitterLastThreeMonths() {
+    	List<Litter> allLitters = litterService.getAllLittersPastNDays(90);
+        return ResponseEntity.ok().body(allLitters);
+    }
+     
 }

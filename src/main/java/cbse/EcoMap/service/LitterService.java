@@ -12,6 +12,12 @@ import jakarta.transaction.Transactional;
 import cbse.EcoMap.repository.CountryRepository;
 //import cbse.EcoMap.security.UserDetailsImpl;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.ZoneOffset;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -130,6 +136,40 @@ public class LitterService {
         }
     }
 
+    public void deleteLitter(Long litterId) {
+        litterRepository.deleteById(litterId);
+    }
+    
+    public List<Litter> getAllLittersInMonth(int year, Month month) {
+        LocalDate startOfMonth = LocalDate.of(year, month, 1);
+        System.out.println(startOfMonth + "this is startOfMonth");
+        LocalDate endOfMonth = startOfMonth.plusMonths(1).minusDays(1);
+        
+        Instant startDate = startOfMonth.atStartOfDay().toInstant(ZoneOffset.UTC);
+        Instant endDate = endOfMonth.atTime(23, 59, 59).toInstant(ZoneOffset.UTC);
+        
+        Sort sort = Sort.by(Sort.Direction.ASC, "dateCreated");
+        return litterRepository.findByDateCreatedBetween(startDate, endDate, sort);
+    }
+    
+    public List<Litter> getAllLittersInDateRange(Instant startDate, Instant endDate) {
+        // Assuming you have a method in your repository to fetch data in a date range
+    	Sort sort = Sort.by(Sort.Direction.ASC, "dateCreated");
+        return litterRepository.findByDateCreatedBetween(startDate, endDate, sort);
+    }
+    
+    public List<Litter> getAllLittersPastNDays(int days) {
+        // Calculate start and end dates based on the number of days
+        Instant endDate = Instant.now();
+        Instant startDate = endDate.minus(days, ChronoUnit.DAYS);
+        
+    	System.out.println("This is endDate" + endDate);
+    	System.out.println("This is endDate" + startDate);
+
+    	Sort sort = Sort.by(Sort.Direction.ASC, "dateCreated");
+        // Assuming you have a method in your repository to fetch data in a date range
+        return litterRepository.findByDateCreatedBetween(startDate, endDate, sort);
+    }
 }
 
 

@@ -49,7 +49,7 @@ public class MediaController {
         }
     }
     
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<Media>> getAllMedia() {
         List<Media> mediaList = mediaService.getAllMedia();
         return ResponseEntity.ok().body(mediaList);

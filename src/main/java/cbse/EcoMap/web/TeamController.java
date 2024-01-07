@@ -23,6 +23,7 @@ import cbse.EcoMap.model.User;
 import cbse.EcoMap.service.TeamService;
 import cbse.EcoMap.service.UserService;
 
+@CrossOrigin(origins = "http://localhost:4200") // Change to Port 4200
 @RestController
 @RequestMapping("/api/team")
 
