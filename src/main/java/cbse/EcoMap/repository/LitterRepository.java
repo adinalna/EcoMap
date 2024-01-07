@@ -27,5 +27,7 @@ public interface LitterRepository extends JpaRepository<Litter, Long> {
 	@Query("SELECT l.countryId, COUNT(l), COUNT(DISTINCT l.user) FROM Litter l GROUP BY l.countryId")
 	List<Object[]> countLittersByCountry();
 
+	//Query for getting litter_tag, joining with litter_id, tag_id and tag_group
+
 
 }

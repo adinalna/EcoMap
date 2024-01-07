@@ -41,6 +41,7 @@ export default function WorldCup() {
             try {
                 const litterResponse = await axios.get(`http://localhost:8080/api/litter/all`);
                 setTotalLitter(litterResponse.data.length);
+                console.log(litterResponse.data)
                 setTotalPhotos(litterResponse.data.length);
                 const countryResponse = await axios.get(`http://localhost:8080/api/litter/countries/top/3`);
                 setTopThreeCountries(countryResponse.data);

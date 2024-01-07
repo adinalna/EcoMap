@@ -27,7 +27,7 @@ const COLUMNS = [
         sort: { sortKey: "COUNTRY" },
     },
     { label: 'Total Litter', renderCell: (item) => item.totalLitter, sort: { sortKey: "TOTALLITTER" },},
-    { label: 'Total Contributors', renderCell: (item) => item.totalContributors, sort: { sortKey: "TOTALCONTRIBUTORS" }, },
+    { label: 'Total Contributors', renderCell: (item) => item.userCount, sort: { sortKey: "TOTALCONTRIBUTORS" }, },
     { label: 'Data', renderCell: (item) => (<CountryGraphOverlay id={item.countryId} name={item.country}/>)},
 ];
 
@@ -42,7 +42,7 @@ function WorldCupLeaderboards() {
         rank: index + 1,
         country: item.countryName,
         totalLitter: item.litterCount,
-        totalContributors: item.userCount,
+        userCount: item.userCount,
         countryId: item.countryId,
     }));
 
@@ -70,13 +70,12 @@ function WorldCupLeaderboards() {
             sortToggleType: SortToggleType.AlternateWithReset,
             sortFns: {
                 RANK: (array) =>
-                    array.sort((a, b) => (a.index || []).length - (b.index || []).length),
+                    array.sort((a, b) => a.rank - b.rank),
                 COUNTRY: (array) => array.sort((a, b) => a.country.localeCompare(b.country)),
                 TOTALLITTER: (array) =>
-                    array.sort((a, b) => (a.totalLitter || []).length - (b.totalLitter || []).length),
+                    array.sort((a, b) => a.litterCount - b.litterCount),
                 TOTALCONTRIBUTORS: (array) =>
-                    array.sort((a, b) => (a.totalContributors || []).length - (b.totalContributors || []).length),
-            },
+                    array.sort((c, d) => c.userCount - d.userCount),},
         }
     );
 
@@ -90,9 +89,7 @@ function WorldCupLeaderboards() {
             const response = await axios.get(
                 `http://localhost:8080/api/litter/countries/all`
             );
-
             setLitterData(response.data);
-            console.log(response.data)
         } catch (error) {
             setSeeAllButtonText('See All')
             console.error(
