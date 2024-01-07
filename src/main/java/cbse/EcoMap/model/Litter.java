@@ -27,6 +27,9 @@ public class Litter {
     @Column(name = "picked_up", nullable = false, columnDefinition = "boolean default false")
     private Boolean pickedUp;
 
+    @Column(name = "country_id", nullable = false)
+    private Integer countryId;
+
     @Builder.Default
     @Column(name = "date_created")
     private Instant dateCreated = Instant.now();

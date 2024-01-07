@@ -3,6 +3,7 @@ package cbse.EcoMap.web;
 import java.util.List;
 import java.util.Optional;
 
+import cbse.EcoMap.dto.CountryLitterCountDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,6 +50,58 @@ public class LitterController {
     public ResponseEntity<?> getLitterById(@PathVariable Long litterId) {
         try {
             Optional<Litter> litter = litterService.getLitterById(litterId);
+            return ResponseEntity.ok().body(litter);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ErrorResponse("Internal Server Error"));
+        }
+    }
+
+    @GetMapping("/country/{countryId}")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ResponseEntity<?> getAllLittersByCountryId(@PathVariable Integer countryId) {
+        try {
+            List<Litter> litter = litterService.getAllLittersByCountryId(countryId);
+            return ResponseEntity.ok().body(litter);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ErrorResponse("Internal Server Error"));
+        }
+    }
+
+    @GetMapping("/countries")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ResponseEntity<?> getAllLittersByCountries() {
+        try {
+            List<LitterDto> litter = litterService.getAllLittersByCountries();
+            return ResponseEntity.ok().body(litter);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ErrorResponse("Internal Server Error"));
+        }
+    }
+
+    @GetMapping("/countries/all")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ResponseEntity<?> getLitterCountByCountry() {
+        try {
+            List<CountryLitterCountDto> litter = litterService.getLitterCountByCountry();
+            return ResponseEntity.ok().body(litter);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ErrorResponse("Internal Server Error"));
+        }
+    }
+
+    @GetMapping("/countries/top/{numberOfCountries}")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ResponseEntity<?> getLitterCountByCountries(@PathVariable Integer numberOfCountries) {
+        try {
+            List<CountryLitterCountDto> litter = litterService.getLitterCountByCountries(numberOfCountries);
             return ResponseEntity.ok().body(litter);
 
         } catch (Exception e) {

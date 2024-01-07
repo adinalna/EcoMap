@@ -14,11 +14,7 @@ export default function WorldCup() {
     const [previousTarget, setPreviousTarget] = useState(10);
     const [totalLitter,setTotalLitter] = useState(0);
     const [totalPhotos,setTotalPhotos] = useState(0);
-    const [topThreeCountries,setTopThreeCountries] = useState([
-        { number: 1, country: 'Netherlands', totalLitter: 216115 },
-        { number: 2, country: 'UK', totalLitter: 145348 },
-        { number: 3, country: 'Singapore', totalLitter: 141217 }
-    ]);
+    const [topThreeCountries,setTopThreeCountries] = useState([]);
 
     const progressPercentage = parseFloat((totalLitter / targetValue * 100).toFixed(2));
 
@@ -41,9 +37,13 @@ export default function WorldCup() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`http://localhost:8080/api/litter/all`);
-                setTotalLitter(response.data.length);
-                setTotalPhotos(response.data.length);
+                const litterResponse = await axios.get(`http://localhost:8080/api/litter/all`);
+                setTotalLitter(litterResponse.data.length);
+                setTotalPhotos(litterResponse.data.length);
+                const countryResponse = await axios.get(`http://localhost:8080/api/litter/countries/top/3`);
+                setTopThreeCountries(countryResponse.data);
+                console.log(countryResponse.data)
+
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -170,16 +170,16 @@ export default function WorldCup() {
                                         <Col>
                                             <h3 style={{fontWeight: 'bold',paddingBottom:20}}>Leaderboards</h3>
                                             <Stack direction='horizontal' gap={2} style={{justifyContent:"center"}}>
-                                                {topThreeCountries.map((item) => (
-                                                    <div key={item.number}>
+                                                {topThreeCountries.map((item,index) => (
+                                                    <div key={item.countryId}>
                                                         <Card style={{width:180}}>
-                                                            <Card.Header style={{fontStyle:"italic", fontWeight:"bolder",fontSize:20}}>{item.number}</Card.Header>
-                                                            <Card.Title>{getCountryFlag(item.country)}</Card.Title>
-                                                            <Card.Title style={{fontSize:22, fontWeight:"bold",paddingTop:10}}>{item.country}</Card.Title>
+                                                            <Card.Header style={{fontStyle:"italic", fontWeight:"bolder",fontSize:20}}>{index + 1}</Card.Header>
+                                                            <Card.Title>{getCountryFlag(item.countryName)}</Card.Title>
+                                                            <Card.Title style={{fontSize:22, fontWeight:"bold",paddingTop:10}}>{item.countryName}</Card.Title>
                                                             <Card.Body>
                                                                 Total Litter:
                                                                 <h3>
-                                                                    {item.totalLitter}
+                                                                    {item.litterCount}
                                                                 </h3>
                                                             </Card.Body>
                                                         </Card>

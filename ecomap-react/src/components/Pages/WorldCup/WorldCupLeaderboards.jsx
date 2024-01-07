@@ -10,129 +10,7 @@ import CountryGraphOverlay from "./CountryGraphOverlay.jsx";
 import { CompactTable } from '@table-library/react-table-library/compact';
 import {SortToggleType, useSort} from "@table-library/react-table-library/sort";
 import {useTheme} from "@table-library/react-table-library/theme";
-
-const nodes = [
-    {
-        rank: 1,
-        country: "Netherlands",
-        totalLitter: "10000000",
-        avgLitterPerPerson: "12331213",
-        avgImagePerPerson: "129387",
-        totalContributors: "66",
-        lastUpdated: "Date",
-        totalPhotos: "1232131",
-        dateCreated: 'DMY',
-        createdBy: "Izzat"
-    },
-    {
-        rank: 2,
-        country: "China",
-        totalLitter: "900000",
-        avgLitterPerPerson: "12331213",
-        avgImagePerPerson: "129387",
-        totalContributors: "66",
-        lastUpdated: "Date",
-        totalPhotos: "1232131",
-        dateCreated: 'DMY',
-        createdBy: "Izzat"
-    },
-    {
-        rank: 3,
-        country: "New Zealand",
-        totalLitter: "800000",
-        avgLitterPerPerson: "1331213",
-        avgImagePerPerson: "1297",
-        totalContributors: "6",
-        lastUpdated: "Date",
-        totalPhotos: "132131",
-        dateCreated: 'DMY',
-        createdBy: "Izzat"
-    },
-    {
-        rank: 4,
-        country: "United States",
-        totalLitter: "10000",
-        avgLitterPerPerson: "331213",
-        avgImagePerPerson: "1287",
-        totalContributors: "668",
-        lastUpdated: "Date",
-        totalPhotos: "12131",
-        dateCreated: 'DMY',
-        createdBy: "Izzat"
-    },
-    {
-        rank: 5,
-        country: "Morocco",
-        totalLitter: "100000",
-        avgLitterPerPerson: "1231213",
-        avgImagePerPerson: "12987",
-        totalContributors: "6876",
-        lastUpdated: "Date",
-        totalPhotos: "122131",
-        dateCreated: 'DMY',
-        createdBy: "Izzat"
-    },
-    {
-        rank: 6,
-        country: "Zimbabwe",
-        totalLitter: "1000999000",
-        avgLitterPerPerson: "1238991213",
-        avgImagePerPerson: "129387",
-        totalContributors: "696",
-        lastUpdated: "Date",
-        totalPhotos: "12392131",
-        dateCreated: 'DMY',
-        createdBy: "Izzat"
-    },
-    {
-        rank: 7,
-        country: "South Korea",
-        totalLitter: "1000000",
-        avgLitterPerPerson: "12331213",
-        avgImagePerPerson: "129387",
-        totalContributors: "66",
-        lastUpdated: "Date",
-        totalPhotos: "1232131",
-        dateCreated: 'DMY',
-        createdBy: "Izzat"
-    },
-    {
-        rank: 8,
-        country: "Palestine",
-        totalLitter: "1000000",
-        avgLitterPerPerson: "12331213",
-        avgImagePerPerson: "129387",
-        totalContributors: "66",
-        lastUpdated: "Date",
-        totalPhotos: "1232131",
-        dateCreated: 'DMY',
-        createdBy: "Izzat"
-    },
-    {
-        rank: 9,
-        country: "Hong Kong",
-        totalLitter: "1000000",
-        avgLitterPerPerson: "12331213",
-        avgImagePerPerson: "129387",
-        totalContributors: "66",
-        lastUpdated: "Date",
-        totalPhotos: "1232131",
-        dateCreated: 'DMY',
-        createdBy: "Izzat"
-    },
-    {
-        rank: 10,
-        country: "Taiwan",
-        totalLitter: "1000000",
-        avgLitterPerPerson: "12331213",
-        avgImagePerPerson: "129387",
-        totalContributors: "66",
-        lastUpdated: "Date",
-        totalPhotos: "1232131",
-        dateCreated: 'DMY',
-        createdBy: "Izzat"
-    },
-];
+import axios from "axios";
 
 const COLUMNS = [
     { label: 'Rank', renderCell: (item) => item.rank, sort: { sortKey: "RANK" },},
@@ -151,18 +29,26 @@ const COLUMNS = [
     { label: 'Total Litter', renderCell: (item) => item.totalLitter, sort: { sortKey: "TOTALLITTER" },},
     { label: 'Avg. Litter/Person', renderCell: (item) => item.avgLitterPerPerson, sort: { sortKey: "AVGLITTER" }, },
     { label: 'Total Contributors', renderCell: (item) => item.totalContributors, sort: { sortKey: "TOTALCONTRIBUTORS" }, },
-    { label: 'Last Updated', renderCell: (item) => item.dateCreated, sort: { sortKey: "LASTUPDATED" },},
-    { label: 'Data', renderCell: (item) => (
-            <CountryGraphOverlay/>
-        ) },
+    { label: 'Data', renderCell: (item) => (<CountryGraphOverlay item={item.country}/>)},
 ];
 
 function WorldCupLeaderboards() {
     const [selectedTime, setSelectedTime] = useState('Frequency');
     const [selectedFilter, setSelectedFilter] = useState('Filters');
     const [selectedSort, setSelectedSort] = useState('Sort');
+    const [litterData,setLitterData] = useState([]);
+    const [seeAllButtonText,setSeeAllButtonText] = useState('See All')
 
-    const data = { nodes };
+    const transformedData = litterData.map((item, index) => ({
+        rank: index + 1,
+        country: item.countryName,
+        totalLitter: item.litterCount.toString(),
+        avgLitterPerPerson: (item.litterCount / item.userCount).toFixed(2), // Example calculation
+        totalContributors: item.userCount.toString(),
+    }));
+
+    const data = { nodes: transformedData };
+
 
     const theme = useTheme({
         BaseCell: ` 
@@ -185,7 +71,7 @@ function WorldCupLeaderboards() {
             sortToggleType: SortToggleType.AlternateWithReset,
             sortFns: {
                 RANK: (array) =>
-                    array.sort((a, b) => (a.rank || []).length - (b.rank || []).length),
+                    array.sort((a, b) => (a.index || []).length - (b.index || []).length),
                 COUNTRY: (array) => array.sort((a, b) => a.country.localeCompare(b.country)),
                 TOTALLITTER: (array) =>
                     array.sort((a, b) => (a.totalLitter || []).length - (b.totalLitter || []).length),
@@ -193,7 +79,7 @@ function WorldCupLeaderboards() {
                     array.sort((a, b) => (a.avgLitterPerPerson || []).length - (b.avgLitterPerPerson || []).length),
                 TOTALCONTRIBUTORS: (array) =>
                     array.sort((a, b) => (a.totalContributors || []).length - (b.totalContributors || []).length),
-                LASTUPDATED: (array) => array.sort((a, b) => a.dateCreated.localeCompare(b.type)),
+                // LASTUPDATED: (array) => array.sort((a, b) => a.dateCreated.localeCompare(b.type)),
             },
         }
     );
@@ -201,6 +87,38 @@ function WorldCupLeaderboards() {
     function onSortChange(action, state) {
         console.log(action, state);
     }
+
+    const handleLoadAllCountries = async () => {
+        try {
+            setSeeAllButtonText('Loading...');
+            const response = await axios.get(
+                `http://localhost:8080/api/litter/countries/all`
+            );
+
+            setLitterData(response.data);
+            console.log(response.data)
+        } catch (error) {
+            setSeeAllButtonText('See All')
+            console.error(
+                "Error loading all country data:",
+                error.response ? error.response.data : error.message
+            );
+        }
+        setSeeAllButtonText('See All');
+    };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8080/api/litter/countries/top/5`);
+                setLitterData(response.data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     return (
         <div className='section'>
@@ -337,7 +255,10 @@ function WorldCupLeaderboards() {
                                         <CompactTable columns={COLUMNS} data={data} sort={sort} theme={theme}/>
                                     </div>
                                     <div>
-                                        <Button variant='success'>See All</Button>
+                                        <Button variant='success' onClick={() => {
+                                            handleLoadAllCountries();
+                                            console.log("See All Clicked")
+                                        }}>{seeAllButtonText}</Button>
                                     </div>
                                 </Stack>
                             </Card.Body>

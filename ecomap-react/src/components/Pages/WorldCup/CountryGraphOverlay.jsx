@@ -19,11 +19,14 @@ const nodes = [
         createdBy: "Izzat"
     },
 ];
-const CountryGraphOverlay = (data) => {
+const CountryGraphOverlay = (country) => {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleShow = () => {
+        console.log(country)
+        setShow(true)
+    };
 
     const [activeKey, setActiveKey] = useState('totalLitterData');
 
@@ -68,20 +71,14 @@ const CountryGraphOverlay = (data) => {
                                 Litter Type
                             </Nav.Link>
                         </Nav.Item>
-                        {/*<Nav.Item>
-                                        <Nav.Link eventKey="contributorsData" style={{color:"black"}}>
-                                            Contributors
-                                        </Nav.Link>
-                                    </Nav.Item>*/}
                     </Nav>
                 </Modal.Header>
                 <Modal.Body>
                     <Container>
                         <Row>
                             <Col>
-                                {activeKey === 'totalLitterData' && <TotalLitterData />}
-                                {activeKey === 'totalTypeData' && <LitterTypeData />}
-                                {/*{activeKey === 'contributorsData' && <ContributorsData />}*/}
+                                {activeKey === 'totalLitterData' && <TotalLitterData country={country} />}
+                                {activeKey === 'totalTypeData' && <LitterTypeData country={country}/>}
                             </Col>
                         </Row>
                     </Container>

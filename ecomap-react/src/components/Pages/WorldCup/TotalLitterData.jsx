@@ -44,7 +44,7 @@ const COLUMNS = [
 ];
 
 
-const TotalLitterData = () => {
+const TotalLitterData = (country) => {
     const data = { nodes };
 
     const sort = useSort(

@@ -15,6 +15,7 @@ public class LitterDto {
     private Boolean pickedUp;
     private Instant dateCreated;
 	private String user;
+	private Integer country;
     private Set<MediaDto> media;
     private Set<TagDto> tags; 
 
@@ -22,7 +23,8 @@ public class LitterDto {
     	this.id = litter.getId();
         this.pickedUp = litter.getPickedUp();
         this.dateCreated = litter.getDateCreated();
-        this.user = litter.getUser().getName();  
+        this.user = litter.getUser().getName();
+        this.country = litter.getCountryId();
         this.media = litter.getMedia().stream().map(MediaDto::new).collect(Collectors.toSet());
         this.tags = litter.getTags().stream().map(TagDto::new).collect(Collectors.toSet());
     }

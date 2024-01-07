@@ -1,15 +1,19 @@
 package cbse.EcoMap.service;
 
 import cbse.EcoMap.dto.LitterDto;
+import cbse.EcoMap.dto.CountryLitterCountDto;
 import cbse.EcoMap.model.Litter;
+import cbse.EcoMap.repository.CountryRepository;
 import cbse.EcoMap.repository.LitterRepository;
 import cbse.EcoMap.repository.UserRepository;
 //import cbse.EcoMap.security.UserDetailsImpl;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import lombok.Lombok;
 import org.springframework.data.domain.Sort;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.core.Authentication;
@@ -21,11 +25,13 @@ public class LitterService {
 
     private final LitterRepository litterRepository;
     private final UserRepository userRepository;
+    private final CountryRepository countryRepository;
 
-//    @Autowired
-    public LitterService(LitterRepository litterRepository, UserRepository userRepository) {
+    //    @Autowired
+    public LitterService(LitterRepository litterRepository, UserRepository userRepository, CountryRepository countryRepository) {
         this.litterRepository = litterRepository;
         this.userRepository = userRepository;
+        this.countryRepository = countryRepository;
     }
 
     public Litter createLitter() {
@@ -43,6 +49,43 @@ public class LitterService {
                 .map(LitterDto::new)
                 .collect(Collectors.toList());
     }
+
+    public List<LitterDto> getAllLittersByCountries() {
+        Sort sort = Sort.by(Sort.Direction.ASC, "countryId");
+        List<Litter> litters = litterRepository.findAllByCountries(sort);
+        return litters.stream()
+                .map(LitterDto::new)
+                .collect(Collectors.toList());
+    }
+
+    public List<CountryLitterCountDto> getLitterCountByCountry() {
+        List<Object[]> counts = litterRepository.countLittersByCountry();
+        return counts.stream()
+                .map(obj -> {
+                    Integer countryId = (Integer) obj[0];
+                    String countryName = countryRepository.findCountryNameById(countryId.longValue());
+                    Long litterCount = (Long) obj[1];
+                    Long userCount = (Long) obj[2];
+                    return new CountryLitterCountDto(countryId, countryName, litterCount, userCount);
+                })
+                .sorted(Comparator.comparing(CountryLitterCountDto::getLitterCount).reversed())
+                .collect(Collectors.toList());
+    }
+
+    public List<CountryLitterCountDto> getLitterCountByCountries(Integer n) {
+        List<Object[]> counts = litterRepository.countLittersByCountry();
+        return counts.stream()
+                .map(obj -> {
+                    Integer countryId = (Integer) obj[0];
+                    String countryName = countryRepository.findCountryNameById(countryId.longValue());
+                    Long litterCount = (Long) obj[1];
+                    Long userCount = (Long) obj[2];
+                    return new CountryLitterCountDto(countryId, countryName, litterCount, userCount);
+                })
+                .sorted(Comparator.comparing(CountryLitterCountDto::getLitterCount).reversed())
+                .limit(n)
+                .collect(Collectors.toList());
+    }
     
     public Optional<Litter> getLitterById(Long litterId) {
         return litterRepository.findById(litterId);
@@ -50,6 +93,10 @@ public class LitterService {
     
     public List<Litter> getAllLittersByUserId(Long userId) {
         return litterRepository.findAllByUserId(userId);
+    }
+
+    public List<Litter> getAllLittersByCountryId(Integer countryId) {
+        return litterRepository.findAllByCountryId(countryId);
     }
 
     public Litter updateLitter(Long litterId, Litter updatedLitter) {
@@ -60,8 +107,6 @@ public class LitterService {
             throw new IllegalArgumentException("Litter not found with ID: " + litterId);
         }
     }
-
-
 
     public void deleteLitter(Long litterId) {
         litterRepository.deleteById(litterId);

@@ -17,4 +17,15 @@ public interface LitterRepository extends JpaRepository<Litter, Long> {
 	
 	@Query("SELECT l FROM Litter l LEFT JOIN FETCH l.media")
 	List<Litter> findAllWithMedia(Sort sort);
+
+	@Query("SELECT l FROM Litter l LEFT JOIN FETCH l.media")
+	List<Litter> findAllByCountries(Sort sort);
+
+	@Query("SELECT l FROM Litter l LEFT JOIN FETCH l.media m WHERE l.countryId = :countryId")
+	List<Litter> findAllByCountryId(Integer countryId);
+
+	@Query("SELECT l.countryId, COUNT(l), COUNT(DISTINCT l.user) FROM Litter l GROUP BY l.countryId")
+	List<Object[]> countLittersByCountry();
+
+
 }
