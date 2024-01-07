@@ -3,7 +3,6 @@ import {Table, Container, Row, Col, Nav, Modal, Button} from 'react-bootstrap'
 import TotalLitterData from "./TotalLitterData.jsx";
 import LitterTypeData from "./LitterTypeData.jsx";
 import getCountryFlag from "./getCountryFlag.jsx";
-// import ContributorsData from "./ContributorsData.jsx";
 
 const nodes = [
     {
@@ -19,12 +18,13 @@ const nodes = [
         createdBy: "Izzat"
     },
 ];
-const CountryGraphOverlay = (country) => {
+const CountryGraphOverlay = (props) => {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
+
     const handleShow = () => {
-        console.log(country)
+        console.log(props.name)
         setShow(true)
     };
 
@@ -51,7 +51,7 @@ const CountryGraphOverlay = (country) => {
                     <div style={{paddingRight:20}}>
                         <Modal.Title style={{fontWeight: 'bold', fontSize: 35,}}>
                             <div style={{height: 40, width: 60}}>
-                                {getCountryFlag(nodes[0].country)}
+                                {getCountryFlag(props.name)}
                             </div>
                         </Modal.Title>
                     </div>
@@ -77,8 +77,8 @@ const CountryGraphOverlay = (country) => {
                     <Container>
                         <Row>
                             <Col>
-                                {activeKey === 'totalLitterData' && <TotalLitterData country={country} />}
-                                {activeKey === 'totalTypeData' && <LitterTypeData country={country}/>}
+                                {activeKey === 'totalLitterData' && <TotalLitterData id={props.id} />}
+                                {activeKey === 'totalTypeData' && <LitterTypeData id={props.id}/>}
                             </Col>
                         </Row>
                     </Container>

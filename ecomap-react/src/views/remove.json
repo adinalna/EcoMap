@@ -1,0 +1,1359 @@
+[
+    {
+        "id": 5,
+        "pickedUp": false,
+        "countryId": 107,
+        "dateCreated": "2023-12-23T09:27:13.454696Z",
+        "user": {
+            "id": 1,
+            "date_created": "2023-12-23T09:04:20Z",
+            "name": "Muhammad Ali",
+            "email": "ali@gmail.com",
+            "password": "$Test123",
+            "country": {
+                "id": 107,
+                "date_created": null,
+                "name": "Malaysia",
+                "xp_score": 0,
+                "teams": [],
+                "users": []
+            },
+            "teams": [],
+            "userTeams": [],
+            "cleanups": [],
+            "litters": [
+                {
+                    "id": 35,
+                    "pickedUp": false,
+                    "countryId": 107,
+                    "dateCreated": "2023-10-04T09:02:43.871501Z",
+                    "user": {
+                        "id": 1,
+                        "date_created": "2023-12-23T09:04:20Z",
+                        "name": "Muhammad Ali",
+                        "email": "ali@gmail.com",
+                        "password": "$Test123",
+                        "country": {
+                            "id": 107,
+                            "date_created": null,
+                            "name": "Malaysia",
+                            "xp_score": 0,
+                            "teams": [],
+                            "users": []
+                        },
+                        "teams": [],
+                        "userTeams": [],
+                        "cleanups": [],
+                        "litters": [
+                            35,
+                            5,
+                            {
+                                "id": 38,
+                                "pickedUp": false,
+                                "countryId": 107,
+                                "dateCreated": "2022-10-01T08:02:43.871501Z",
+                                "user": {
+                                    "id": 1,
+                                    "date_created": "2023-12-23T09:04:20Z",
+                                    "name": "Muhammad Ali",
+                                    "email": "ali@gmail.com",
+                                    "password": "$Test123",
+                                    "country": {
+                                        "id": 107,
+                                        "date_created": null,
+                                        "name": "Malaysia",
+                                        "xp_score": 0,
+                                        "teams": [],
+                                        "users": []
+                                    },
+                                    "teams": [],
+                                    "userTeams": [],
+                                    "cleanups": [],
+                                    "litters": [
+                                        35,
+                                        5,
+                                        38,
+                                        {
+                                            "id": 7,
+                                            "pickedUp": false,
+                                            "countryId": 107,
+                                            "dateCreated": "2023-10-23T08:02:43.871501Z",
+                                            "user": {
+                                                "id": 1,
+                                                "date_created": "2023-12-23T09:04:20Z",
+                                                "name": "Muhammad Ali",
+                                                "email": "ali@gmail.com",
+                                                "password": "$Test123",
+                                                "country": {
+                                                    "id": 107,
+                                                    "date_created": null,
+                                                    "name": "Malaysia",
+                                                    "xp_score": 0,
+                                                    "teams": [],
+                                                    "users": []
+                                                },
+                                                "teams": [],
+                                                "userTeams": [],
+                                                "cleanups": [],
+                                                "litters": [
+                                                    35,
+                                                    5,
+                                                    38,
+                                                    7,
+                                                    {
+                                                        "id": 43,
+                                                        "pickedUp": false,
+                                                        "countryId": 107,
+                                                        "dateCreated": "2021-10-04T09:02:43.871501Z",
+                                                        "user": {
+                                                            "id": 1,
+                                                            "date_created": "2023-12-23T09:04:20Z",
+                                                            "name": "Muhammad Ali",
+                                                            "email": "ali@gmail.com",
+                                                            "password": "$Test123",
+                                                            "country": {
+                                                                "id": 107,
+                                                                "date_created": null,
+                                                                "name": "Malaysia",
+                                                                "xp_score": 0,
+                                                                "teams": [],
+                                                                "users": []
+                                                            },
+                                                            "teams": [],
+                                                            "userTeams": [],
+                                                            "cleanups": [],
+                                                            "litters": [
+                                                                35,
+                                                                5,
+                                                                38,
+                                                                7,
+                                                                43,
+                                                                {
+                                                                    "id": 12,
+                                                                    "pickedUp": false,
+                                                                    "countryId": 107,
+                                                                    "dateCreated": "2023-05-23T09:02:43.871501Z",
+                                                                    "user": {
+                                                                        "id": 1,
+                                                                        "date_created": "2023-12-23T09:04:20Z",
+                                                                        "name": "Muhammad Ali",
+                                                                        "email": "ali@gmail.com",
+                                                                        "password": "$Test123",
+                                                                        "country": {
+                                                                            "id": 107,
+                                                                            "date_created": null,
+                                                                            "name": "Malaysia",
+                                                                            "xp_score": 0,
+                                                                            "teams": [],
+                                                                            "users": []
+                                                                        },
+                                                                        "teams": [],
+                                                                        "userTeams": [],
+                                                                        "cleanups": [],
+                                                                        "litters": [
+                                                                            35,
+                                                                            5,
+                                                                            38,
+                                                                            7,
+                                                                            43,
+                                                                            12,
+                                                                            {
+                                                                                "id": 45,
+                                                                                "pickedUp": false,
+                                                                                "countryId": 184,
+                                                                                "dateCreated": "2024-01-07T04:10:47.582515Z",
+                                                                                "user": {
+                                                                                    "id": 1,
+                                                                                    "date_created": "2023-12-23T09:04:20Z",
+                                                                                    "name": "Muhammad Ali",
+                                                                                    "email": "ali@gmail.com",
+                                                                                    "password": "$Test123",
+                                                                                    "country": {
+                                                                                        "id": 107,
+                                                                                        "date_created": null,
+                                                                                        "name": "Malaysia",
+                                                                                        "xp_score": 0,
+                                                                                        "teams": [],
+                                                                                        "users": []
+                                                                                    },
+                                                                                    "teams": [],
+                                                                                    "userTeams": [],
+                                                                                    "cleanups": [],
+                                                                                    "litters": [
+                                                                                        35,
+                                                                                        5,
+                                                                                        38,
+                                                                                        7,
+                                                                                        43,
+                                                                                        12,
+                                                                                        45,
+                                                                                        {
+                                                                                            "id": 46,
+                                                                                            "pickedUp": false,
+                                                                                            "countryId": 159,
+                                                                                            "dateCreated": "2024-01-07T07:10:29.536075Z",
+                                                                                            "user": {
+                                                                                                "id": 1,
+                                                                                                "date_created": "2023-12-23T09:04:20Z",
+                                                                                                "name": "Muhammad Ali",
+                                                                                                "email": "ali@gmail.com",
+                                                                                                "password": "$Test123",
+                                                                                                "country": {
+                                                                                                    "id": 107,
+                                                                                                    "date_created": null,
+                                                                                                    "name": "Malaysia",
+                                                                                                    "xp_score": 0,
+                                                                                                    "teams": [],
+                                                                                                    "users": []
+                                                                                                },
+                                                                                                "teams": [],
+                                                                                                "userTeams": [],
+                                                                                                "cleanups": [],
+                                                                                                "litters": [
+                                                                                                    35,
+                                                                                                    5,
+                                                                                                    38,
+                                                                                                    7,
+                                                                                                    43,
+                                                                                                    12,
+                                                                                                    45,
+                                                                                                    46,
+                                                                                                    {
+                                                                                                        "id": 47,
+                                                                                                        "pickedUp": false,
+                                                                                                        "countryId": 159,
+                                                                                                        "dateCreated": "2024-01-07T07:55:38.050262Z",
+                                                                                                        "user": {
+                                                                                                            "id": 1,
+                                                                                                            "date_created": "2023-12-23T09:04:20Z",
+                                                                                                            "name": "Muhammad Ali",
+                                                                                                            "email": "ali@gmail.com",
+                                                                                                            "password": "$Test123",
+                                                                                                            "country": {
+                                                                                                                "id": 107,
+                                                                                                                "date_created": null,
+                                                                                                                "name": "Malaysia",
+                                                                                                                "xp_score": 0,
+                                                                                                                "teams": [],
+                                                                                                                "users": []
+                                                                                                            },
+                                                                                                            "teams": [],
+                                                                                                            "userTeams": [],
+                                                                                                            "cleanups": [],
+                                                                                                            "litters": [
+                                                                                                                35,
+                                                                                                                5,
+                                                                                                                38,
+                                                                                                                7,
+                                                                                                                43,
+                                                                                                                12,
+                                                                                                                45,
+                                                                                                                46,
+                                                                                                                47,
+                                                                                                                {
+                                                                                                                    "id": 17,
+                                                                                                                    "pickedUp": false,
+                                                                                                                    "countryId": 107,
+                                                                                                                    "dateCreated": "2022-12-23T04:02:43.871501Z",
+                                                                                                                    "user": {
+                                                                                                                        "id": 1,
+                                                                                                                        "date_created": "2023-12-23T09:04:20Z",
+                                                                                                                        "name": "Muhammad Ali",
+                                                                                                                        "email": "ali@gmail.com",
+                                                                                                                        "password": "$Test123",
+                                                                                                                        "country": {
+                                                                                                                            "id": 107,
+                                                                                                                            "date_created": null,
+                                                                                                                            "name": "Malaysia",
+                                                                                                                            "xp_score": 0,
+                                                                                                                            "teams": [],
+                                                                                                                            "users": []
+                                                                                                                        },
+                                                                                                                        "teams": [],
+                                                                                                                        "userTeams": [],
+                                                                                                                        "cleanups": [],
+                                                                                                                        "litters": [
+                                                                                                                            35,
+                                                                                                                            5,
+                                                                                                                            38,
+                                                                                                                            7,
+                                                                                                                            43,
+                                                                                                                            12,
+                                                                                                                            45,
+                                                                                                                            46,
+                                                                                                                            47,
+                                                                                                                            17,
+                                                                                                                            {
+                                                                                                                                "id": 25,
+                                                                                                                                "pickedUp": false,
+                                                                                                                                "countryId": 167,
+                                                                                                                                "dateCreated": "2022-05-22T21:02:43.871501Z",
+                                                                                                                                "user": {
+                                                                                                                                    "id": 1,
+                                                                                                                                    "date_created": "2023-12-23T09:04:20Z",
+                                                                                                                                    "name": "Muhammad Ali",
+                                                                                                                                    "email": "ali@gmail.com",
+                                                                                                                                    "password": "$Test123",
+                                                                                                                                    "country": {
+                                                                                                                                        "id": 107,
+                                                                                                                                        "date_created": null,
+                                                                                                                                        "name": "Malaysia",
+                                                                                                                                        "xp_score": 0,
+                                                                                                                                        "teams": [],
+                                                                                                                                        "users": []
+                                                                                                                                    },
+                                                                                                                                    "teams": [],
+                                                                                                                                    "userTeams": [],
+                                                                                                                                    "cleanups": [],
+                                                                                                                                    "litters": [
+                                                                                                                                        35,
+                                                                                                                                        5,
+                                                                                                                                        38,
+                                                                                                                                        7,
+                                                                                                                                        43,
+                                                                                                                                        12,
+                                                                                                                                        45,
+                                                                                                                                        46,
+                                                                                                                                        47,
+                                                                                                                                        17,
+                                                                                                                                        25,
+                                                                                                                                        {
+                                                                                                                                            "id": 26,
+                                                                                                                                            "pickedUp": false,
+                                                                                                                                            "countryId": 121,
+                                                                                                                                            "dateCreated": "2022-04-22T20:02:43.871501Z",
+                                                                                                                                            "user": {
+                                                                                                                                                "id": 1,
+                                                                                                                                                "date_created": "2023-12-23T09:04:20Z",
+                                                                                                                                                "name": "Muhammad Ali",
+                                                                                                                                                "email": "ali@gmail.com",
+                                                                                                                                                "password": "$Test123",
+                                                                                                                                                "country": {
+                                                                                                                                                    "id": 107,
+                                                                                                                                                    "date_created": null,
+                                                                                                                                                    "name": "Malaysia",
+                                                                                                                                                    "xp_score": 0,
+                                                                                                                                                    "teams": [],
+                                                                                                                                                    "users": []
+                                                                                                                                                },
+                                                                                                                                                "teams": [],
+                                                                                                                                                "userTeams": [],
+                                                                                                                                                "cleanups": [],
+                                                                                                                                                "litters": [
+                                                                                                                                                    35,
+                                                                                                                                                    5,
+                                                                                                                                                    38,
+                                                                                                                                                    7,
+                                                                                                                                                    43,
+                                                                                                                                                    12,
+                                                                                                                                                    45,
+                                                                                                                                                    46,
+                                                                                                                                                    47,
+                                                                                                                                                    17,
+                                                                                                                                                    25,
+                                                                                                                                                    26,
+                                                                                                                                                    {
+                                                                                                                                                        "id": 30,
+                                                                                                                                                        "pickedUp": false,
+                                                                                                                                                        "countryId": 107,
+                                                                                                                                                        "dateCreated": "2023-10-01T08:02:43.871501Z",
+                                                                                                                                                        "user": {
+                                                                                                                                                            "id": 1,
+                                                                                                                                                            "date_created": "2023-12-23T09:04:20Z",
+                                                                                                                                                            "name": "Muhammad Ali",
+                                                                                                                                                            "email": "ali@gmail.com",
+                                                                                                                                                            "password": "$Test123",
+                                                                                                                                                            "country": {
+                                                                                                                                                                "id": 107,
+                                                                                                                                                                "date_created": null,
+                                                                                                                                                                "name": "Malaysia",
+                                                                                                                                                                "xp_score": 0,
+                                                                                                                                                                "teams": [],
+                                                                                                                                                                "users": []
+                                                                                                                                                            },
+                                                                                                                                                            "teams": [],
+                                                                                                                                                            "userTeams": [],
+                                                                                                                                                            "cleanups": [],
+                                                                                                                                                            "litters": [
+                                                                                                                                                                35,
+                                                                                                                                                                5,
+                                                                                                                                                                38,
+                                                                                                                                                                7,
+                                                                                                                                                                43,
+                                                                                                                                                                12,
+                                                                                                                                                                45,
+                                                                                                                                                                46,
+                                                                                                                                                                47,
+                                                                                                                                                                17,
+                                                                                                                                                                25,
+                                                                                                                                                                26,
+                                                                                                                                                                30
+                                                                                                                                                            ]
+                                                                                                                                                        },
+                                                                                                                                                        "media": [
+                                                                                                                                                            {
+                                                                                                                                                                "id": 30,
+                                                                                                                                                                "path": "litter/0a3410-07b1c3-035831-08baaa.mp4",
+                                                                                                                                                                "mediaType": "video",
+                                                                                                                                                                "locationX": 100.2875385,
+                                                                                                                                                                "locationY": 5.467610613,
+                                                                                                                                                                "dateCreated": null
+                                                                                                                                                            }
+                                                                                                                                                        ],
+                                                                                                                                                        "tags": []
+                                                                                                                                                    }
+                                                                                                                                                ]
+                                                                                                                                            },
+                                                                                                                                            "media": [
+                                                                                                                                                {
+                                                                                                                                                    "id": 26,
+                                                                                                                                                    "path": "litter/05e82e-080337-05f638-011a80.mp4",
+                                                                                                                                                    "mediaType": "video",
+                                                                                                                                                    "locationX": 97.80468156,
+                                                                                                                                                    "locationY": 23.18003493,
+                                                                                                                                                    "dateCreated": null
+                                                                                                                                                }
+                                                                                                                                            ],
+                                                                                                                                            "tags": [
+                                                                                                                                                {
+                                                                                                                                                    "id": 9,
+                                                                                                                                                    "title": null,
+                                                                                                                                                    "tagGroup": {
+                                                                                                                                                        "id": 1,
+                                                                                                                                                        "title": "Alcohol",
+                                                                                                                                                        "tags": []
+                                                                                                                                                    }
+                                                                                                                                                }
+                                                                                                                                            ]
+                                                                                                                                        },
+                                                                                                                                        30
+                                                                                                                                    ]
+                                                                                                                                },
+                                                                                                                                "media": [
+                                                                                                                                    {
+                                                                                                                                        "id": 25,
+                                                                                                                                        "path": "litter/e566fec7-12dd-4a3f-a3aa-73d159050cbc.jpeg",
+                                                                                                                                        "mediaType": "image",
+                                                                                                                                        "locationX": 18.0713472,
+                                                                                                                                        "locationY": 59.32360269,
+                                                                                                                                        "dateCreated": null
+                                                                                                                                    }
+                                                                                                                                ],
+                                                                                                                                "tags": []
+                                                                                                                            },
+                                                                                                                            26,
+                                                                                                                            30
+                                                                                                                        ]
+                                                                                                                    },
+                                                                                                                    "media": [
+                                                                                                                        {
+                                                                                                                            "id": 17,
+                                                                                                                            "path": "litter/41c6a6a6-689b-4567-887b-8a6fce10c33a.jpeg",
+                                                                                                                            "mediaType": "image",
+                                                                                                                            "locationX": 100.2875385,
+                                                                                                                            "locationY": 5.467610613,
+                                                                                                                            "dateCreated": null
+                                                                                                                        }
+                                                                                                                    ],
+                                                                                                                    "tags": []
+                                                                                                                },
+                                                                                                                25,
+                                                                                                                26,
+                                                                                                                30
+                                                                                                            ]
+                                                                                                        },
+                                                                                                        "media": [
+                                                                                                            {
+                                                                                                                "id": 47,
+                                                                                                                "path": "litter/289c892a-5d31-4a7b-a3e7-52d1f060ddbd.jpeg",
+                                                                                                                "mediaType": "image",
+                                                                                                                "locationX": 24.736328895884505,
+                                                                                                                "locationY": -32.17290205088275,
+                                                                                                                "dateCreated": "2024-01-07T07:55:37.027860Z"
+                                                                                                            }
+                                                                                                        ],
+                                                                                                        "tags": []
+                                                                                                    },
+                                                                                                    17,
+                                                                                                    25,
+                                                                                                    26,
+                                                                                                    30
+                                                                                                ]
+                                                                                            },
+                                                                                            "media": [
+                                                                                                {
+                                                                                                    "id": 46,
+                                                                                                    "path": "litter/94f07afa-d241-4d47-ba8b-ffa5e17ddae0.mp4",
+                                                                                                    "mediaType": "video",
+                                                                                                    "locationX": 24.736328895884505,
+                                                                                                    "locationY": -32.17290205088275,
+                                                                                                    "dateCreated": "2024-01-07T07:10:28.496295Z"
+                                                                                                }
+                                                                                            ],
+                                                                                            "tags": []
+                                                                                        },
+                                                                                        47,
+                                                                                        17,
+                                                                                        25,
+                                                                                        26,
+                                                                                        30
+                                                                                    ]
+                                                                                },
+                                                                                "media": [
+                                                                                    {
+                                                                                        "id": 45,
+                                                                                        "path": "litter/f4a92201-7067-4f22-814b-b46a6322f649.jpeg",
+                                                                                        "mediaType": "image",
+                                                                                        "locationX": -3.0216662009872404,
+                                                                                        "locationY": 51.21538072469425,
+                                                                                        "dateCreated": "2024-01-07T04:10:46.662356Z"
+                                                                                    }
+                                                                                ],
+                                                                                "tags": []
+                                                                            },
+                                                                            46,
+                                                                            47,
+                                                                            17,
+                                                                            25,
+                                                                            26,
+                                                                            30
+                                                                        ]
+                                                                    },
+                                                                    "media": [
+                                                                        {
+                                                                            "id": 12,
+                                                                            "path": "litter/0089cb-02b36e-04be4b-0f1424.mp4",
+                                                                            "mediaType": "video",
+                                                                            "locationX": 100.2875385,
+                                                                            "locationY": 5.467610613,
+                                                                            "dateCreated": null
+                                                                        }
+                                                                    ],
+                                                                    "tags": []
+                                                                },
+                                                                45,
+                                                                46,
+                                                                47,
+                                                                17,
+                                                                25,
+                                                                26,
+                                                                30
+                                                            ]
+                                                        },
+                                                        "media": [
+                                                            {
+                                                                "id": 43,
+                                                                "path": "litter/0089cb-02b36e-04be4b-0f1424.mp4",
+                                                                "mediaType": "video",
+                                                                "locationX": 100.2875385,
+                                                                "locationY": 5.467610613,
+                                                                "dateCreated": null
+                                                            }
+                                                        ],
+                                                        "tags": [
+                                                            {
+                                                                "id": 11,
+                                                                "title": null,
+                                                                "tagGroup": {
+                                                                    "id": 1,
+                                                                    "title": "Alcohol",
+                                                                    "tags": []
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    12,
+                                                    45,
+                                                    46,
+                                                    47,
+                                                    17,
+                                                    25,
+                                                    26,
+                                                    30
+                                                ]
+                                            },
+                                            "media": [
+                                                {
+                                                    "id": 7,
+                                                    "path": "litter/0a3410-07b1c3-035831-08baaa.mp4",
+                                                    "mediaType": "video",
+                                                    "locationX": 100.2875385,
+                                                    "locationY": 5.467610613,
+                                                    "dateCreated": null
+                                                }
+                                            ],
+                                            "tags": []
+                                        },
+                                        43,
+                                        12,
+                                        45,
+                                        46,
+                                        47,
+                                        17,
+                                        25,
+                                        26,
+                                        30
+                                    ]
+                                },
+                                "media": [
+                                    {
+                                        "id": 38,
+                                        "path": "litter/0089cb-02b36e-04be4b-0f1424.mp4",
+                                        "mediaType": "video",
+                                        "locationX": 100.2875385,
+                                        "locationY": 5.467610613,
+                                        "dateCreated": null
+                                    }
+                                ],
+                                "tags": []
+                            },
+                            7,
+                            43,
+                            12,
+                            45,
+                            46,
+                            47,
+                            17,
+                            25,
+                            26,
+                            30
+                        ]
+                    },
+                    "media": [
+                        {
+                            "id": 35,
+                            "path": "litter/0ece5d-03ab4f-064f36-001e8f.mp4",
+                            "mediaType": "video",
+                            "locationX": 100.2875385,
+                            "locationY": 5.467610613,
+                            "dateCreated": null
+                        }
+                    ],
+                    "tags": []
+                },
+                5,
+                38,
+                7,
+                43,
+                12,
+                45,
+                46,
+                47,
+                17,
+                25,
+                26,
+                30
+            ]
+        },
+        "media": [
+            {
+                "id": 5,
+                "path": "litter/c109e939-4a98-452e-8582-f8bd83f33a50.jpeg",
+                "mediaType": "image",
+                "locationX": 100.28753849123113,
+                "locationY": 5.467610613144475,
+                "dateCreated": "2023-12-23T09:34:46Z"
+            }
+        ],
+        "tags": [
+            {
+                "id": 176,
+                "title": null,
+                "tagGroup": {
+                    "id": 10,
+                    "title": "Soft Drinks",
+                    "tags": []
+                }
+            },
+            {
+                "id": 3,
+                "title": null,
+                "tagGroup": {
+                    "id": 1,
+                    "title": "Alcohol",
+                    "tags": []
+                }
+            },
+            {
+                "id": 5,
+                "title": null,
+                "tagGroup": {
+                    "id": 1,
+                    "title": "Alcohol",
+                    "tags": []
+                }
+            },
+            {
+                "id": 1,
+                "title": null,
+                "tagGroup": {
+                    "id": 1,
+                    "title": "Alcohol",
+                    "tags": []
+                }
+            }
+        ]
+    },
+    7,
+    12,
+    {
+        "id": 22,
+        "pickedUp": false,
+        "countryId": 107,
+        "dateCreated": "2022-07-22T23:02:43.871501Z",
+        "user": {
+            "id": 4,
+            "date_created": "2023-12-21T14:22:54Z",
+            "name": "Felix Kjellberg",
+            "email": "felix@gmail.com",
+            "password": "$Test123",
+            "country": {
+                "id": 167,
+                "date_created": null,
+                "name": "Sweden",
+                "xp_score": 0,
+                "teams": [],
+                "users": []
+            },
+            "teams": [],
+            "userTeams": [],
+            "cleanups": [],
+            "litters": [
+                {
+                    "id": 33,
+                    "pickedUp": false,
+                    "countryId": 167,
+                    "dateCreated": "2023-10-02T05:02:43.871501Z",
+                    "user": {
+                        "id": 4,
+                        "date_created": "2023-12-21T14:22:54Z",
+                        "name": "Felix Kjellberg",
+                        "email": "felix@gmail.com",
+                        "password": "$Test123",
+                        "country": {
+                            "id": 167,
+                            "date_created": null,
+                            "name": "Sweden",
+                            "xp_score": 0,
+                            "teams": [],
+                            "users": []
+                        },
+                        "teams": [],
+                        "userTeams": [],
+                        "cleanups": [],
+                        "litters": [
+                            33,
+                            {
+                                "id": 3,
+                                "pickedUp": true,
+                                "countryId": 167,
+                                "dateCreated": "2023-12-23T09:02:43.668501Z",
+                                "user": {
+                                    "id": 4,
+                                    "date_created": "2023-12-21T14:22:54Z",
+                                    "name": "Felix Kjellberg",
+                                    "email": "felix@gmail.com",
+                                    "password": "$Test123",
+                                    "country": {
+                                        "id": 167,
+                                        "date_created": null,
+                                        "name": "Sweden",
+                                        "xp_score": 0,
+                                        "teams": [],
+                                        "users": []
+                                    },
+                                    "teams": [],
+                                    "userTeams": [],
+                                    "cleanups": [],
+                                    "litters": [
+                                        33,
+                                        3,
+                                        {
+                                            "id": 20,
+                                            "pickedUp": false,
+                                            "countryId": 167,
+                                            "dateCreated": "2022-09-23T01:02:43.871501Z",
+                                            "user": {
+                                                "id": 4,
+                                                "date_created": "2023-12-21T14:22:54Z",
+                                                "name": "Felix Kjellberg",
+                                                "email": "felix@gmail.com",
+                                                "password": "$Test123",
+                                                "country": {
+                                                    "id": 167,
+                                                    "date_created": null,
+                                                    "name": "Sweden",
+                                                    "xp_score": 0,
+                                                    "teams": [],
+                                                    "users": []
+                                                },
+                                                "teams": [],
+                                                "userTeams": [],
+                                                "cleanups": [],
+                                                "litters": [
+                                                    33,
+                                                    3,
+                                                    20,
+                                                    22,
+                                                    {
+                                                        "id": 41,
+                                                        "pickedUp": false,
+                                                        "countryId": 167,
+                                                        "dateCreated": "2021-09-02T05:02:43.871501Z",
+                                                        "user": {
+                                                            "id": 4,
+                                                            "date_created": "2023-12-21T14:22:54Z",
+                                                            "name": "Felix Kjellberg",
+                                                            "email": "felix@gmail.com",
+                                                            "password": "$Test123",
+                                                            "country": {
+                                                                "id": 167,
+                                                                "date_created": null,
+                                                                "name": "Sweden",
+                                                                "xp_score": 0,
+                                                                "teams": [],
+                                                                "users": []
+                                                            },
+                                                            "teams": [],
+                                                            "userTeams": [],
+                                                            "cleanups": [],
+                                                            "litters": [
+                                                                33,
+                                                                3,
+                                                                20,
+                                                                22,
+                                                                41,
+                                                                {
+                                                                    "id": 10,
+                                                                    "pickedUp": false,
+                                                                    "countryId": 167,
+                                                                    "dateCreated": "2023-07-23T05:02:43.871501Z",
+                                                                    "user": {
+                                                                        "id": 4,
+                                                                        "date_created": "2023-12-21T14:22:54Z",
+                                                                        "name": "Felix Kjellberg",
+                                                                        "email": "felix@gmail.com",
+                                                                        "password": "$Test123",
+                                                                        "country": {
+                                                                            "id": 167,
+                                                                            "date_created": null,
+                                                                            "name": "Sweden",
+                                                                            "xp_score": 0,
+                                                                            "teams": [],
+                                                                            "users": []
+                                                                        },
+                                                                        "teams": [],
+                                                                        "userTeams": [],
+                                                                        "cleanups": [],
+                                                                        "litters": [
+                                                                            33,
+                                                                            3,
+                                                                            20,
+                                                                            22,
+                                                                            41,
+                                                                            10,
+                                                                            {
+                                                                                "id": 15,
+                                                                                "pickedUp": false,
+                                                                                "countryId": 167,
+                                                                                "dateCreated": "2023-02-23T06:02:43.871501Z",
+                                                                                "user": {
+                                                                                    "id": 4,
+                                                                                    "date_created": "2023-12-21T14:22:54Z",
+                                                                                    "name": "Felix Kjellberg",
+                                                                                    "email": "felix@gmail.com",
+                                                                                    "password": "$Test123",
+                                                                                    "country": {
+                                                                                        "id": 167,
+                                                                                        "date_created": null,
+                                                                                        "name": "Sweden",
+                                                                                        "xp_score": 0,
+                                                                                        "teams": [],
+                                                                                        "users": []
+                                                                                    },
+                                                                                    "teams": [],
+                                                                                    "userTeams": [],
+                                                                                    "cleanups": [],
+                                                                                    "litters": [
+                                                                                        33,
+                                                                                        3,
+                                                                                        20,
+                                                                                        22,
+                                                                                        41,
+                                                                                        10,
+                                                                                        15
+                                                                                    ]
+                                                                                },
+                                                                                "media": [
+                                                                                    {
+                                                                                        "id": 15,
+                                                                                        "path": "litter/0ece5d-03ab4f-064f36-001e8f.mp4",
+                                                                                        "mediaType": "video",
+                                                                                        "locationX": 18.0713472,
+                                                                                        "locationY": 59.32360269,
+                                                                                        "dateCreated": null
+                                                                                    }
+                                                                                ],
+                                                                                "tags": []
+                                                                            }
+                                                                        ]
+                                                                    },
+                                                                    "media": [
+                                                                        {
+                                                                            "id": 10,
+                                                                            "path": "litter/0089cb-02b36e-04be4b-0f1424.mp4",
+                                                                            "mediaType": "video",
+                                                                            "locationX": 18.0713472,
+                                                                            "locationY": 59.32360269,
+                                                                            "dateCreated": null
+                                                                        }
+                                                                    ],
+                                                                    "tags": []
+                                                                },
+                                                                15
+                                                            ]
+                                                        },
+                                                        "media": [
+                                                            {
+                                                                "id": 41,
+                                                                "path": "litter/0a3410-07b1c3-035831-08baaa.mp4",
+                                                                "mediaType": "video",
+                                                                "locationX": 18.0713472,
+                                                                "locationY": 59.32360269,
+                                                                "dateCreated": null
+                                                            }
+                                                        ],
+                                                        "tags": []
+                                                    },
+                                                    10,
+                                                    15
+                                                ]
+                                            },
+                                            "media": [
+                                                {
+                                                    "id": 20,
+                                                    "path": "litter/e566fec7-12dd-4a3f-a3aa-73d159050cbc.jpeg",
+                                                    "mediaType": "image",
+                                                    "locationX": 18.0713472,
+                                                    "locationY": 59.32360269,
+                                                    "dateCreated": null
+                                                }
+                                            ],
+                                            "tags": []
+                                        },
+                                        22,
+                                        41,
+                                        10,
+                                        15
+                                    ]
+                                },
+                                "media": [
+                                    {
+                                        "id": 3,
+                                        "path": "litter/80abaefb-64c0-4772-b78c-c8c8b9eda121.jpeg",
+                                        "mediaType": "image",
+                                        "locationX": 18.0713472018871,
+                                        "locationY": 59.32360268501997,
+                                        "dateCreated": "2023-12-23T09:02:41.951911Z"
+                                    }
+                                ],
+                                "tags": []
+                            },
+                            20,
+                            22,
+                            41,
+                            10,
+                            15
+                        ]
+                    },
+                    "media": [
+                        {
+                            "id": 33,
+                            "path": "litter/e566fec7-12dd-4a3f-a3aa-73d159050cbc.jpeg",
+                            "mediaType": "image",
+                            "locationX": 18.0713472,
+                            "locationY": 59.32360269,
+                            "dateCreated": null
+                        }
+                    ],
+                    "tags": []
+                },
+                3,
+                20,
+                22,
+                41,
+                10,
+                15
+            ]
+        },
+        "media": [
+            {
+                "id": 22,
+                "path": "litter/0ece5d-03ab4f-064f36-001e8f.mp4",
+                "mediaType": "video",
+                "locationX": 100.2875385,
+                "locationY": 5.467610613,
+                "dateCreated": null
+            }
+        ],
+        "tags": []
+    },
+    30,
+    35,
+    38,
+    43,
+    17,
+    {
+        "id": 27,
+        "pickedUp": false,
+        "countryId": 107,
+        "dateCreated": "2022-03-22T19:02:43.871501Z",
+        "user": {
+            "id": 2,
+            "date_created": "2023-12-21T14:22:54Z",
+            "name": "John Doe",
+            "email": "john@gmail.com",
+            "password": "$Test123",
+            "country": {
+                "id": 184,
+                "date_created": null,
+                "name": "United Kingdom",
+                "xp_score": 0,
+                "teams": [],
+                "users": []
+            },
+            "teams": [],
+            "userTeams": [],
+            "cleanups": [],
+            "litters": [
+                {
+                    "id": 1,
+                    "pickedUp": false,
+                    "countryId": 184,
+                    "dateCreated": "2023-12-23T09:02:43.049269Z",
+                    "user": {
+                        "id": 2,
+                        "date_created": "2023-12-21T14:22:54Z",
+                        "name": "John Doe",
+                        "email": "john@gmail.com",
+                        "password": "$Test123",
+                        "country": {
+                            "id": 184,
+                            "date_created": null,
+                            "name": "United Kingdom",
+                            "xp_score": 0,
+                            "teams": [],
+                            "users": []
+                        },
+                        "teams": [],
+                        "userTeams": [],
+                        "cleanups": [],
+                        "litters": [
+                            1,
+                            {
+                                "id": 19,
+                                "pickedUp": false,
+                                "countryId": 184,
+                                "dateCreated": "2022-10-23T02:02:43.871501Z",
+                                "user": {
+                                    "id": 2,
+                                    "date_created": "2023-12-21T14:22:54Z",
+                                    "name": "John Doe",
+                                    "email": "john@gmail.com",
+                                    "password": "$Test123",
+                                    "country": {
+                                        "id": 184,
+                                        "date_created": null,
+                                        "name": "United Kingdom",
+                                        "xp_score": 0,
+                                        "teams": [],
+                                        "users": []
+                                    },
+                                    "teams": [],
+                                    "userTeams": [],
+                                    "cleanups": [],
+                                    "litters": [
+                                        1,
+                                        19,
+                                        {
+                                            "id": 24,
+                                            "pickedUp": false,
+                                            "countryId": 184,
+                                            "dateCreated": "2022-01-22T22:02:43.871501Z",
+                                            "user": {
+                                                "id": 2,
+                                                "date_created": "2023-12-21T14:22:54Z",
+                                                "name": "John Doe",
+                                                "email": "john@gmail.com",
+                                                "password": "$Test123",
+                                                "country": {
+                                                    "id": 184,
+                                                    "date_created": null,
+                                                    "name": "United Kingdom",
+                                                    "xp_score": 0,
+                                                    "teams": [],
+                                                    "users": []
+                                                },
+                                                "teams": [],
+                                                "userTeams": [],
+                                                "cleanups": [],
+                                                "litters": [
+                                                    1,
+                                                    19,
+                                                    24,
+                                                    {
+                                                        "id": 40,
+                                                        "pickedUp": false,
+                                                        "countryId": 184,
+                                                        "dateCreated": "2022-11-03T06:02:43.871501Z",
+                                                        "user": {
+                                                            "id": 2,
+                                                            "date_created": "2023-12-21T14:22:54Z",
+                                                            "name": "John Doe",
+                                                            "email": "john@gmail.com",
+                                                            "password": "$Test123",
+                                                            "country": {
+                                                                "id": 184,
+                                                                "date_created": null,
+                                                                "name": "United Kingdom",
+                                                                "xp_score": 0,
+                                                                "teams": [],
+                                                                "users": []
+                                                            },
+                                                            "teams": [],
+                                                            "userTeams": [],
+                                                            "cleanups": [],
+                                                            "litters": [
+                                                                1,
+                                                                19,
+                                                                24,
+                                                                40,
+                                                                {
+                                                                    "id": 9,
+                                                                    "pickedUp": false,
+                                                                    "countryId": 184,
+                                                                    "dateCreated": "2023-08-23T06:02:43.871501Z",
+                                                                    "user": {
+                                                                        "id": 2,
+                                                                        "date_created": "2023-12-21T14:22:54Z",
+                                                                        "name": "John Doe",
+                                                                        "email": "john@gmail.com",
+                                                                        "password": "$Test123",
+                                                                        "country": {
+                                                                            "id": 184,
+                                                                            "date_created": null,
+                                                                            "name": "United Kingdom",
+                                                                            "xp_score": 0,
+                                                                            "teams": [],
+                                                                            "users": []
+                                                                        },
+                                                                        "teams": [],
+                                                                        "userTeams": [],
+                                                                        "cleanups": [],
+                                                                        "litters": [
+                                                                            1,
+                                                                            19,
+                                                                            24,
+                                                                            40,
+                                                                            9,
+                                                                            27,
+                                                                            {
+                                                                                "id": 14,
+                                                                                "pickedUp": false,
+                                                                                "countryId": 184,
+                                                                                "dateCreated": "2023-03-23T07:02:43.871501Z",
+                                                                                "user": {
+                                                                                    "id": 2,
+                                                                                    "date_created": "2023-12-21T14:22:54Z",
+                                                                                    "name": "John Doe",
+                                                                                    "email": "john@gmail.com",
+                                                                                    "password": "$Test123",
+                                                                                    "country": {
+                                                                                        "id": 184,
+                                                                                        "date_created": null,
+                                                                                        "name": "United Kingdom",
+                                                                                        "xp_score": 0,
+                                                                                        "teams": [],
+                                                                                        "users": []
+                                                                                    },
+                                                                                    "teams": [],
+                                                                                    "userTeams": [],
+                                                                                    "cleanups": [],
+                                                                                    "litters": [
+                                                                                        1,
+                                                                                        19,
+                                                                                        24,
+                                                                                        40,
+                                                                                        9,
+                                                                                        27,
+                                                                                        14,
+                                                                                        {
+                                                                                            "id": 32,
+                                                                                            "pickedUp": false,
+                                                                                            "countryId": 184,
+                                                                                            "dateCreated": "2023-11-03T06:02:43.871501Z",
+                                                                                            "user": {
+                                                                                                "id": 2,
+                                                                                                "date_created": "2023-12-21T14:22:54Z",
+                                                                                                "name": "John Doe",
+                                                                                                "email": "john@gmail.com",
+                                                                                                "password": "$Test123",
+                                                                                                "country": {
+                                                                                                    "id": 184,
+                                                                                                    "date_created": null,
+                                                                                                    "name": "United Kingdom",
+                                                                                                    "xp_score": 0,
+                                                                                                    "teams": [],
+                                                                                                    "users": []
+                                                                                                },
+                                                                                                "teams": [],
+                                                                                                "userTeams": [],
+                                                                                                "cleanups": [],
+                                                                                                "litters": [
+                                                                                                    1,
+                                                                                                    19,
+                                                                                                    24,
+                                                                                                    40,
+                                                                                                    9,
+                                                                                                    27,
+                                                                                                    14,
+                                                                                                    32
+                                                                                                ]
+                                                                                            },
+                                                                                            "media": [
+                                                                                                {
+                                                                                                    "id": 32,
+                                                                                                    "path": "litter/0ece5d-03ab4f-064f36-001e8f.mp4",
+                                                                                                    "mediaType": "video",
+                                                                                                    "locationX": -3.021666201,
+                                                                                                    "locationY": 51.21538072,
+                                                                                                    "dateCreated": null
+                                                                                                }
+                                                                                            ],
+                                                                                            "tags": []
+                                                                                        }
+                                                                                    ]
+                                                                                },
+                                                                                "media": [
+                                                                                    {
+                                                                                        "id": 14,
+                                                                                        "path": "litter/41c6a6a6-689b-4567-887b-8a6fce10c33a.jpeg",
+                                                                                        "mediaType": "image",
+                                                                                        "locationX": -3.021666201,
+                                                                                        "locationY": 51.21538072,
+                                                                                        "dateCreated": null
+                                                                                    }
+                                                                                ],
+                                                                                "tags": []
+                                                                            },
+                                                                            32
+                                                                        ]
+                                                                    },
+                                                                    "media": [
+                                                                        {
+                                                                            "id": 9,
+                                                                            "path": "litter/41c6a6a6-689b-4567-887b-8a6fce10c33a.jpeg",
+                                                                            "mediaType": "image",
+                                                                            "locationX": -3.021666201,
+                                                                            "locationY": 51.21538072,
+                                                                            "dateCreated": null
+                                                                        }
+                                                                    ],
+                                                                    "tags": []
+                                                                },
+                                                                27,
+                                                                14,
+                                                                32
+                                                            ]
+                                                        },
+                                                        "media": [
+                                                            {
+                                                                "id": 40,
+                                                                "path": "litter/e566fec7-12dd-4a3f-a3aa-73d159050cbc.jpeg",
+                                                                "mediaType": "image",
+                                                                "locationX": -3.021666201,
+                                                                "locationY": 51.21538072,
+                                                                "dateCreated": null
+                                                            }
+                                                        ],
+                                                        "tags": []
+                                                    },
+                                                    9,
+                                                    27,
+                                                    14,
+                                                    32
+                                                ]
+                                            },
+                                            "media": [
+                                                {
+                                                    "id": 24,
+                                                    "path": "litter/e566fec7-12dd-4a3f-a3aa-73d159050cbc.jpeg",
+                                                    "mediaType": "image",
+                                                    "locationX": -3.021666201,
+                                                    "locationY": 51.21538072,
+                                                    "dateCreated": null
+                                                }
+                                            ],
+                                            "tags": []
+                                        },
+                                        40,
+                                        9,
+                                        27,
+                                        14,
+                                        32
+                                    ]
+                                },
+                                "media": [
+                                    {
+                                        "id": 19,
+                                        "path": "litter/0a3410-07b1c3-035831-08baaa.mp4",
+                                        "mediaType": "video",
+                                        "locationX": -3.021666201,
+                                        "locationY": 51.21538072,
+                                        "dateCreated": null
+                                    }
+                                ],
+                                "tags": []
+                            },
+                            24,
+                            40,
+                            9,
+                            27,
+                            14,
+                            32
+                        ]
+                    },
+                    "media": [
+                        {
+                            "id": 1,
+                            "path": "litter/654d3fec-c7b7-41d3-a5ec-a9ce3a54494d.jpeg",
+                            "mediaType": "image",
+                            "locationX": -3.0216662009872404,
+                            "locationY": 51.21538072469425,
+                            "dateCreated": "2023-12-23T09:02:41.925728Z"
+                        }
+                    ],
+                    "tags": []
+                },
+                19,
+                24,
+                40,
+                9,
+                27,
+                14,
+                32
+            ]
+        },
+        "media": [
+            {
+                "id": 27,
+                "path": "litter/e566fec7-12dd-4a3f-a3aa-73d159050cbc.jpeg",
+                "mediaType": "image",
+                "locationX": 100.2875385,
+                "locationY": 5.467610613,
+                "dateCreated": null
+            }
+        ],
+        "tags": []
+    }
+]

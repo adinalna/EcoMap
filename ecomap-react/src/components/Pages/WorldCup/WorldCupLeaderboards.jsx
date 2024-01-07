@@ -27,9 +27,8 @@ const COLUMNS = [
         sort: { sortKey: "COUNTRY" },
     },
     { label: 'Total Litter', renderCell: (item) => item.totalLitter, sort: { sortKey: "TOTALLITTER" },},
-    { label: 'Avg. Litter/Person', renderCell: (item) => item.avgLitterPerPerson, sort: { sortKey: "AVGLITTER" }, },
     { label: 'Total Contributors', renderCell: (item) => item.totalContributors, sort: { sortKey: "TOTALCONTRIBUTORS" }, },
-    { label: 'Data', renderCell: (item) => (<CountryGraphOverlay item={item.country}/>)},
+    { label: 'Data', renderCell: (item) => (<CountryGraphOverlay id={item.countryId} name={item.country}/>)},
 ];
 
 function WorldCupLeaderboards() {
@@ -42,9 +41,9 @@ function WorldCupLeaderboards() {
     const transformedData = litterData.map((item, index) => ({
         rank: index + 1,
         country: item.countryName,
-        totalLitter: item.litterCount.toString(),
-        avgLitterPerPerson: (item.litterCount / item.userCount).toFixed(2), // Example calculation
-        totalContributors: item.userCount.toString(),
+        totalLitter: item.litterCount,
+        totalContributors: item.userCount,
+        countryId: item.countryId,
     }));
 
     const data = { nodes: transformedData };
@@ -75,11 +74,8 @@ function WorldCupLeaderboards() {
                 COUNTRY: (array) => array.sort((a, b) => a.country.localeCompare(b.country)),
                 TOTALLITTER: (array) =>
                     array.sort((a, b) => (a.totalLitter || []).length - (b.totalLitter || []).length),
-                AVGLITTER: (array) =>
-                    array.sort((a, b) => (a.avgLitterPerPerson || []).length - (b.avgLitterPerPerson || []).length),
                 TOTALCONTRIBUTORS: (array) =>
                     array.sort((a, b) => (a.totalContributors || []).length - (b.totalContributors || []).length),
-                // LASTUPDATED: (array) => array.sort((a, b) => a.dateCreated.localeCompare(b.type)),
             },
         }
     );
@@ -257,7 +253,6 @@ function WorldCupLeaderboards() {
                                     <div>
                                         <Button variant='success' onClick={() => {
                                             handleLoadAllCountries();
-                                            console.log("See All Clicked")
                                         }}>{seeAllButtonText}</Button>
                                     </div>
                                 </Stack>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {TypeAnimation} from "react-type-animation";
-import {Button, Card, Col, Container, ProgressBar, Row, Stack, Badge} from "react-bootstrap";
+import {Button, Card, Col, Container, ProgressBar, Row, Stack, Badge, Spinner} from "react-bootstrap";
 import { ArrowForwardOutline} from "react-ionicons";
 import CountUp from "react-countup";
 import getCountryFlag from "../components/Pages/WorldCup/getCountryFlag.jsx";
@@ -14,6 +14,7 @@ export default function WorldCup() {
     const [previousTarget, setPreviousTarget] = useState(10);
     const [totalLitter,setTotalLitter] = useState(0);
     const [totalPhotos,setTotalPhotos] = useState(0);
+    const [isLoading, setIsLoading] = useState(true);
     const [topThreeCountries,setTopThreeCountries] = useState([]);
 
     const progressPercentage = parseFloat((totalLitter / targetValue * 100).toFixed(2));
@@ -36,6 +37,7 @@ export default function WorldCup() {
 
     useEffect(() => {
         const fetchData = async () => {
+            setIsLoading(true);
             try {
                 const litterResponse = await axios.get(`http://localhost:8080/api/litter/all`);
                 setTotalLitter(litterResponse.data.length);
@@ -47,10 +49,23 @@ export default function WorldCup() {
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
+            setIsLoading(false);
         };
 
         fetchData();
     }, []);
+
+    const LoadingPlaceholder = () => (
+        <div>
+            <Stack direction='horizontal' gap={2} style={{justifyContent:"center"}}>
+                <Card style={{width:180}}>
+                    <Card.Body>
+                        <Spinner animation="border" variant="success" />
+                    </Card.Body>
+                </Card>
+            </Stack>
+        </div>
+    );
 
     return (
         <>
@@ -169,6 +184,9 @@ export default function WorldCup() {
                                     <Row>
                                         <Col>
                                             <h3 style={{fontWeight: 'bold',paddingBottom:20}}>Leaderboards</h3>
+                                            {isLoading ? (
+                                                <LoadingPlaceholder />
+                                            ) : (
                                             <Stack direction='horizontal' gap={2} style={{justifyContent:"center"}}>
                                                 {topThreeCountries.map((item,index) => (
                                                     <div key={item.countryId}>
@@ -186,6 +204,7 @@ export default function WorldCup() {
                                                     </div>
                                                 ))}
                                             </Stack>
+                                            )}
                                         </Col>
                                     </Row>
                                     <Row>

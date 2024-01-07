@@ -1,6 +1,6 @@
 import {Col, Container, Row, Table} from "react-bootstrap";
 import {LineChart} from "@mui/x-charts/LineChart";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import getCountryFlag from "./getCountryFlag.jsx";
 import Stack from "react-bootstrap/Stack";
 import {CompactTable} from "@table-library/react-table-library/compact";
@@ -9,6 +9,7 @@ import { useSort} from "@table-library/react-table-library/sort";
 import UnfoldMoreOutlinedIcon from "@mui/icons-material/UnfoldMoreOutlined.js";
 import KeyboardArrowUpOutlinedIcon from "@mui/icons-material/KeyboardArrowUpOutlined.js";
 import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined.js";
+import axios from "axios";
 
 const nodes = [
     {
@@ -44,7 +45,10 @@ const COLUMNS = [
 ];
 
 
-const TotalLitterData = (country) => {
+const TotalLitterData = (props) => {
+    const [countryLitterData,setCountryLitterData] = useState([]);
+
+
     const data = { nodes };
 
     const sort = useSort(
@@ -77,6 +81,21 @@ const TotalLitterData = (country) => {
     function onSortChange(action, state) {
         console.log(action, state);
     }
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8080/api/litter/country/${props.id}`);
+                setCountryLitterData(response.data);
+                console.log(response.data)
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchData();
+    }, [props.id]);
+
     return (
         <Container>
             <Row>
