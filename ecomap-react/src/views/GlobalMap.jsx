@@ -1,8 +1,9 @@
 import React from "react";
 import { Fragment, useState, useEffect } from "react";
 import axios from "axios";
-import { GoogleMap, useLoadScript } from "@react-google-maps/api";
+import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
 import MarkerWithInfo from "../components/Pages/GlobalMap/MarkerWithInfo";
+import CleanUpMarkerWithInfo from "../components/Pages/GlobalMap/CleanUpMarkerWithInfo";
 
 export default function Global() {
     const { isLoaded } = useLoadScript({
@@ -10,11 +11,13 @@ export default function Global() {
     });
 
     const [litterMarkers, setMarkers] = useState([]);
+    const [cleanUpMarkers, setCleanUpMarkes] = useState([]);
 
     const [activeMarker, setActiveMarker] = useState(null);
     const [map, setMap] = useState(/** @type google.map.Maps*/ null);
     const [center, setCenter] = useState({ lat: 40.3947365, lng: 49.6898045 });
 
+    //fetch both litter and cleanup Markers
     useEffect(() => {
         const fetchMarkers = async () => {
             try {
@@ -27,7 +30,21 @@ export default function Global() {
             }
         };
 
+        const fetchCleanUp = async () => {
+            try {
+                const response = await axios.get(
+                    "http://localhost:8080/api/cleanup/list"
+                );
+                setCleanUpMarkes(response.data);
+
+                console.log(response.data);
+            } catch (error) {
+                console.error("Error fetching cleanUpMarkers:", error);
+            }
+        };
+
         fetchMarkers();
+        fetchCleanUp();
     }, []);
 
     useEffect(() => {
@@ -68,7 +85,7 @@ export default function Global() {
                                 height: "100%",
                             }}
                         >
-                            {map && litterMarkers && (
+                            {map && litterMarkers && cleanUpMarkers && (
                                 <>
                                     {/* <HeatmapLayerF
                                         data={litterMarkers.map(
@@ -111,6 +128,41 @@ export default function Global() {
                                                     litterTags={litterTags}
                                                 />
                                             )
+                                    )}
+                                    {cleanUpMarkers.map(
+                                        ({
+                                            id,
+                                            name,
+                                            location_x,
+                                            location_y,
+                                            image,
+                                            date,
+                                            description,
+                                            isPublic,
+                                            date_created,
+                                        }) => (
+                                            <CleanUpMarkerWithInfo
+                                                key={id}
+                                                id={id}
+                                                name={name}
+                                                description={description}
+                                                date={date}
+                                                dateCreated={date_created}
+                                                location_x={parseFloat(
+                                                    location_x
+                                                )}
+                                                location_y={parseFloat(
+                                                    location_y
+                                                )}
+                                                activeMarker={activeMarker}
+                                                handleActiveMarker={
+                                                    handleActiveMarker
+                                                }
+                                                setActiveMarker={
+                                                    setActiveMarker
+                                                }
+                                            />
+                                        )
                                     )}
                                 </>
                             )}
