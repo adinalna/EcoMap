@@ -77,7 +77,7 @@ export default function Global() {
                     {isLoaded ? (
                         <GoogleMap
                             center={center}
-                            zoom={3}
+                            zoom={12}
                             onClick={() => setActiveMarker(null)}
                             onLoad={(map) => setMap(map)}
                             mapContainerStyle={{
