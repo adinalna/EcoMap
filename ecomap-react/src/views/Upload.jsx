@@ -31,7 +31,11 @@ export default function Upload() {
 
   const handlePreUpload = async (onUpload) => {
     try {
-      const geotagChecks = await Promise.all(selectedFiles.map(checkGeotag));
+      const geotagChecks = await Promise.all(
+        selectedFiles.map(file => 
+          file.type.startsWith('video/mp4') ? Promise.resolve(true) : checkGeotag(file)
+        )
+      );
       const allFilesGeotagged = geotagChecks.every((result) => result);
 
       if (allFilesGeotagged) {
@@ -43,6 +47,7 @@ export default function Upload() {
       console.error("Error checking geotags:", error.message);
     }
   };
+
 
   const handleUploadComplete = async ({ overallUploadSuccess, fileResults }) => {
     console.log("Upload success:", overallUploadSuccess);

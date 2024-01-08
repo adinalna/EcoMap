@@ -14,6 +14,9 @@ import GlobalMap from "./views/GlobalMap.jsx";
 import CreateTeam from "./views/CreateTeam.jsx";
 import JoinTeam from "./views/JoinTeam.jsx";
 import ViewTeam from "./views/ViewTeam.jsx";
+import Community from "./views/Community.jsx";
+import WorldCup from "/@//views/WorldCup.jsx";
+import WorldCupLeaderboards from "/@//components/Pages/WorldCup/WorldCupLeaderboards.jsx";
 
 const router = createBrowserRouter([
     {
@@ -24,6 +27,10 @@ const router = createBrowserRouter([
                 path: "/",
                 element: <DefaultLayout />,
                 children: [
+                    {
+                        path: '/',
+                        element: <Navigate to="/about" />
+                    },
                     {
                         path: "/upload",
                         element: <Upload />,
@@ -51,7 +58,15 @@ const router = createBrowserRouter([
                     {
                         path: "/myTeam",
                         element: <ViewTeam />
-                    }
+                    },
+                    {
+                        path: "/worldcup",
+                        element: <WorldCup />
+                    },
+                    {
+                        path: "/worldCupLeaderboards",
+                        element: <WorldCupLeaderboards />
+                    },
                 ]
             },
             {
@@ -75,6 +90,10 @@ const router = createBrowserRouter([
                         element: <Signup />,
                     },
                 ],
+            },
+            {
+                path: '/community',
+                element: <Community />
             },
         ],
     },

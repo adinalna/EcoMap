@@ -4,14 +4,26 @@ const appendGeotag = async (uploads) => {
   try {
     const updatedUploads = await Promise.all(
       uploads.map(async (upload) => {
-        const { file } = upload;
-        const exifData = await exifr.parse(file);
-        const updatedUpload = {
+        const { file, fileType } = upload;
+        let locationX = 0;
+        let locationY = 0;
+
+        if (fileType === 'image/jpeg' || fileType === 'image/jpg' || fileType === 'image/png') {
+
+          const exifData = await exifr.parse(file);
+          locationX = exifData?.longitude || 0;
+          locationY = exifData?.latitude || 0;
+        } else {
+
+          locationX = 24.736328895884505;
+          locationY = -32.17290205088275; 
+        }
+
+        return {
           ...upload,
-          locationX: exifData?.longitude || 0,
-          locationY: exifData?.latitude || 0,
+          locationX: locationX,
+          locationY: locationY,
         };
-        return updatedUpload;
       })
     );
     console.log("updatedUploads", updatedUploads);

@@ -95,6 +95,7 @@ export default function LitterTagForm({ litter }) {
                     return updatedTag ? updatedTag : tag;
                 });
                 setTags(newTags);
+                litter.litterTags = newTags;
                 setSelected([]);
             })
             .catch((err) => {
@@ -119,6 +120,7 @@ export default function LitterTagForm({ litter }) {
             .then(({ data }) => {
                 const updatedTags = tags.filter(tag => !selectedIds.includes(tag.id));
                 setTags(updatedTags);
+                litter.litterTags = newTags;
                 setSelected([]);
 
             })
@@ -136,6 +138,7 @@ export default function LitterTagForm({ litter }) {
                 // console.log("Added: ", data);
                 const updatedTags = [...tags, ...data];
                 setTags(updatedTags);
+                litter.litterTags = updatedTags;
                 setSelected([]);
             })
             .catch((err) => {

@@ -1,0 +1,78 @@
+.about-container {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px;
+  text-align: center;
+  background-color: black;
+  color: white;
+  min-width: 1000px;
+}
+
+.about-content {
+  color: white;
+  min-width: 1000px;
+}
+
+.about-p1 {
+  max-width: 700px;
+  color: white;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.about-heading {
+  color: #2C3E50;
+  padding-bottom: 25px;
+  color: white;
+}
+
+.about-card {
+  width: 30%;
+  margin-bottom: 20px;
+}
+
+.about-list {
+  text-align: center;
+}
+
+.card-container {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 20px;
+}
+
+.about-paragraph {
+  color: white;
+  margin-bottom: 10px;
+}
+
+.about-list {
+  list-style-type: disc;
+  color: #555;
+  padding-left: 20px;
+}
+
+.stepsCard {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  height: 200px;
+}
+
+.fade-in-card {
+  opacity: 0.7; /* Initial opacity */
+  transition: opacity 0.3s ease-in-out; /* Transition effect with ease-in-out timing */
+}
+
+.fade-in-card:hover {
+  opacity: 1; /* Opacity on hover */
+}
+
+.fade-in-text {
+  font-size: 20px;
+}
+
+.about-card {
+  
+}

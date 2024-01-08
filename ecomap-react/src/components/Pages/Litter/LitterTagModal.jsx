@@ -68,8 +68,8 @@ export default function LitterTagModal({
                                         alt=""
                                         style={{
                                             maxWidth: '100%',
-                                            maxHeight: '415px',
-                                        }}
+                                            maxHeight: '380px',
+                                          }}
                                     />
                                 )}
                                 {litter.media[currentIndex].mediaType === 'video' && (
@@ -77,8 +77,8 @@ export default function LitterTagModal({
                                         controls
                                         style={{
                                             maxWidth: '100%',
-                                            maxHeight: '550px',
-                                        }}
+                                            maxHeight: '380px',
+                                          }}
                                     >
                                         <source
                                             src={`${bucketUrl}/${litter.media[currentIndex].path}`}

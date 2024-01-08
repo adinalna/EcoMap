@@ -1,0 +1,73 @@
+.community-container {
+  text-align: left;
+  padding: 100px;
+  /* padding-top: 30px; */
+  background-color: black;
+  color: white;
+
+  &.blue {
+    background-color: #000435;
+  }
+}
+
+.community-div {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 60px;
+}
+
+.community-child-div {
+  text-align: center;
+
+  & h2 {
+    font-weight: 600;
+  }
+
+  & span {
+    display: block;
+  }
+}
+
+.community-graph {
+  height: 600px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+  /* padding-bottom: 40px; */
+}
+
+.community-select {
+  padding-left: 40px;
+  margin-bottom: 20px;
+}
+
+.linechart {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.imageDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center; /* For centering text content */
+}
+
+/* Add styles for Avatar */
+.imageDiv > .MuiAvatar-root {
+  margin-bottom: 10px; /* Adjust as needed */
+}
+
+.ab-p-div {
+  margin: 10px 0;
+  margin-bottom: 30px;
+}
+
+.fade-in-card {
+  min-width: 180px;
+}
+
+.fade-in-text {
+  color: black;
+}

@@ -2,6 +2,7 @@ package cbse.EcoMap.service;
 
 import cbse.EcoMap.client.GeocodeMapsApiClient;
 import cbse.EcoMap.dto.LitterDto;
+import cbse.EcoMap.dto.CountryLitterDto;
 import cbse.EcoMap.model.Litter;
 import cbse.EcoMap.model.Country;
 import cbse.EcoMap.model.User;
@@ -12,6 +13,14 @@ import jakarta.transaction.Transactional;
 import cbse.EcoMap.repository.CountryRepository;
 //import cbse.EcoMap.security.UserDetailsImpl;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.ZoneOffset;
+import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -84,6 +93,41 @@ public class LitterService {
         return null;
     }
 
+    public List<CountryLitterDto> getCountriesLitterCount() {
+        List<Object[]> counts = litterRepository.getCountriesLitterCount();
+        return counts.stream()
+                .map(obj -> {
+                    Country country = (Country) obj[0];
+                    Long countryId = country.getId();
+                    String countryName = country.getName();
+                    Long litterCount = (Long) obj[1];
+                    Long userCount = (Long) obj[2];
+                    return new CountryLitterDto(countryId, countryName,litterCount, userCount);
+                })
+                .sorted(Comparator.comparing(CountryLitterDto::getLitterCount).reversed())
+                .collect(Collectors.toList());
+    }
+
+    public List<CountryLitterDto> getLitterCountByCountries(Integer n) {
+        List<Object[]> counts = litterRepository.getCountriesLitterCount();
+        return counts.stream()
+                .map(obj -> {
+                    Country country = (Country) obj[0];
+                    Long countryId = country.getId();
+                    String countryName = country.getName();
+                    Long litterCount = (Long) obj[1];
+                    Long userCount = (Long) obj[2];
+                    return new CountryLitterDto(countryId, countryName,litterCount, userCount);
+                })
+                .sorted(Comparator.comparing(CountryLitterDto::getLitterCount).reversed())
+                .limit(n)
+                .collect(Collectors.toList());
+    }
+
+    public List<Litter> getAllLittersByCountryId(Integer countryId) {
+        return litterRepository.findAllByCountryId(countryId);
+    }
+
     private User getUser(Long userId) {
         return userRepository.findById(userId).orElse(null);
     }
@@ -130,6 +174,40 @@ public class LitterService {
         }
     }
 
+    public void deleteLitter(Long litterId) {
+        litterRepository.deleteById(litterId);
+    }
+    
+    public List<Litter> getAllLittersInMonth(int year, Month month) {
+        LocalDate startOfMonth = LocalDate.of(year, month, 1);
+        System.out.println(startOfMonth + "this is startOfMonth");
+        LocalDate endOfMonth = startOfMonth.plusMonths(1).minusDays(1);
+        
+        Instant startDate = startOfMonth.atStartOfDay().toInstant(ZoneOffset.UTC);
+        Instant endDate = endOfMonth.atTime(23, 59, 59).toInstant(ZoneOffset.UTC);
+        
+        Sort sort = Sort.by(Sort.Direction.ASC, "dateCreated");
+        return litterRepository.findByDateCreatedBetween(startDate, endDate, sort);
+    }
+    
+    public List<Litter> getAllLittersInDateRange(Instant startDate, Instant endDate) {
+        // Assuming you have a method in your repository to fetch data in a date range
+    	Sort sort = Sort.by(Sort.Direction.ASC, "dateCreated");
+        return litterRepository.findByDateCreatedBetween(startDate, endDate, sort);
+    }
+    
+    public List<Litter> getAllLittersPastNDays(int days) {
+        // Calculate start and end dates based on the number of days
+        Instant endDate = Instant.now();
+        Instant startDate = endDate.minus(days, ChronoUnit.DAYS);
+        
+    	System.out.println("This is endDate" + endDate);
+    	System.out.println("This is endDate" + startDate);
+
+    	Sort sort = Sort.by(Sort.Direction.ASC, "dateCreated");
+        // Assuming you have a method in your repository to fetch data in a date range
+        return litterRepository.findByDateCreatedBetween(startDate, endDate, sort);
+    }
 }
 
 
