@@ -6,13 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import cbse.EcoMap.dto.LitterTagDto;
 import cbse.EcoMap.dto.TagDto;
@@ -34,24 +28,34 @@ public class TagController {
     }
 
     @GetMapping("/all")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<List<TagDto>> getAllTags() {
         List<TagDto> allTags = tagService.findtAllTags();
         return ResponseEntity.ok().body(allTags);
     }
+    @GetMapping("/litterType/all")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ResponseEntity<List<LitterTagDto>> getAllLitterTags() {
+        List<LitterTagDto> allLitterTags = tagService.findAllLitterTags();
+        return ResponseEntity.ok().body(allLitterTags);
+    }
     
     @GetMapping("/user/{userId}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<List<TagDto>> getTagsByUserId(@PathVariable Long userId) {
         List<TagDto> allTags = tagService.findTagsByUserId(userId);
         return ResponseEntity.ok().body(allTags);
     }
     
     @GetMapping("/unused/{litterId}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<List<TagDto>> getUnusedTagsByLitterId(@PathVariable Long litterId) {
         List<TagDto> unusedTags = tagService.findUnusedTagsByLitterId(litterId);
         return ResponseEntity.ok(unusedTags);
     }
     
     @PostMapping("/batch")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<?> createTagBatch(@RequestParam Long userId, @RequestBody List<LitterTag> litterTagList) {
         try {
             List<LitterTag> newLitterTags = tagService.createMediaBatch(litterTagList);
@@ -64,6 +68,7 @@ public class TagController {
     }
     
     @PostMapping("/count/update/batch")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<?> editTagCountBatch(@RequestBody List<LitterTagDto> litterTagList) {
         try {
             List<LitterTagDto> updatedLitterTagDtos = tagService.updateTagCountBatch(litterTagList);
@@ -76,6 +81,7 @@ public class TagController {
     }
     
     @PostMapping("/delete/batch")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<?> deleteTagBatch(@RequestBody List<Long> tagIds) {
         try {
             tagService.deleteTagBatch(tagIds);
@@ -87,6 +93,7 @@ public class TagController {
     }
     
     @PostMapping("/litter-tag/create/batch/{litterId}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<?> createLitterTags(@PathVariable Long litterId, @RequestBody List<TagDto> tagDtos) {
         try {
             List<LitterTagDto> createdLitterTags = tagService.createLitterTags(litterId, tagDtos);
@@ -100,26 +107,31 @@ public class TagController {
     }
 
     @GetMapping("/trending/ever")
+    @CrossOrigin(origins = "http://localhost:4200")
     public List<TagDto> getMostUsedTag() {
         return tagService.findMostUsedTag();
     }
 
     @GetMapping("/trending/week")
+    @CrossOrigin(origins = "http://localhost:4200")
     public List<TagDto> getMostUsedTagLastWeek() {
         return tagService.findMostUsedTagLastWeek();
     }
 
     @GetMapping("/trending/month")
+    @CrossOrigin(origins = "http://localhost:4200")
     public List<TagDto> getMostUsedTagLastMonth() {
         return tagService.findMostUsedTagLastMonth();
     }
 
     @GetMapping("/trending/year")
+    @CrossOrigin(origins = "http://localhost:4200")
     public List<TagDto> getMostUsedTagLastYear() {
         return tagService.findMostUsedTagLastYear();
     }
 
     @GetMapping("/trending/all")
+    @CrossOrigin(origins = "http://localhost:4200")
     public Map<String, List<TagDto>> getMostUsedTagsAll() {
         return tagService.findMostUsedTagsAll();
     }

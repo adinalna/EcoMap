@@ -9,47 +9,16 @@ import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDown
 import axios from "axios";
 import {useTheme} from "@table-library/react-table-library/theme";
 
-const nodes = [
-    {
-        litterType: {
-            'alcohol': {
-                numberOfLitterType: 50
-            },
-            'art': {
-                numberOfLitterType: 10
-            },
-            'brands': {
-                numberOfLitterType: 10
-            },
-            'coastal': {
-                numberOfLitterType: 10
-            },
-            'coffee': {
-                numberOfLitterType: 10
-            },
-            'dumping': {
-                numberOfLitterType: 10
-            },
-            'food': {
-                numberOfLitterType: 10
-            },
-            'industrial': {
-                numberOfLitterType: 10
-            },
-        }
-    },
-];
-
 const LitterTypeData = (props) => {
     const [countryLitterData,setCountryLitterData] = useState([])
     const [litterTypeData, setLitterTypeData] = useState([]);
+    const nodes = props.nodes;
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(`http://localhost:8080/api/litter/country/${props.id}`);
                 setCountryLitterData(response.data);
-                console.log(response.data)
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -77,13 +46,15 @@ const LitterTypeData = (props) => {
 
         fetchData();
         setLitterTypeData(updatedLitterTypeData);
-    }, [props.id]);
+    }, [props.name]);
+
 
     const pieChartData = litterTypeData.map(item => ({
         id: item.rank, // or some other unique identifier
         value: item.count,
         label: item.type
     }));
+
 
 
     const COLUMNS = [

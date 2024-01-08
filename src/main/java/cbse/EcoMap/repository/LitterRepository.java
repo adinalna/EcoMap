@@ -25,11 +25,11 @@ public interface LitterRepository extends JpaRepository<Litter, Long> {
 	@Query("SELECT DISTINCT l FROM Litter l LEFT JOIN FETCH l.media m WHERE l.dateCreated BETWEEN :startDate AND :endDate")
 	List<Litter> findByDateCreatedBetween(@Param("startDate") Instant startDate, @Param("endDate") Instant endDate, Sort sort);
 
-
 	@Query("SELECT l.country, COUNT(l), COUNT(DISTINCT l.user) FROM Litter l GROUP BY l.country")
 	List<Object[]> getCountriesLitterCount();
 
 	@Query("SELECT l FROM Litter l LEFT JOIN FETCH l.media m WHERE l.country.id = :countryId")
 	List<Litter> findAllByCountryId(Integer countryId);
+
 }
 

@@ -1,5 +1,6 @@
 package cbse.EcoMap.repository;
 
+import  cbse.EcoMap.model.Litter;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -32,4 +33,6 @@ public interface LitterTagRepository extends JpaRepository<LitterTag, Long> {
     @Query("SELECT t FROM Tag t WHERE NOT EXISTS " +
             "(SELECT lt FROM LitterTag lt WHERE lt.tag = t AND lt.litter.id = :litterId)")
      List<Tag> findUnusedTagsByLitterId(@Param("litterId") Long litterId);
+
+
 }

@@ -141,39 +141,51 @@ function WorldCupLeaderboards() {
                                                 setSelectedFilter('None')
                                             }}>Default: None</Dropdown.Item>
                                             <Dropdown.Item onClick={() => {
-                                                setSelectedFilter('Litter Type - Smoking')
-                                            }}>Litter Type - Smoking</Dropdown.Item>
+                                                setSelectedFilter('Litter Type - Alcohol')
+                                            }}>Litter Type - Alcohol</Dropdown.Item>
+                                            <Dropdown.Item onClick={() => {
+                                                setSelectedFilter('Litter Type - Art')
+                                            }}>Litter Type - Art</Dropdown.Item>
+                                            <Dropdown.Item onClick={() => {
+                                                setSelectedFilter('Litter Type - Brands')
+                                            }}>Litter Type - Brands</Dropdown.Item>
+                                            <Dropdown.Item onClick={() => {
+                                                setSelectedFilter('Litter Type - Coastal')
+                                            }}>Litter Type - Coastal</Dropdown.Item>
+                                            <Dropdown.Item onClick={() => {
+                                                setSelectedFilter('Litter Type - Coffee')
+                                            }}>Litter Type - Coffee</Dropdown.Item>
+                                            <Dropdown.Item onClick={() => {
+                                                setSelectedFilter('Litter Type - Dumping')
+                                            }}>Litter Type - Dumping</Dropdown.Item>
                                             <Dropdown.Item onClick={() => {
                                                 setSelectedFilter('Litter Type - Food')
                                             }}>Litter Type - Food</Dropdown.Item>
                                             <Dropdown.Item onClick={() => {
-                                                setSelectedFilter('Litter Type - Drinks')
-                                            }}>Litter Type - Drinks</Dropdown.Item>
+                                                setSelectedFilter('Litter Type - Industrial')
+                                            }}>Litter Type - Industrial</Dropdown.Item>
                                             <Dropdown.Item onClick={() => {
                                                 setSelectedFilter('Litter Type - Sanitary')
                                             }}>Litter Type - Sanitary</Dropdown.Item>
                                             <Dropdown.Item onClick={() => {
-                                                setSelectedFilter('Litter Type - Animal Waste')
-                                            }}>Litter Type - Animal Waste</Dropdown.Item>
+                                                setSelectedFilter('Litter Type - Soft Drinks')
+                                            }}>Litter Type - Soft Drinks</Dropdown.Item>
                                             <Dropdown.Item onClick={() => {
-                                                setSelectedFilter('Litter Type - Others')
-                                            }}>Litter Type - Others</Dropdown.Item>
+                                                setSelectedFilter('Litter Type - Smoking')
+                                            }}>Litter Type - Smoking</Dropdown.Item>
                                             <Dropdown.Item onClick={() => {
-                                                setSelectedFilter('Region - Americas')
-                                            }}>Region - Americas</Dropdown.Item>
+                                                setSelectedFilter('Litter Type - Other')
+                                            }}>Litter Type - Other</Dropdown.Item>
                                             <Dropdown.Item onClick={() => {
-                                                setSelectedFilter('Region - Asia Pacific')
-                                            }}>Region - Asia Pacific</Dropdown.Item>
+                                                setSelectedFilter('Litter Type - Material')
+                                            }}>Litter Type - Material</Dropdown.Item>
                                             <Dropdown.Item onClick={() => {
-                                                setSelectedFilter('Region - Europe')
-                                            }}>Region - Europe</Dropdown.Item>
-                                            <Dropdown.Item onClick={() => {
-                                                setSelectedFilter('Region - Middle East / Africa')
-                                            }}>Region - Middle East / Africa</Dropdown.Item>
+                                                setSelectedFilter('Litter Type - Pets')
+                                            }}>Litter Type - Pets</Dropdown.Item>
                                         </Dropdown.Menu>
                                     </Dropdown>
                                 </div>
-                                <div>
+                                {/*<div>
                                     <Dropdown>
                                         <Dropdown.Toggle variant="outline-dark"
                                                          id="dropdown-basic">
@@ -197,8 +209,8 @@ function WorldCupLeaderboards() {
                                             }}>Year</Dropdown.Item>
                                         </Dropdown.Menu>
                                     </Dropdown>
-                                </div>
-                                <div>
+                                </div>*/}
+                                {/*<div>
                                     <Dropdown>
                                         <Dropdown.Toggle variant="outline-dark"
                                                          id="dropdown-basic">
@@ -211,9 +223,9 @@ function WorldCupLeaderboards() {
                                             <Dropdown.Item onClick={() => {
                                                 setSelectedSort('Average Litter Per Person')
                                             }}>Average Litter Per Person</Dropdown.Item>
-                                            {/*<Dropdown.Item onClick={() => {
+                                            <Dropdown.Item onClick={() => {
                                                 setSelectedSort('Total Contributors')
-                                            }}>Total Contributors</Dropdown.Item>*/}
+                                            }}>Total Contributors</Dropdown.Item>
                                             <Dropdown.Item onClick={() => {
                                                 setSelectedSort('First Created')
                                             }}>First Created</Dropdown.Item>
@@ -228,7 +240,7 @@ function WorldCupLeaderboards() {
                                             }}>Alphabetical: Z-A</Dropdown.Item>
                                         </Dropdown.Menu>
                                     </Dropdown>
-                                </div>
+                                </div>*/}
                                 <div>
                                     <Button variant='light'>
                                         <RefreshOutline

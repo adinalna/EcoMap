@@ -4,26 +4,157 @@ import TotalLitterData from "./TotalLitterData.jsx";
 import LitterTypeData from "./LitterTypeData.jsx";
 import getCountryFlag from "./getCountryFlag.jsx";
 
-const nodes = [
+const nodes1 = [
     {
-        rank: 1,
-        country: "Netherlands",
-        totalLitter: "10000000",
-        avgLitterPerPerson: "12331213",
-        avgImagePerPerson: "129387",
-        totalContributors: "66",
-        lastUpdated: "Date",
-        totalPhotos: "1232131",
-        dateCreated: 'DMY',
-        createdBy: "Izzat"
+        litterType: {
+            'alcohol': {
+                numberOfLitterType: 2
+            },
+            'art': {
+                numberOfLitterType: 3
+            },
+            'coffee': {
+                numberOfLitterType: 1
+            },
+            'food': {
+                numberOfLitterType: 2
+            },
+            'smoking': {
+                numberOfLitterType: 1
+            },
+            'pets': {
+                numberOfLitterType: 1
+            },
+        }
     },
 ];
+const nodes2 = [
+    {
+        litterType: {
+            'sanitary': {
+                numberOfLitterType: 2
+            },
+            'pets': {
+                numberOfLitterType: 3
+            },
+            'coffee': {
+                numberOfLitterType: 1
+            },
+            'food': {
+                numberOfLitterType: 2
+            },
+            'smoking': {
+                numberOfLitterType: 1
+            },
+            'coastal': {
+                numberOfLitterType: 1
+            },
+        }
+    },
+];
+const nodes3 = [
+    {
+        litterType: {
+            'alcohol': {
+                numberOfLitterType: 2
+            },
+            'dumping': {
+                numberOfLitterType: 3
+            },
+            'coffee': {
+                numberOfLitterType: 1
+            },
+            'food': {
+                numberOfLitterType: 2
+            },
+            'smoking': {
+                numberOfLitterType: 1
+            },
+            'soft drinks': {
+                numberOfLitterType: 1
+            },
+        }
+    },
+];
+const nodes4 = [
+    {
+        litterType: {
+            'alcohol': {
+                numberOfLitterType: 2
+            },
+            'coffee': {
+                numberOfLitterType: 2
+            },
+            'food': {
+                numberOfLitterType: 3
+            },
+            'pets': {
+                numberOfLitterType: 1
+            },
+        }
+    }
+];
+const nodes5 = [
+    {
+        litterType: {
+            'art': {
+                numberOfLitterType: 3
+            },
+            'coffee': {
+                numberOfLitterType: 1
+            },
+            'food': {
+                numberOfLitterType: 3
+            },
+            'smoking': {
+                numberOfLitterType: 2
+            },
+            'pets': {
+                numberOfLitterType: 1
+            },
+        }
+    }
+];
+const nodes6 = [
+    {
+        litterType: {
+            'alcohol': {
+                numberOfLitterType: 1
+            },
+            'smoking': {
+                numberOfLitterType: 1
+            }
+        }
+    }
+];
+
 const CountryGraphOverlay = (props) => {
     const [show, setShow] = useState(false);
+    const [nodes, setNodes] = useState([])
 
     const handleClose = () => setShow(false);
 
     const handleShow = () => {
+        switch (props.name){
+            case 'Malaysia':
+                setNodes(nodes1);
+                break;
+            case 'Myanmar':
+                setNodes(nodes2);
+                break;
+            case 'Norway':
+                setNodes(nodes3);
+                break;
+            case 'United Kingdom':
+                setNodes(nodes4);
+                break;
+            case 'Sweden':
+                setNodes(nodes5);
+                break;
+            case 'South Africa':
+                setNodes(nodes6);
+                break;
+        }
         console.log(props.name)
         setShow(true)
     };
@@ -57,15 +188,10 @@ const CountryGraphOverlay = (props) => {
                     </div>
                     <Nav
                         variant="underline"
-                        defaultActiveKey="totalLitterData"
+                        defaultActiveKey="totalTypeData"
                         activeKey={activeKey}
                         onSelect={handleSelect}
                     >
-                        <Nav.Item>
-                            <Nav.Link eventKey="totalLitterData" style={{color:"black"}}>
-                                Total Litter
-                            </Nav.Link>
-                        </Nav.Item>
                         <Nav.Item>
                             <Nav.Link eventKey="totalTypeData" style={{color:"black"}}>
                                 Litter Type
@@ -77,8 +203,7 @@ const CountryGraphOverlay = (props) => {
                     <Container>
                         <Row>
                             <Col>
-                                {activeKey === 'totalLitterData' && <TotalLitterData id={props.id} />}
-                                {activeKey === 'totalTypeData' && <LitterTypeData id={props.id}/>}
+                                <LitterTypeData id={props.id} nodes={nodes}/>
                             </Col>
                         </Row>
                     </Container>

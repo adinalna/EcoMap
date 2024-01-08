@@ -4,19 +4,14 @@ import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
+import cbse.EcoMap.dto.CountryLitterDto;
+import cbse.EcoMap.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cbse.EcoMap.model.Litter;
-import cbse.EcoMap.model.LitterTag;
-import cbse.EcoMap.model.Media;
-import cbse.EcoMap.model.Tag;
 import cbse.EcoMap.dto.LitterTagDto;
 import cbse.EcoMap.dto.TagDto;
 import cbse.EcoMap.repository.TagRepository;
@@ -149,4 +144,12 @@ public class TagService {
                                   .map(LitterTagDto::new)
                                   .collect(Collectors.toList());
     }
+
+    public List<LitterTagDto> findAllLitterTags() {
+        List<LitterTag> litterTags = litterTagRepository.findAll();
+        return litterTags.stream()
+                .map(LitterTagDto::new)
+                .collect(Collectors.toList());
+    }
+
 }
