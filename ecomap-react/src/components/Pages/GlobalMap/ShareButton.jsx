@@ -3,25 +3,35 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShareSquare, faShareNodes } from "@fortawesome/free-solid-svg-icons";
 
 function ShareButton({ onShare }) {
-    const shareUrl = `https://www.google.com/maps/search/?api=1&query=${onShare.location.lat},${onShare.location.lng}`;
+    // const shareUrl = `https://www.google.com/maps/search/?api=1&query=${onShare.location.lat},${onShare.location.lng}`;
 
-    //this doesn't work I need to figure out why? Also replace with a map direction instead.
-    // Function to handle button click
+    // const handleClick = async () => {
+    //     if (!navigator.share) {
+    //         alert(`Share this URL: ${shareUrl}`);
+    //         return;
+    //     }
+    //     try {
+    //         await navigator.share({
+    //             title: "Check out this location on Google Maps",
+    //             text: "Here is a cool location I found. Check it out!",
+    //             url: shareUrl,
+    //         });
+    //         console.log("Shared successfully");
+    //     } catch (err) {
+    //         console.error("Error sharing", err);
+    //     }
+    // };
+
+    const shareUrl = `https://www.google.com/maps/place/${onShare.location.lat},${onShare.location.lng}`;
+
     const handleClick = async () => {
-        if (!navigator.share) {
-            // Fallback for browsers that don't support the Web Share API
-            alert(`Share this URL: ${shareUrl}`);
-            return;
-        }
         try {
-            await navigator.share({
-                title: "Check out this location on Google Maps",
-                text: "Here is a cool location I found. Check it out!",
-                url: shareUrl,
-            });
-            console.log("Shared successfully");
+            await navigator.clipboard.writeText(shareUrl);
+            console.log("URL copied to clipboard successfully");
+            alert("URL copied to clipboard. You can now paste it to share.");
         } catch (err) {
-            console.error("Error sharing", err);
+            console.error("Error copying to clipboard", err);
+            alert(`Error copying to clipboard: ${err.message}`);
         }
     };
 

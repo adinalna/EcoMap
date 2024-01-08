@@ -1,29 +1,51 @@
-import React from "react";
-import { Marker, InfoWindowF } from "@react-google-maps/api";
+import React, { useState } from "react";
+import { MarkerF, InfoWindowF } from "@react-google-maps/api";
 import ShareButton from "./ShareButton";
-import { getPinIcon } from "./helpers/markerHelpers";
+import cleanUpPin from "../../../../src/assets/cleanUpPin.svg";
+import axios from "axios";
 
-function MarkerWithInfo({
+function CleanUpMarkerWithInfo({
     id,
-    media,
-    user,
+    name,
+    location_x,
+    location_y,
+    image,
+    date,
+    description,
+    isPublic,
     dateCreated,
-    pickedUp,
-    address,
     activeMarker,
     handleActiveMarker,
     setActiveMarker,
-    litterTags,
 }) {
+    const [loading, setLoading] = useState(false);
+
+    const handleJoinEvent = async (cleanupId) => {
+        const userId = 1;
+        try {
+            setLoading(true);
+
+            const response = await axios.get(
+                `http://localhost:8080/api/usercleanup/find?userId=${userId}&cleanupId=${cleanupId}`
+            );
+            alert("User has successfully joined the Cleanup", response.data);
+        } catch (error) {
+            console.error(
+                "Error joining cleanup event:",
+                error.response ? error.response.data : error.message
+            );
+        }
+        setLoading(false);
+    };
     return (
-        <Marker
+        <MarkerF
             key={id}
             position={{
-                lat: media[0].locationY,
-                lng: media[0].locationX,
+                lat: location_x,
+                lng: location_y,
             }}
             onClick={() => handleActiveMarker(id)}
-            icon={getPinIcon(pickedUp)}
+            icon={cleanUpPin}
         >
             {activeMarker === id ? (
                 <InfoWindowF onCloseClick={() => setActiveMarker(null)}>
@@ -39,16 +61,6 @@ function MarkerWithInfo({
                             backgroundColor: "#fff",
                         }}
                     >
-                        <img
-                            src={`https://yfipsoqnsipqnjqnmnqs.supabase.co/storage/v1/object/public/ecomap/${media[0].path}`}
-                            alt="Marker"
-                            style={{
-                                height: "180px",
-                                width: "100%",
-                                objectFit: "cover",
-                                borderRadius: "4px",
-                            }}
-                        />
                         <p
                             style={{
                                 margin: 0,
@@ -56,40 +68,22 @@ function MarkerWithInfo({
                                 fontSize: "18px",
                             }}
                         >
-                            {pickedUp
-                                ? "✅ Was picked up!"
-                                : "❌ Was not picked up!"}
+                            {name}
                         </p>
-                        {litterTags.length > 0 && (
-                            <div style={{}}>
-                                {litterTags.map(({ id, titleValue, count }) => (
-                                    <div
-                                        style={{ display: "flex", gap: "5px" }}
-                                    >
-                                        <span
-                                            key={id}
-                                            style={{ fontWeight: "300" }}
-                                        >
-                                            {titleValue}:
-                                        </span>
-                                        <span style={{ fontWeight: "600" }}>
-                                            {count}
-                                        </span>
-                                    </div>
-                                ))}
-                            </div>
-                        )}
-
-                        <div>
-                            {address}
-                            <br />
-                        </div>
                         <p
                             style={{
                                 margin: 0,
                             }}
                         >
-                            By {user}
+                            {description}
+                        </p>
+
+                        <p
+                            style={{
+                                margin: 0,
+                            }}
+                        >
+                            Joined US on {date}
                         </p>
                         <p
                             style={{
@@ -99,14 +93,13 @@ function MarkerWithInfo({
                         >
                             Created on: {dateCreated.toString()}
                         </p>
-
                         <div
                             style={{
                                 display: "flex",
                                 gap: "5px",
                             }}
                         >
-                            {/* <button
+                            <button
                                 style={{
                                     padding: "8px",
                                     backgroundColor: "#007BFF",
@@ -116,15 +109,16 @@ function MarkerWithInfo({
                                     cursor: "pointer",
                                     width: "100%",
                                 }}
-                                onClick={() => console.log("Button clicked!")}
+                                onClick={() => handleJoinEvent(id)}
+                                disabled={loading}
                             >
-                                
-                            </button> */}
+                                {!loading ? "Join Clean Up" : "loading..."}
+                            </button>
                             <ShareButton
                                 onShare={{
                                     location: {
-                                        lat: media[0].locationY,
-                                        lng: media[0].locationX,
+                                        lat: parseFloat(location_y),
+                                        lng: parseFloat(location_x),
                                     },
                                 }}
                             />
@@ -132,8 +126,8 @@ function MarkerWithInfo({
                     </div>
                 </InfoWindowF>
             ) : null}
-        </Marker>
+        </MarkerF>
     );
 }
 
-export default MarkerWithInfo;
+export default CleanUpMarkerWithInfo;

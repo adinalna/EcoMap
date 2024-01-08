@@ -3,6 +3,7 @@ import { Fragment, useState, useEffect } from "react";
 import axios from "axios";
 import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
 import MarkerWithInfo from "../components/Pages/GlobalMap/MarkerWithInfo";
+import CleanUpMarkerWithInfo from "../components/Pages/GlobalMap/CleanUpMarkerWithInfo";
 
 export default function Global() {
     const { isLoaded } = useLoadScript({
@@ -72,7 +73,7 @@ export default function Global() {
     return (
         <Fragment>
             <div className="">
-                <div style={{ height: "80vh", width: "100vw" }}>
+                <div style={{ height: "93vh", width: "100vw" }}>
                     {isLoaded ? (
                         <GoogleMap
                             center={center}
@@ -128,38 +129,46 @@ export default function Global() {
                                                 />
                                             )
                                     )}
-                                    {/* {cleanUpMarkers.map(
-                                        ({ id, location_x, location_y }) =>
-                                            location_x &&
-                                            location_y && (
-                                                <MarkerF
-                                                    key={id}
-                                                    position={{
-                                                        lat: parseFloat(
-                                                            location_y
-                                                        ),
-                                                        lng: parseFloat(
-                                                            location_x
-                                                        ),
-                                                    }}
-                                                />
-                                            )
-                                    )} */}
+                                    {cleanUpMarkers.map(
+                                        ({
+                                            id,
+                                            name,
+                                            location_x,
+                                            location_y,
+                                            image,
+                                            date,
+                                            description,
+                                            isPublic,
+                                            date_created,
+                                        }) => (
+                                            <CleanUpMarkerWithInfo
+                                                key={id}
+                                                id={id}
+                                                name={name}
+                                                description={description}
+                                                date={date}
+                                                dateCreated={date_created}
+                                                location_x={parseFloat(
+                                                    location_x
+                                                )}
+                                                location_y={parseFloat(
+                                                    location_y
+                                                )}
+                                                activeMarker={activeMarker}
+                                                handleActiveMarker={
+                                                    handleActiveMarker
+                                                }
+                                                setActiveMarker={
+                                                    setActiveMarker
+                                                }
+                                            />
+                                        )
+                                    )}
                                 </>
                             )}
                         </GoogleMap>
                     ) : null}
                 </div>
-                {cleanUpMarkers.map(
-                    ({ id, location_x, location_y }) =>
-                        location_x &&
-                        location_y && (
-                            <>
-                                <div>{id}</div>
-                                <div>helo</div>
-                            </>
-                        )
-                )}
             </div>
         </Fragment>
     );
